@@ -32,7 +32,7 @@ public class ProyectoFinalGrupo66 {
         BrigadaData briData = new BrigadaData(con);
         CuartelData cData = new CuartelData();
        
-       /* Cuartel cuartel = new Cuartel("Cuartel Central La Plata", "137 n° 2546", 180, 73 , "2215656109", "ccblaplata@bomberosaa.org", "Activo");*/
+        Cuartel cuartel = new Cuartel("Cuartel Central La Plata", "137 n° 2546", 180, 73 , "2215656109", "ccblaplata@bomberosaa.org", "Activo");
         Brigada brigada = new Brigada(8,"Brigada 1", "Inundaciones",1, true, true);
       
         Bombero bombero = new Bombero(36650729, "Benjamín Toledo", "A+", LocalDate.of(1997,11,9), "2216552792", "", "Bombero", "Voluntario", "Masculino", "benjjatoledo@gmail.com", "Activo");
