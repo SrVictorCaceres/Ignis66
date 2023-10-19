@@ -6,6 +6,7 @@
 package Ignis66.acessoADatos;
 
 
+
 import Ignis66.entidades.Bombero;
 import java.sql.Connection;
 import java.sql.Date;
@@ -18,20 +19,18 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author fdicocco
+ * @author fdicoccoX
  */
 public class BomberoData {
     private Connection con=null;
-    private void mensaje(String mensaje) {
-    JOptionPane.showMessageDialog(null, mensaje);
-    }
+ 
     
 public BomberoData(){
      con=Conexion.getConexion();
     }
     
 public void altaBombero(Bombero bombero){
-     String sql = "INSERT INTO bomberos (dni, nombreCompleto, fechaNacimiento, grupoSanguineo, fijo, celular, sexo, correo, tipoBombero, rango, estado) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+     String sql = "INSERT INTO bomberos (dni, nombreCompleto, fechaNacimiento, grupoSanguineo, fijo, celular, sexo, correo, tipoBombero, rango, estado, especialidad) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
            
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -40,12 +39,13 @@ public void altaBombero(Bombero bombero){
             ps.setDate(3, Date.valueOf(bombero.getFechaNacimiento()));    
             ps.setString(4, bombero.getGrupoSanguineo());
             ps.setString(5, bombero.getFijo());
-            ps.setString(6, bombero.getCelular());
+            ps.setLong(6, bombero.getCelular());
             ps.setString(7, bombero.getSexo());        
             ps.setString(8, bombero.getCorreo());         
             ps.setString(9, bombero.getTipo());
             ps.setString(10, bombero.getRango());    
             ps.setString(11, bombero.getEstado());                
+            ps.setString(12, bombero.getEspecialidad());    
             
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -59,7 +59,9 @@ public void altaBombero(Bombero bombero){
 
                   } catch (SQLException ex) {
                   JOptionPane.showMessageDialog(null, "Error!! No se pudo ingresar el bombero " +bombero.getNombreCompleto() +" en la Base de Datos");
-         }
+                  } catch (NullPointerException nx){
+                      JOptionPane.showMessageDialog(null, "Error!! Debe completar todos los campos obligatorios");
+                  }
     }
 
 public void bajaBombero(int idBombero){
@@ -79,12 +81,12 @@ public void bajaBombero(int idBombero){
             JOptionPane.showMessageDialog(null, "Error al intentar acceder a la tabla. No se pudo ejecutar la baja.");
                 }
      
-     };  // ok en Main  
+     };  // ok en Main , pero no se utiliza por el momento. 
 
 public void modificarDatosBombero(Bombero bombero, int idBombero){
     
     String sql = "UPDATE bomberos SET dni = ?, nombreCompleto = ?, fechaNacimiento = ?, grupoSanguineo = ?, fijo = ?, celular = ?, sexo = ?, correo = ?,"
-            + " tipoBombero = ?, rango = ? WHERE idBombero = ? ";
+            + " tipoBombero = ?, rango = ?, estado = ?, especialidad = ?  WHERE idBombero = ? ";
                 try {
                         PreparedStatement ps = con.prepareStatement(sql); 
                         ps.setInt(1,bombero.getDni());
@@ -92,12 +94,14 @@ public void modificarDatosBombero(Bombero bombero, int idBombero){
                         ps.setDate(3, Date.valueOf(bombero.getFechaNacimiento()));    
                         ps.setString(4, bombero.getGrupoSanguineo());
                         ps.setString(5, bombero.getFijo());
-                        ps.setString(6, bombero.getCelular());
+                        ps.setLong(6, bombero.getCelular());
                         ps.setString(7, bombero.getSexo());        
                         ps.setString(8, bombero.getCorreo());         
                         ps.setString(9, bombero.getTipo());
                         ps.setString(10, bombero.getRango());         
-                        ps.setInt(11,idBombero);
+                        ps.setString(11, bombero.getEstado());         
+                        ps.setInt(13,idBombero);
+                        ps.setString(12, bombero.getEspecialidad());   
              
              int check = ps.executeUpdate();
              if (check > 0) {
@@ -128,7 +132,7 @@ public void modificarDatosBombero(Bombero bombero, int idBombero){
     }  //ok
  
  public Bombero traerDatos(int idBombero){
-         String sql = "SELECT nombreCompleto, dni, sexo, fechaNacimiento, grupoSanguineo, celular, fijo, correo, tipoBombero, rango, estado FROM bomberos WHERE idBombero = ?";
+         String sql = "SELECT nombreCompleto, dni, sexo, fechaNacimiento, grupoSanguineo, celular, fijo, correo, tipoBombero, rango, estado, especialidad FROM bomberos WHERE idBombero = ?";
          Bombero bomber = null;   
          try{
         PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
@@ -143,12 +147,13 @@ public void modificarDatosBombero(Bombero bombero, int idBombero){
             bomber.setSexo(rs.getString("sexo"));
             bomber.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
             bomber.setGrupoSanguineo(rs.getString("grupoSanguineo"));
-            bomber.setCelular(rs.getString("celular"));
+            bomber.setCelular(rs.getInt("celular"));
             bomber.setFijo(rs.getString("fijo"));
             bomber.setCorreo(rs.getString("correo"));
             bomber.setTipo(rs.getString("tipoBombero"));
             bomber.setRango(rs.getString("rango"));
             bomber.setEstado(rs.getString("estado"));
+            bomber.setEspecialidad(rs.getString("especialidad"));
             
             }else{
                 JOptionPane.showMessageDialog(null, "El bombero buscado no existe.");}

@@ -19,42 +19,44 @@ public class Bombero {
     private String grupoSanguineo;  /// Combo Box con las opciones: A+, A- , B+, B- , AB+ , AB-, O+ y O-  //
     private LocalDate fechaNacimiento;
     private String fijo;
-    private String celular;
+    private long celular;
     private String rango;
     /* BOMBERO, CABO, CABO PRIMERO, SARGENTO, SARGENTO 1°, SUBOFICIAL PRINCIPAL, SUBOFICIAL MAYOR, OFICIAL AYUDANTE, OFICIAL INSPECTOR, 
     OFICIAL PRINCIPAL, SUBCOMANDANTE, COMANDANTE, COMANDANTE MAYOR, COMANDANTE GENERAL*/
     private String tipo;  /// Zapador o Voluntario //
-    private String sexo;  // Femenino, Masculino o No Binario (o cambiar por "Otros") //
+    private String sexo;  // Femenino, Masculino o "Otros" //
     private String correo;
     private Brigada brigada;
     private String estado;
+    private String especialidad;
 
     public Bombero() {
     }
 
-    public Bombero(int dni, String nombreCompleto, String grupoSanguineo, LocalDate fechaNacimiento, String celular, String fijo, String rango, String tipo, String sexo, String correo, String estado) {
+    public Bombero(int dni, String nombreCompleto, String grupoSanguineo, LocalDate fechaNacimiento, long celular, String fijo, String rango, String tipo, String sexo, String correo, String estado, String especialidad) {
         this.dni = dni;
         this.nombreCompleto = nombreCompleto;
         this.grupoSanguineo  = grupoSanguineo;
-     
-    this.fechaNacimiento  = fechaNacimiento;
-     
-    this.celular  = celular;
-     
-    this.fijo  = fijo;
-     
-    this.rango  = rango;
-     
-    this.tipo  = tipo;
-     
-    this.sexo  = sexo;
-     
-    this.correo  = correo;
-     
-    this.estado  = estado;
+        this.fechaNacimiento  = fechaNacimiento;
+        this.celular  = celular;
+        this.fijo  = fijo; 
+        this.rango  = rango;
+        this.tipo  = tipo;
+        this.sexo  = sexo;
+        this.correo  = correo;  
+        this.estado  = estado;
+        this.especialidad  = especialidad;
 
 
         
+    }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
     }
     public int getIdBombero() {
         return idBombero;
@@ -114,11 +116,11 @@ public String getNombreCompleto() {
         this.fijo = fijo;
     }
 
-    public String getCelular() {
+    public long getCelular() {
         return celular;
     }
 
-    public void setCelular(String celular) {
+    public void setCelular(long celular) {
         this.celular = celular;
     }
 
