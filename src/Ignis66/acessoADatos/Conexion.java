@@ -32,7 +32,7 @@ public class Conexion {
             JOptionPane.showMessageDialog(null,"Conectado a la BD "+DB);
             
             }catch(ClassNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null,"Error al cargar los drivers ");
+                    JOptionPane.showMessageDialog(null,"Error al cargar los drivers");
                     } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error de conexión " + ex.getMessage());
         }

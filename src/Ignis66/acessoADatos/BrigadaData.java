@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
@@ -14,20 +15,20 @@ public class BrigadaData {
     
     private Connection con;
 
-    public BrigadaData(Connection con) {
-        this.con = con;
+    public BrigadaData() {
+        con = Conexion.getConexion();
     }
     
-    public void agregarBrigada(Brigada brigada){
+    public void agregarBrigada(Brigada brigada, int id){
        
     try{    
         String sql = "INSERT Into brigada(nombreBrigada, especialidad, libre, estado, idCuartel) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, brigada.getNombreBrigada());
         ps.setString(2, brigada.getEspecialidad());
-        ps.setBoolean(3, brigada.isActivo());
-        ps.setBoolean(4, brigada.isLibre());
-        ps.setInt(5, brigada.getIdCuartel());
+        ps.setBoolean(3, brigada.isLibre());
+        ps.setBoolean(4, brigada.isActivo());
+        ps.setInt(5, id);
         ps.executeUpdate();
         
         ResultSet rs = ps.getGeneratedKeys();
@@ -42,8 +43,9 @@ public class BrigadaData {
        }
     }
     
-    public void brigadasLibres(Brigada brigada){
+    public ArrayList<Brigada> brigadasLibres(){
         
+        ArrayList<Brigada> lista = new ArrayList();
         String sql = "SELECT * FROM brigada WHERE libre = 1";
         
     try{    
@@ -52,13 +54,7 @@ public class BrigadaData {
         ResultSet rs = ps.executeQuery();
         
         while (rs.next()) {
-            brigada = new Brigada();
-            brigada.setIdBrigada(rs.getInt("idBrigada"));
-            brigada.setNombreBrigada(rs.getString("nombreBrigada"));
-            brigada.setEspecialidad(rs.getString("especialidad"));
-            brigada.setLibre(rs.getBoolean("libre"));
-            brigada.setActivo(rs.getBoolean("estado"));
-            brigada.setIdCuartel(rs.getInt("idCuartel"));   
+             lista.add(new Brigada(rs.getInt("idBrigada"), rs.getString("nombreBrigada"), rs.getString("especialidad"), rs.getInt("idCuartel"), rs.getBoolean("libre"), rs.getBoolean("estado")));
         }
         
         ps.close();
@@ -66,6 +62,9 @@ public class BrigadaData {
        }catch(SQLException sqle){
            JOptionPane.showMessageDialog(null, "Error en la busqueda de Brigadas " + sqle.getMessage());
        } 
+    
+        return lista;
     }
+    
     
 }
