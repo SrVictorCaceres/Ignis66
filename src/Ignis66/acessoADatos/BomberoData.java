@@ -160,7 +160,7 @@ public void modificarDatosBombero(Bombero bombero, int idBombero){
             rs.close();
             ps.close();
         }catch(SQLException sqle){
-            JOptionPane.showMessageDialog(null, "Error en la carga de datos ");
+            JOptionPane.showMessageDialog(null, " bombero Error en la carga de datos ");
         }
         return bomber;
          

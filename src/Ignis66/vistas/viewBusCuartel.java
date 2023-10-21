@@ -4,7 +4,9 @@ import Ignis66.acessoADatos.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,6 +20,24 @@ public class viewBusCuartel extends javax.swing.JFrame {
     public viewBusCuartel() {
         initComponents();
         cargarCuartel();
+        disableCopyPaste(txtidCuartel);//deshabilita el copy paste en el textfield
+        disableCopyPaste(txtNombre);
+        disableCopyPaste(txtCiudad);
+      
+    }
+
+    private void disableCopy(JComponent component) {
+        component.getInputMap().put(KeyStroke.getKeyStroke("control C"), "none");
+    }
+
+    private void disablePaste(JComponent component) {
+        component.getInputMap().put(KeyStroke.getKeyStroke("control V"), "none");
+    }
+
+    private void disableCopyPaste(JComponent component) {
+        disableCopy(component);
+        disablePaste(component);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -30,13 +50,17 @@ public class viewBusCuartel extends javax.swing.JFrame {
         tblCuartel = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtCiudad = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jLabel1.setText("Búsqueda de cuartel por código");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(231, 11, -1, 27));
+        jLabel1.setText("Búsqueda de cuartel por código, nombre o ciudad");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 400, 27));
 
         txtidCuartel.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtidCuartel.addActionListener(new java.awt.event.ActionListener() {
@@ -48,8 +72,11 @@ public class viewBusCuartel extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtidCuartelKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtidCuartelKeyTyped(evt);
+            }
         });
-        getContentPane().add(txtidCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 92, 176, -1));
+        getContentPane().add(txtidCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 70, -1));
 
         tblCuartel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -74,8 +101,48 @@ public class viewBusCuartel extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 82, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel3.setText("Ingrese el ID del cuartel:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(281, 59, -1, -1));
+        jLabel3.setText("Ingrese el ID:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel4.setText("Ingrese el Nombre:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 120, -1));
+
+        txtNombre.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 200, -1));
+
+        jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel5.setText("Ingrese la Ciudad:");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 150, -1));
+
+        txtCiudad.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCiudad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCiudadActionPerformed(evt);
+            }
+        });
+        txtCiudad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCiudadKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCiudadKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 230, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -87,7 +154,7 @@ public class viewBusCuartel extends javax.swing.JFrame {
 
     private void txtidCuartelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtidCuartelKeyReleased
 
-        buscarCuartel(txtidCuartel.getText());
+        buscarIDCuartel(txtidCuartel.getText());
 
 
     }//GEN-LAST:event_txtidCuartelKeyReleased
@@ -124,9 +191,67 @@ public class viewBusCuartel extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tblCuartelMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
+    private void txtidCuartelKeyTyped(java.awt.event.KeyEvent evt) {                                      
+//GEN-FIRST:event_txtidCuartelKeyTyped
+        // 
+
+        txtNombre.setEditable(false);
+        txtNombre.setEnabled(false);
+        txtCiudad.setEditable(false);
+        txtCiudad.setEnabled(false);
+
+        int key = evt.getKeyChar();
+        boolean num = key >= 48 && key <= 57;
+        if (!num) {
+            evt.consume();
+        }
+        if (txtidCuartel.getText().length() >= 4) {
+            evt.consume();
+        } 
+    }//GEN-LAST:event_txtidCuartelKeyTyped
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+
+
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtCiudadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCiudadKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCiudadKeyTyped
+
+    private void txtCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiudadActionPerformed
+    
+    }//GEN-LAST:event_txtCiudadActionPerformed
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+     
+        buscarNOMCuartel(txtNombre.getText());
+
+
+    }//GEN-LAST:event_txtNombreKeyReleased
+
+    private void txtCiudadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCiudadKeyReleased
+           buscarCIUCuartel(txtCiudad.getText());
+        
+
+
+    }//GEN-LAST:event_txtCiudadKeyReleased
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {                                   
+                                    
+        char c = evt.getKeyChar();
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) {
+            evt.consume();
+        }
+
+        if (txtNombre.getText().length() >= 40) {
+            evt.consume();
+        
+    }                                  
+   
+    }                                  
+
+  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -163,12 +288,13 @@ public class viewBusCuartel extends javax.swing.JFrame {
 
         String[] nCol = {"ID", "Nombre", "Dirección", "Ciudad", "Provincia", "Telefono", "CoordenadaX", "CoordenadaY", "Correo", "Estado"};
         String[] reg = new String[10];
-
+        tblCuartel.getTableHeader().setReorderingAllowed(false);
         DefaultTableModel modelo = new DefaultTableModel(null, nCol) {
             @Override
             public boolean isCellEditable(int f, int c) {
                 return false;
-            };
+            }
+        ;
         };
         tblCuartel.setModel(modelo);
 
@@ -202,13 +328,12 @@ public class viewBusCuartel extends javax.swing.JFrame {
 
     }
 
-    public void buscarCuartel(String idCuartel) {
+    public void buscarIDCuartel(String idCuartel) {
 
         String reg[] = new String[10];
         String nCol[] = {"ID", "Nombre", "Dirección", "Ciudad", "Provincia", "Telefono", "CoordenadaX", "CoordenadaY", "Correo", "Estado"};
         String sql = "SELECT idCuartel, nombreCuartel, direccion, Ciudad, Provincia, telefono, coordenadaX, coordenadaY, correo, estado FROM Cuartel where idCuartel LIKE'%" + idCuartel + "%'";
-        DefaultTableModel model = new DefaultTableModel(null, nCol)
-         {
+        DefaultTableModel model = new DefaultTableModel(null, nCol) {
             @Override
             public boolean isCellEditable(int f, int c) {
                 return false;
@@ -252,13 +377,99 @@ public class viewBusCuartel extends javax.swing.JFrame {
             modelo.removeRow(f);
         }
     }
+       public void buscarNOMCuartel(String nombre) {
+
+        String reg[] = new String[10];
+        String nCol[] = {"ID", "Nombre", "Dirección", "Ciudad", "Provincia", "Telefono", "CoordenadaX", "CoordenadaY", "Correo", "Estado"};
+        String sql = "SELECT idCuartel, nombreCuartel, direccion, Ciudad, Provincia, telefono, coordenadaX, coordenadaY, correo, estado FROM Cuartel where nombreCuartel LIKE'%" + nombre + "%'";
+        DefaultTableModel model = new DefaultTableModel(null, nCol) {
+            @Override
+            public boolean isCellEditable(int f, int c) {
+                return false;
+            }
+        ;
+        };
+        
+        tblCuartel.setModel(model);
+
+        try {
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                reg[0] = rs.getString(1);
+                reg[1] = rs.getString(2);
+                reg[2] = rs.getString(3);
+                reg[3] = rs.getString(4);
+                reg[4] = rs.getString(5);
+                reg[5] = rs.getString(6);
+                reg[6] = rs.getString(7);
+                reg[7] = rs.getString(8);
+                reg[8] = rs.getString(9);
+                reg[9] = rs.getString(10);
+
+                model.addRow(reg);
+            }
+
+            ps.close();
+
+        } catch (SQLException sqle) {
+
+            JOptionPane.showMessageDialog(null, "Error en la carga de datos " + sqle.getMessage());
+        }
+       }
+ public void buscarCIUCuartel(String Ciudad) {
+
+        String reg[] = new String[10];
+        String nCol[] = {"ID", "Nombre", "Dirección", "Ciudad", "Provincia", "Telefono", "CoordenadaX", "CoordenadaY", "Correo", "Estado"};
+        String sql = "SELECT idCuartel, nombreCuartel, direccion, Ciudad, Provincia, telefono, coordenadaX, coordenadaY, correo, estado FROM Cuartel where ciudad LIKE'%" + Ciudad + "%'";
+        DefaultTableModel model = new DefaultTableModel(null, nCol) {
+            @Override
+            public boolean isCellEditable(int f, int c) {
+                return false;
+            }
+        ;
+        };
+        
+        tblCuartel.setModel(model);
+
+        try {
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                reg[0] = rs.getString(1);
+                reg[1] = rs.getString(2);
+                reg[2] = rs.getString(3);
+                reg[3] = rs.getString(4);
+                reg[4] = rs.getString(5);
+                reg[5] = rs.getString(6);
+                reg[6] = rs.getString(7);
+                reg[7] = rs.getString(8);
+                reg[8] = rs.getString(9);
+                reg[9] = rs.getString(10);
+
+                model.addRow(reg);
+            }
+
+            ps.close();
+
+        } catch (SQLException sqle) {
+
+            JOptionPane.showMessageDialog(null, "Error en la carga de datos " + sqle.getMessage());
+        }
+       }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCuartel;
+    private javax.swing.JTextField txtCiudad;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtidCuartel;
     // End of variables declaration//GEN-END:variables
 }

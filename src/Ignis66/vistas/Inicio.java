@@ -2,11 +2,11 @@ package Ignis66.vistas;
 
 import desplazable.Desface;
 import java.awt.Dimension;
-/*import Ignis66.vistas.PruebaFormularioBombero;
+import Ignis66.vistas.PruebaFormularioBombero;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
-import javax.swing.JFrame;*/
+import javax.swing.JFrame;
 
 public class Inicio extends javax.swing.JFrame {
 
