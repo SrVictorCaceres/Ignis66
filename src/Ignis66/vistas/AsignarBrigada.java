@@ -5,8 +5,6 @@ import Ignis66.acessoADatos.BomberoData;
 import Ignis66.acessoADatos.BrigadaData;
 import Ignis66.entidades.Bombero;
 import Ignis66.entidades.Brigada;
-import Ignis66.entidades.EspBrigada;
-import Ignis66.entidades.NomBrigada;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -43,7 +41,6 @@ public class AsignarBrigada extends javax.swing.JFrame {
         disableCopyPaste(b5);
         disableCopyPaste(txtB);
         disableCopyPaste(txtE);
-      
     }
 
     private void disableCopy(JComponent component) {
@@ -93,9 +90,10 @@ public class AsignarBrigada extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tabla3 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(880, 710));
+        setUndecorated(true);
 
         jPanel1.setBackground(java.awt.Color.red);
 
@@ -108,10 +106,10 @@ public class AsignarBrigada extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(298, 298, 298)
                 .addComponent(jLabel1)
-                .addGap(352, 352, 352))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,9 +140,39 @@ public class AsignarBrigada extends javax.swing.JFrame {
 
         jLabel6.setText("Bombero 3: ");
 
+        b1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                b1KeyTyped(evt);
+            }
+        });
+
+        b2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                b2KeyTyped(evt);
+            }
+        });
+
+        b3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                b3KeyTyped(evt);
+            }
+        });
+
         jLabel7.setText("Bombero 4: ");
 
         jLabel8.setText("Bombero 5: ");
+
+        b4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                b4KeyTyped(evt);
+            }
+        });
+
+        b5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                b5KeyTyped(evt);
+            }
+        });
 
         tabla2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -180,7 +208,19 @@ public class AsignarBrigada extends javax.swing.JFrame {
 
         jLabel2.setText("Brigada: ");
 
+        txtB.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBKeyTyped(evt);
+            }
+        });
+
         jLabel3.setText("Especialidad: ");
+
+        txtE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEKeyTyped(evt);
+            }
+        });
 
         tabla3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -199,6 +239,13 @@ public class AsignarBrigada extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Salir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -238,39 +285,41 @@ public class AsignarBrigada extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addComponent(txtE, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(196, 196, 196)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(96, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(limpCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(95, 95, 95)
-                        .addComponent(asignarBri, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(109, 109, 109)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGap(296, 296, 296)
                             .addComponent(jLabel8)
                             .addGap(22, 22, 22)
                             .addComponent(b5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(51, 51, 51))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(66, 66, 66)))))
+                            .addGap(66, 66, 66)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(limpCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(95, 95, 95)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(asignarBri, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
+                        .addGap(109, 109, 109)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(196, 196, 196)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -286,21 +335,23 @@ public class AsignarBrigada extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(b4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(txtE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(asignarBri)
                     .addComponent(limpCampos)
                     .addComponent(jButton1))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -325,14 +376,20 @@ public class AsignarBrigada extends javax.swing.JFrame {
         brigada.setNombreBrigada(txtB.getText());
         brigada.setEspecialidad(txtE.getText());
         
-        lista.add(new Brigada(brigada.getNombreBrigada(), bombero, bombero2, bombero3, bombero4, bombero5, brigada.getEspecialidad(), true, false));
+        if(b1.getText().isEmpty() || b2.getText().isEmpty() || b3.getText().isEmpty() || b4.getText().isEmpty() || b5.getText().isEmpty() || txtB.getText().isEmpty() || txtE.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Para asignar una brigada se necesita que todos los campos esten completos");
+        }else{
+            lista.add(new Brigada(brigada.getNombreBrigada(), bombero, bombero2, bombero3, bombero4, bombero5, brigada.getEspecialidad(), true, false));
         
-        modelo.addRow(new Object[]{brigada.getNombreBrigada(), bombero.getNombreCompleto(), bombero2.getNombreCompleto(), bombero3.getNombreCompleto(), bombero4.getNombreCompleto(), bombero5.getNombreCompleto(), brigada.getEspecialidad()});
+            modelo.addRow(new Object[]{brigada.getNombreBrigada(), bombero.getNombreCompleto(), bombero2.getNombreCompleto(), bombero3.getNombreCompleto(), bombero4.getNombreCompleto(), bombero5.getNombreCompleto(), brigada.getEspecialidad()});
+        }
         
         limpCampos();
     }//GEN-LAST:event_asignarBriActionPerformed
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+    
+        
         
         if(b1.getText().isEmpty() && tabla.getSelectedRow() != -1 && evt.getClickCount() == 2){
             b1.setText(tabla.getValueAt(tabla.getSelectedRow(), 1).toString());
@@ -345,7 +402,110 @@ public class AsignarBrigada extends javax.swing.JFrame {
         }else if(b5.getText().isEmpty() && !b1.getText().isEmpty() && !b2.getText().isEmpty() && !b3.getText().isEmpty() && !b4.getText().isEmpty() && tabla.getSelectedRow() != -1 && evt.getClickCount() == 2){
             b5.setText(tabla.getValueAt(tabla.getSelectedRow(), 1).toString());
         }
-          
+        String bombero = b1.getText();
+        String bombero2 = b2.getText();
+        String bombero3 = b3.getText();
+        String bombero4 = b4.getText();
+        String bombero5 = b5.getText();
+        
+        try{
+            if(!b1.getText().isEmpty() && !b2.getText().isEmpty() && !b3.getText().isEmpty() && !b4.getText().isEmpty() && !b5.getText().isEmpty() && evt.getClickCount() == 2){
+                
+            String id = JOptionPane.showInputDialog("Ingrese el id del bombero 1");
+            int idB = Integer.parseInt(id);
+            Bombero bom1 = new Bombero(idB, bombero);
+            String id2 = JOptionPane.showInputDialog("Ingrese el id del bombero 2");
+            int idB2 = Integer.parseInt(id2);
+            Bombero bom2 = new Bombero(idB2, bombero2);
+            String id3 = JOptionPane.showInputDialog("Ingrese el id del bombero 3");
+            int idB3 = Integer.parseInt(id3);
+            Bombero bom3 = new Bombero(idB3, bombero3);
+            String id4 = JOptionPane.showInputDialog("Ingrese el id del bombero 4");
+            int idB4 = Integer.parseInt(id4);
+            Bombero bom4 = new Bombero(idB4, bombero4);
+            String id5 = JOptionPane.showInputDialog("Ingrese el id del bombero 5");
+            int idB5 = Integer.parseInt(id5);
+            Bombero bom5 = new Bombero(idB5, bombero5);
+            
+
+            if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom4.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
+                b2.setText("");
+                b3.setText("");
+                b4.setText("");
+                b5.setText("");
+            }else if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom4.getIdBombero()){
+                b2.setText("");
+                b3.setText("");
+                b4.setText("");
+            }else if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom3.getIdBombero()){
+                b2.setText("");
+                b3.setText("");
+            }else if(bom1.getIdBombero() == bom2.getIdBombero()){
+                b2.setText("");
+            }else if(bom1.getIdBombero() == bom3.getIdBombero()){
+                b3.setText("");
+            }else if(bom1.getIdBombero() == bom4.getIdBombero()){
+                b4.setText("");
+            }else if(bom1.getIdBombero() == bom5.getIdBombero()){
+                b5.setText("");
+            }else if(bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom4.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
+                b3.setText("");
+                b4.setText("");
+                b5.setText("");
+            }else if(bom1.getIdBombero() == bom4.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
+                b4.setText("");
+                b5.setText("");
+            }else if(bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom4.getIdBombero()){
+                b3.setText("");
+                b4.setText("");
+            }else if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
+                b2.setText("");
+                b5.setText("");
+            }else if(bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
+                b3.setText("");
+                b5.setText("");
+            }else if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom4.getIdBombero()){
+                b2.setText("");
+                b4.setText("");
+            }else if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
+                b2.setText("");
+                b3.setText("");
+                b5.setText("");
+            }else if(bom2.getIdBombero() == bom3.getIdBombero() && bom2.getIdBombero() == bom4.getIdBombero() && bom2.getIdBombero() == bom5.getIdBombero()){
+                b3.setText("");
+                b4.setText("");
+                b5.setText("");
+            }else if(bom2.getIdBombero() == bom3.getIdBombero()){
+                b3.setText("");
+            }else if(bom2.getIdBombero() == bom4.getIdBombero()){
+                b4.setText("");
+            }else if(bom2.getIdBombero() == bom5.getIdBombero()){
+                b5.setText("");
+            }else if(bom2.getIdBombero() == bom3.getIdBombero() && bom2.getIdBombero() == bom5.getIdBombero()){
+                b3.setText("");
+                b5.setText("");
+            }else if(bom2.getIdBombero() == bom4.getIdBombero() && bom2.getIdBombero() == bom5.getIdBombero()){
+                b4.setText("");
+                b5.setText("");
+            }else if(bom2.getIdBombero() == bom3.getIdBombero() && bom2.getIdBombero() == bom4.getIdBombero()){
+                b3.setText("");
+                b4.setText("");
+            }else if(bom3.getIdBombero() == bom4.getIdBombero()){
+                b4.setText("");
+            }else if(bom3.getIdBombero() == bom5.getIdBombero()){
+                b5.setText("");
+            }else if(bom3.getIdBombero() == bom4.getIdBombero() && bom3.getIdBombero() == bom5.getIdBombero()){
+                b4.setText("");
+                b5.setText("");
+            }else if(bom4.getIdBombero() == bom5.getIdBombero()){
+                b5.setText("");
+            }
+            
+           } 
+        }catch(NumberFormatException nf){
+            JOptionPane.showMessageDialog(this, "Ingrese un número");
+        }
+        
     }//GEN-LAST:event_tablaMouseClicked
 
     private void tabla2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla2MouseClicked
@@ -392,6 +552,59 @@ public class AsignarBrigada extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void b1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_b1KeyTyped
+        char c = evt.getKeyChar();
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
+            evt.consume();
+        }
+    }//GEN-LAST:event_b1KeyTyped
+
+    private void b2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_b2KeyTyped
+        char c = evt.getKeyChar();
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
+            evt.consume();
+        }
+    }//GEN-LAST:event_b2KeyTyped
+
+    private void b3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_b3KeyTyped
+        char c = evt.getKeyChar();
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
+            evt.consume();
+        }
+    }//GEN-LAST:event_b3KeyTyped
+
+    private void b4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_b4KeyTyped
+        char c = evt.getKeyChar();
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
+            evt.consume();
+        }
+    }//GEN-LAST:event_b4KeyTyped
+
+    private void b5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_b5KeyTyped
+        char c = evt.getKeyChar();
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
+            evt.consume();
+        }
+    }//GEN-LAST:event_b5KeyTyped
+
+    private void txtBKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtBKeyTyped
+
+    private void txtEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtEKeyTyped
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -435,6 +648,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
     private javax.swing.JTextField b4;
     private javax.swing.JTextField b5;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -522,4 +736,5 @@ public class AsignarBrigada extends javax.swing.JFrame {
         txtB.setText("");
         txtE.setText("");
     }
+    
 }

@@ -32,6 +32,11 @@ public class Bombero {
 
     public Bombero() {
     }
+    
+    public Bombero(int idBombero, String nombreCompleto){
+        this.idBombero = idBombero;
+        this.nombreCompleto = nombreCompleto;
+    }
 
     public Bombero(int dni, String nombreCompleto, String grupoSanguineo, LocalDate fechaNacimiento, long celular, String fijo, String rango, String tipo, String sexo, String correo, String estado, String especialidad) {
         this.dni = dni;
