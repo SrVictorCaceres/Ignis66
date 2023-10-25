@@ -13,15 +13,15 @@ public class Cuartel {
    public String Ciudad;
     public String Provincia;
     public String telefono;
-    public int coordenadaX;
-    public int coodenadaY;
+    public String  coordenadaX;
+    public String  coordenadaY;
     public String correo;
     public String estado;
 
     public Cuartel() {
     }
 
-    public Cuartel(int idCuartel, String nombreCuartel, String direccion, String Ciudad, String Provincia, String telefono, int coordenadaX, int coodenadaY, String correo, String estado) {
+    public Cuartel(int idCuartel, String nombreCuartel, String direccion, String Ciudad, String Provincia, String telefono, String coordenadaX, String coordenadaY, String correo, String estado) {
         this.idCuartel = idCuartel;
         this.nombreCuartel = nombreCuartel;
         this.direccion = direccion;
@@ -29,19 +29,19 @@ public class Cuartel {
         this.Provincia = Provincia;
         this.telefono = telefono;
         this.coordenadaX = coordenadaX;
-        this.coodenadaY = coodenadaY;
+        this.coordenadaY = coordenadaY;
         this.correo = correo;
         this.estado = estado;
     }
 
-    public Cuartel(String nombreCuartel, String direccion, String Ciudad, String Provincia, String telefono, int coordenadaX, int coodenadaY, String correo, String estado) {
+    public Cuartel(String nombreCuartel, String direccion, String Ciudad, String Provincia, String telefono, String coordenadaX, String coordenadaY, String correo, String estado) {
         this.nombreCuartel = nombreCuartel;
         this.direccion = direccion;
         this.Ciudad = Ciudad;
         this.Provincia = Provincia;
         this.telefono = telefono;
         this.coordenadaX = coordenadaX;
-        this.coodenadaY = coodenadaY;
+        this.coordenadaY = coordenadaY;
         this.correo = correo;
         this.estado = estado;
     }
@@ -94,20 +94,20 @@ public class Cuartel {
         this.telefono = telefono;
     }
 
-    public int getCoordenadaX() {
+    public String getCoordenadaX() {
         return coordenadaX;
     }
 
-    public void setCoordenadaX(int coordenadaX) {
+    public void setCoordenadaX(String coordenadaX) {
         this.coordenadaX = coordenadaX;
     }
 
-    public int getCoodenadaY() {
-        return coodenadaY;
+    public String getCoordenadaY() {
+        return coordenadaY;
     }
 
-    public void setCoodenadaY(int coodenadaY) {
-        this.coodenadaY = coodenadaY;
+    public void setCoordenadaY(String coordenadaY) {
+        this.coordenadaY = coordenadaY;
     }
 
     public String getCorreo() {
