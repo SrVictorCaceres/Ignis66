@@ -401,9 +401,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
     
-        
-        
-        if(b1.getText().isEmpty() && tabla.getSelectedRow() != -1 && evt.getClickCount() == 2){
+      if(b1.getText().isEmpty() && tabla.getSelectedRow() != -1 && evt.getClickCount() == 2){
             b1.setText(tabla.getValueAt(tabla.getSelectedRow(), 1).toString());
         }else if(b2.getText().isEmpty() && !b1.getText().isEmpty() && tabla.getSelectedRow() != -1 && evt.getClickCount() == 2){
             b2.setText(tabla.getValueAt(tabla.getSelectedRow(), 1).toString());
@@ -515,9 +513,10 @@ public class AsignarBrigada extends javax.swing.JFrame {
             
            } 
         }catch(NumberFormatException nf){
-            JOptionPane.showMessageDialog(this, "Ingrese un número");
+            JOptionPane.showMessageDialog(this, "Ingrese un número ");
         }
-        
+
+     
     }//GEN-LAST:event_tablaMouseClicked
 
     private void tabla2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla2MouseClicked
