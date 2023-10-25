@@ -515,8 +515,8 @@ public class AsignarBrigada extends javax.swing.JFrame {
         }catch(NumberFormatException nf){
             JOptionPane.showMessageDialog(this, "Ingrese un número");
         }
-           
-        
+
+     
     }//GEN-LAST:event_tablaMouseClicked
 
     private void tabla2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla2MouseClicked
