@@ -513,7 +513,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
             
            } 
         }catch(NumberFormatException nf){
-            JOptionPane.showMessageDialog(this, "Ingrese un número");
+            JOptionPane.showMessageDialog(this, "Ingrese un número ");
         }
 
      
