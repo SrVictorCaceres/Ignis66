@@ -15,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
 public class AsignarBrigada extends javax.swing.JFrame {
 
     ArrayList<Brigada> lista = new ArrayList();
-    
         
         DefaultTableModel modelo = new DefaultTableModel(){
             @Override
@@ -23,6 +22,13 @@ public class AsignarBrigada extends javax.swing.JFrame {
                 return false;
             }
             
+        };
+        
+        DefaultTableModel modelo2 = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int f, int c){
+                return false;
+            }
         };
         
         
@@ -283,10 +289,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
                         .addGap(130, 130, 130)
                         .addComponent(jLabel3)
                         .addGap(27, 27, 27)
-                        .addComponent(txtE, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(196, 196, 196)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtE, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(96, Short.MAX_VALUE)
@@ -310,17 +313,22 @@ public class AsignarBrigada extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
-                .addGap(196, 196, 196)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(195, 195, 195)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(199, 199, 199)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(46, 46, 46)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,9 +342,9 @@ public class AsignarBrigada extends javax.swing.JFrame {
                     .addComponent(b2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(b4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(47, 47, 47)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,6 +363,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void limpCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpCamposActionPerformed
@@ -382,7 +391,10 @@ public class AsignarBrigada extends javax.swing.JFrame {
             lista.add(new Brigada(brigada.getNombreBrigada(), bombero, bombero2, bombero3, bombero4, bombero5, brigada.getEspecialidad(), true, false));
         
             modelo.addRow(new Object[]{brigada.getNombreBrigada(), bombero.getNombreCompleto(), bombero2.getNombreCompleto(), bombero3.getNombreCompleto(), bombero4.getNombreCompleto(), bombero5.getNombreCompleto(), brigada.getEspecialidad()});
+            modelo2.removeRow(tabla2.getSelectedRow());
         }
+        
+        
         
         limpCampos();
     }//GEN-LAST:event_asignarBriActionPerformed
@@ -602,7 +614,9 @@ public class AsignarBrigada extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEKeyTyped
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        dispose();
+        if (JOptionPane.showConfirmDialog(null, "Esta seguro que desea salir de esta pantalla?", "Ignis - Salir de la Aplicación", JOptionPane.YES_NO_OPTION) == 0) {
+            dispose();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -663,7 +677,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton limpCampos;
     private javax.swing.JTable tabla;
-    private javax.swing.JTable tabla2;
+    public javax.swing.JTable tabla2;
     private javax.swing.JTable tabla3;
     private javax.swing.JTextField txtB;
     private javax.swing.JTextField txtE;
@@ -690,23 +704,21 @@ public class AsignarBrigada extends javax.swing.JFrame {
     }
     
     public void armarTabla2(){
-        String [] nombreColumnas = {"Id Brigada", "Brigada", "Especialidad", "Activa", "Libre"};
-        DefaultTableModel modelo = new DefaultTableModel(null, nombreColumnas){
-            @Override
-            public boolean isCellEditable(int f, int c){
-                return false;
-            }
-        };
         
+        modelo2.addColumn("ID Brigada");
+        modelo2.addColumn("Brigada");
+        modelo2.addColumn("Especialidad");
+        modelo2.addColumn("Activa");
+        modelo2.addColumn("Libre");
         BrigadaData bData = new BrigadaData();
         String activa = "No";
         String libre = "Si";
         for(Brigada bri: bData.brigadasLibres()){
             if(!bri.isLibre()){
-                modelo.addRow(new Object[]{bri.getIdBrigada(), bri.getNombreBrigada(), bri.getEspecialidad(), activa, libre});
+                modelo2.addRow(new Object[]{bri.getIdBrigada(), bri.getNombreBrigada(), bri.getEspecialidad(), activa, libre});
             }
         }
-        tabla2.setModel(modelo);
+        tabla2.setModel(modelo2);
     }
     
     public void armarTabla3(){
@@ -737,4 +749,5 @@ public class AsignarBrigada extends javax.swing.JFrame {
         txtE.setText("");
     }
     
+   
 }
