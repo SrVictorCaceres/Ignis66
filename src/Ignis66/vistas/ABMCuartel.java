@@ -95,8 +95,6 @@ public class ABMCuartel extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         txtDireccion = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblCuarte = new javax.swing.JTable();
         lblDireccion = new javax.swing.JLabel();
         lblCiudad = new javax.swing.JLabel();
         lblCoordX = new javax.swing.JLabel();
@@ -117,6 +115,8 @@ public class ABMCuartel extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblCuarte = new javax.swing.JTable();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -132,6 +132,7 @@ public class ABMCuartel extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 204, 204));
         setFocusable(false);
+        setUndecorated(true);
         getContentPane().setLayout(null);
 
         btnLimpiar.setBackground(new java.awt.Color(204, 204, 0));
@@ -344,39 +345,6 @@ public class ABMCuartel extends javax.swing.JFrame {
         getContentPane().add(jLabel4);
         jLabel4.setBounds(10, 90, 60, 13);
 
-        tblCuarte.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "null"
-            }
-        ));
-        tblCuarte.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblCuarteMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblCuarte);
-        if (tblCuarte.getColumnModel().getColumnCount() > 0) {
-            tblCuarte.getColumnModel().getColumn(0).setMinWidth(30);
-            tblCuarte.getColumnModel().getColumn(0).setMaxWidth(30);
-            tblCuarte.getColumnModel().getColumn(1).setMinWidth(50);
-            tblCuarte.getColumnModel().getColumn(1).setMaxWidth(50);
-            tblCuarte.getColumnModel().getColumn(2).setMinWidth(50);
-            tblCuarte.getColumnModel().getColumn(2).setMaxWidth(50);
-            tblCuarte.getColumnModel().getColumn(3).setMinWidth(50);
-            tblCuarte.getColumnModel().getColumn(3).setMaxWidth(50);
-            tblCuarte.getColumnModel().getColumn(4).setMinWidth(8);
-            tblCuarte.getColumnModel().getColumn(4).setMaxWidth(8);
-        }
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(10, 370, 610, 80);
-
         lblDireccion.setForeground(new java.awt.Color(255, 51, 51));
         getContentPane().add(lblDireccion);
         lblDireccion.setBounds(269, 39, 80, 21);
@@ -504,6 +472,36 @@ public class ABMCuartel extends javax.swing.JFrame {
         getContentPane().add(jSeparator2);
         jSeparator2.setBounds(10, 302, 710, 20);
 
+        tblCuarte.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblCuarte);
+        if (tblCuarte.getColumnModel().getColumnCount() > 0) {
+            tblCuarte.getColumnModel().getColumn(0).setMinWidth(20);
+            tblCuarte.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblCuarte.getColumnModel().getColumn(0).setMaxWidth(20);
+            tblCuarte.getColumnModel().getColumn(1).setMinWidth(80);
+            tblCuarte.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tblCuarte.getColumnModel().getColumn(1).setMaxWidth(80);
+            tblCuarte.getColumnModel().getColumn(2).setMinWidth(50);
+            tblCuarte.getColumnModel().getColumn(2).setPreferredWidth(50);
+            tblCuarte.getColumnModel().getColumn(2).setMaxWidth(50);
+            tblCuarte.getColumnModel().getColumn(3).setMinWidth(30);
+            tblCuarte.getColumnModel().getColumn(3).setPreferredWidth(30);
+            tblCuarte.getColumnModel().getColumn(3).setMaxWidth(30);
+        }
+
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(20, 370, 510, 70);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -623,36 +621,6 @@ public class ABMCuartel extends javax.swing.JFrame {
         validar();
 
     }//GEN-LAST:event_txtMailKeyReleased
-
-    private void tblCuarteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCuarteMouseClicked
-        int filaSelec = tblCuarte.getSelectedRow();
-       /* String[] registros = new String[10];*/
-        CuartelData cdata = new CuartelData();
-        String idCuartel = tblCuarte.getValueAt(filaSelec, 0).toString();
-        int idC = Integer.parseInt(idCuartel);
-        Cuartel c = cdata.buscarCuartel(idC);
-        lblIdCuartel.setText(idC + "");
-
-        txtNombre.setText(c.getNombreCuartel());
-
-        txtDireccion.setText(c.getDireccion());
-
-        txtCiudad.setText(c.getCiudad());
-        txtNroTel.setText(c.getTelefono());
-        txtProvincia.setText(c.getProvincia());
-
-        txtCoordX.setText(c.getCoordenadaX());
-
-        txtCoordY.setText(c.getCoordenadaY());
-
-        txtMail.setText(c.getCorreo());
-
-        rbEstado.setSelected(true);
-
-        validar();
-
-
-    }//GEN-LAST:event_tblCuarteMouseClicked
 
     private void txtBusNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusNomActionPerformed
         // TODO add your handling code here:
@@ -842,6 +810,7 @@ public class ABMCuartel extends javax.swing.JFrame {
         String nCol[] = {"ID", "Nombre", "Dirección", "Ciudad", "Estado"};
         String sql = "SELECT idCuartel, nombreCuartel, direccion, Ciudad, Provincia, telefono, coordenadaX, coordenadaY, correo, estado FROM Cuartel where idCuartel LIKE'%" + idCuartel + "%'";
         DefaultTableModel model = new DefaultTableModel(null, nCol) {
+          
             @Override
             public boolean isCellEditable(int f, int c) {
                 return false;
@@ -965,19 +934,18 @@ public class ABMCuartel extends javax.swing.JFrame {
 
         String[] nCol = {"ID", "Nombre", "Barrio/Ciudad", "Telefono", "Estado"};
         String[] reg = new String[5];
-       /*  tblCuarte.setModel(modelo);
-        tblCuarte.getColumnModel().getColumn(0).setPreferredWidth(5);
+       /*tblCuarte.setModel(modelo);*/
+     tblCuarte.getTableHeader().setReorderingAllowed(false);//no mueve tabla
+       /*  tblCuarte.getColumnModel().getColumn(0).setPreferredWidth(5);
         tblCuarte.getColumnModel().getColumn(1).setPreferredWidth(30);
         tblCuarte.getColumnModel().getColumn(2).setPreferredWidth(30);
         tblCuarte.getColumnModel().getColumn(3).setPreferredWidth(20);
-        tblCuarte.getColumnModel().getColumn(4).setPreferredWidth(12);
-        tblCuarte.getTableHeader().setReorderingAllowed(false);*/
-        DefaultTableModel modelo = new DefaultTableModel(null, nCol) {
-            @Override
-            public boolean isCellEditable(int f, int c) {
+        tblCuarte.getColumnModel().getColumn(4).setPreferredWidth(12);*/
+    DefaultTableModel modelo = new DefaultTableModel(null, nCol) {
+        
+        public boolean isCellEditable(int f, int c) {
                 return false;
-            }
-        ;
+            };
         };
         tblCuarte.setModel(modelo);
 
@@ -1051,7 +1019,7 @@ public class ABMCuartel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblBuscId;
@@ -1065,7 +1033,7 @@ public class ABMCuartel extends javax.swing.JFrame {
     private javax.swing.JLabel lblPcia;
     private javax.swing.JLabel lblTelefono;
     public static javax.swing.JRadioButton rbEstado;
-    public static javax.swing.JTable tblCuarte;
+    private javax.swing.JTable tblCuarte;
     private javax.swing.JTextField txtBusCiu;
     private javax.swing.JTextField txtBusNom;
     private javax.swing.JTextField txtBuscId;

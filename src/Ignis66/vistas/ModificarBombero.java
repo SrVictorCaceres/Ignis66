@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Date;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,20 +23,33 @@ import javax.swing.table.DefaultTableModel;
  * @author fdicocco
  */
 public class ModificarBombero extends javax.swing.JFrame {
+    Bombero b = new Bombero();
+    int idComparador; 
+    
       private DefaultTableModel modelo = new DefaultTableModel(){
                 @Override
         public boolean isCellEditable(int f, int c) {
             return false;
         };
+        
+        
 };
     /**
      * Creates new form PruebaModificarBombero
      */
     public ModificarBombero() {
+               
         initComponents();
         modelarTabla();
         cargarTabla();
         validacion();
+        disableCopyPaste(jtfNombre);
+        disableCopyPaste(jtfDni);
+        disableCopyPaste(jtfFijo2);
+        disableCopyPaste(jtfCelular);
+        disableCopyPaste(jtfCorreo2);
+        disableCopyPaste(jtfBuscarNombre);
+        disableCopyPaste(jdcFechaNac);
     }
 
     /**
@@ -94,10 +109,10 @@ public class ModificarBombero extends javax.swing.JFrame {
         jlErrorEstado = new javax.swing.JLabel();
         jlErrorCorreo = new javax.swing.JLabel();
         jlErrorFijo = new javax.swing.JLabel();
-        jrbCorreo = new javax.swing.JRadioButton();
-        jrbCorreo1 = new javax.swing.JRadioButton();
-        jrbFijo = new javax.swing.JRadioButton();
-        jrbFijo1 = new javax.swing.JRadioButton();
+        jrbCorreoNo = new javax.swing.JRadioButton();
+        jrbCorreoSi = new javax.swing.JRadioButton();
+        jrbFijoNo = new javax.swing.JRadioButton();
+        jrbFijoSi = new javax.swing.JRadioButton();
         jLabel29 = new javax.swing.JLabel();
         jtfCorreo2 = new javax.swing.JTextField();
         jcbEspecialidad = new javax.swing.JComboBox<>();
@@ -109,6 +124,7 @@ public class ModificarBombero extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(204, 0, 0));
 
@@ -130,8 +146,13 @@ public class ModificarBombero extends javax.swing.JFrame {
             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 0, 669, 0);
+
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel13.setText("Introduza el nombre y/o apellido:");
+        getContentPane().add(jLabel13);
+        jLabel13.setBounds(331, 91, 152, 13);
 
         jtfBuscarNombre.setBorder(null);
         jtfBuscarNombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -142,6 +163,8 @@ public class ModificarBombero extends javax.swing.JFrame {
                 jtfBuscarNombreKeyTyped(evt);
             }
         });
+        getContentPane().add(jtfBuscarNombre);
+        jtfBuscarNombre.setBounds(331, 106, 292, 25);
 
         jtfCelular.setBorder(null);
         jtfCelular.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -152,15 +175,25 @@ public class ModificarBombero extends javax.swing.JFrame {
                 jtfCelularKeyTyped(evt);
             }
         });
+        getContentPane().add(jtfCelular);
+        jtfCelular.setBounds(40, 363, 210, 22);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel7.setText("Sexo *");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(40, 222, 31, 13);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel6.setText("Correo Electrónico");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(331, 396, 85, 13);
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel21.setText("Teléfono Fijo (Cód. de Área + Nro Tel)");
+        getContentPane().add(jLabel21);
+        jLabel21.setBounds(331, 440, 176, 13);
+        getContentPane().add(jLabel24);
+        jLabel24.setBounds(250, 170, 0, 0);
 
         jtfNombre.setBorder(null);
         jtfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -171,30 +204,48 @@ public class ModificarBombero extends javax.swing.JFrame {
                 jtfNombreKeyTyped(evt);
             }
         });
+        getContentPane().add(jtfNombre);
+        jtfNombre.setBounds(40, 151, 210, 22);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel1.setText("Nombre Completo *");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(40, 137, 91, 13);
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel17.setText("Grupo Sanguíneo *");
+        getContentPane().add(jLabel17);
+        jLabel17.setBounds(40, 307, 89, 13);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel3.setText("DNI *");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(40, 181, 27, 13);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel4.setText("Fecha de Nacimiento *");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(40, 265, 102, 12);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel5.setText("Celular (sin 0 ni 15) *");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(40, 350, 95, 13);
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel16.setText("Tipo de Bombero *");
+        getContentPane().add(jLabel16);
+        jLabel16.setBounds(40, 401, 87, 13);
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel18.setText("Rango *");
+        getContentPane().add(jLabel18);
+        jLabel18.setBounds(40, 444, 38, 12);
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel25.setText("Estado *");
+        getContentPane().add(jLabel25);
+        jLabel25.setBounds(331, 353, 39, 13);
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -230,15 +281,24 @@ public class ModificarBombero extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(100);
         }
 
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(331, 137, 292, 149);
+
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel26.setText("ID del Bombero");
+        getContentPane().add(jLabel26);
+        jLabel26.setBounds(40, 103, 71, 13);
 
         jtfIdBombero.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jtfIdBombero.setText("-");
+        getContentPane().add(jtfIdBombero);
+        jtfIdBombero.setBounds(40, 116, 14, 17);
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(102, 102, 102));
         jLabel28.setText("* Campos obligatorios");
+        getContentPane().add(jLabel28);
+        jLabel28.setBounds(523, 60, 100, 13);
 
         jtfDni.setBorder(null);
         jtfDni.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -249,38 +309,56 @@ public class ModificarBombero extends javax.swing.JFrame {
                 jtfDniKeyTyped(evt);
             }
         });
+        getContentPane().add(jtfDni);
+        jtfDni.setBounds(40, 194, 210, 22);
+
+        jdcFechaNac.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jdcFechaNacMouseClicked(evt);
+            }
+        });
+        getContentPane().add(jdcFechaNac);
+        jdcFechaNac.setBounds(40, 277, 210, 24);
 
         jcbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino", "Otro" }));
         jcbSexo.setBorder(null);
-        jcbSexo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbSexoActionPerformed(evt);
+        jcbSexo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbSexoMouseClicked(evt);
             }
         });
+        getContentPane().add(jcbSexo);
+        jcbSexo.setBounds(40, 235, 210, 24);
 
         jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ACTIVO", "INACTIVO" }));
         jcbEstado.setBorder(null);
-        jcbEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbEstadoActionPerformed(evt);
+        jcbEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbEstadoMouseClicked(evt);
             }
         });
+        getContentPane().add(jcbEstado);
+        jcbEstado.setBounds(331, 366, 235, 24);
 
         jcbSangre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" }));
         jcbSangre.setBorder(null);
-        jcbSangre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbSangreActionPerformed(evt);
+        jcbSangre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbSangreMouseClicked(evt);
             }
         });
+        getContentPane().add(jcbSangre);
+        jcbSangre.setBounds(40, 320, 210, 24);
 
         jcbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Voluntario", "Zapador" }));
         jcbTipo.setBorder(null);
-        jcbTipo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbTipoActionPerformed(evt);
+        jcbTipo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbTipoMouseClicked(evt);
             }
         });
+        getContentPane().add(jcbTipo);
+        jcbTipo.setBounds(40, 414, 210, 24);
 
         jtfFijo2.setBorder(null);
         jtfFijo2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -291,6 +369,8 @@ public class ModificarBombero extends javax.swing.JFrame {
                 jtfFijo2KeyTyped(evt);
             }
         });
+        getContentPane().add(jtfFijo2);
+        jtfFijo2.setBounds(430, 453, 145, 24);
 
         jbSalir.setBackground(new java.awt.Color(255, 51, 51));
         jbSalir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -302,6 +382,8 @@ public class ModificarBombero extends javax.swing.JFrame {
                 jbSalirActionPerformed(evt);
             }
         });
+        getContentPane().add(jbSalir);
+        jbSalir.setBounds(523, 510, 100, 31);
 
         jbLimpiar.setBackground(new java.awt.Color(255, 255, 102));
         jbLimpiar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -313,6 +395,8 @@ public class ModificarBombero extends javax.swing.JFrame {
                 jbLimpiarActionPerformed(evt);
             }
         });
+        getContentPane().add(jbLimpiar);
+        jbLimpiar.setBounds(386, 510, 119, 31);
 
         jbActualizar.setBackground(new java.awt.Color(153, 255, 51));
         jbActualizar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -324,92 +408,132 @@ public class ModificarBombero extends javax.swing.JFrame {
                 jbActualizarActionPerformed(evt);
             }
         });
+        getContentPane().add(jbActualizar);
+        jbActualizar.setBounds(40, 510, 210, 31);
 
         jcbRango.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BOMBERO", "CABO", "CABO PRIMERO", "SARGENTO", "SARGENTO 1°", "SUBOFICIAL PRINCIPAL", "SUBOFICIAL MAYOR", "OFICIAL AYUDANTE", "OFICIAL INSPECTOR", "OFICIAL PRINCIPAL", "SUBCOMANDANTE", "COMANDANTE", "COMANDANTE MAYOR", "COMANDANTE GENERAL" }));
         jcbRango.setBorder(null);
-        jcbRango.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRangoActionPerformed(evt);
+        jcbRango.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbRangoMouseClicked(evt);
             }
         });
+        getContentPane().add(jcbRango);
+        jcbRango.setBounds(40, 456, 210, 24);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel12.setText("Seleccione de la tabla el bombero cuyos datos desea actualizar:");
+        getContentPane().add(jLabel12);
+        jLabel12.setBounds(40, 60, 387, 15);
+        getContentPane().add(jSeparator3);
+        jSeparator3.setBounds(40, 75, 583, 10);
 
         jlErrorNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorNombre.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorNombre.setText("!");
+        getContentPane().add(jlErrorNombre);
+        jlErrorNombre.setBounds(254, 151, 5, 24);
 
         jlErrorDni.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorDni.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorDni.setText("!");
+        getContentPane().add(jlErrorDni);
+        jlErrorDni.setBounds(254, 194, 5, 22);
 
         jlErrorSexo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorSexo.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorSexo.setText("!");
+        getContentPane().add(jlErrorSexo);
+        jlErrorSexo.setBounds(254, 237, 5, 17);
 
         jlErrorFecha.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorFecha.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorFecha.setText("!");
+        getContentPane().add(jlErrorFecha);
+        jlErrorFecha.setBounds(254, 277, 5, 24);
 
         jlErrorSangre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorSangre.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorSangre.setText("!");
+        getContentPane().add(jlErrorSangre);
+        jlErrorSangre.setBounds(254, 320, 5, 24);
 
         jlErrorCelular.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorCelular.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorCelular.setText("!");
+        getContentPane().add(jlErrorCelular);
+        jlErrorCelular.setBounds(254, 363, 5, 17);
 
         jlErrorTipo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorTipo.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorTipo.setText("!");
+        getContentPane().add(jlErrorTipo);
+        jlErrorTipo.setBounds(254, 416, 5, 17);
 
         jlErrorRango.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorRango.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorRango.setText("!");
+        getContentPane().add(jlErrorRango);
+        jlErrorRango.setBounds(254, 458, 5, 17);
 
         jlErrorEstado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorEstado.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorEstado.setText("!");
+        getContentPane().add(jlErrorEstado);
+        jlErrorEstado.setBounds(570, 366, 5, 17);
 
         jlErrorCorreo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorCorreo.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorCorreo.setText("!");
+        getContentPane().add(jlErrorCorreo);
+        jlErrorCorreo.setBounds(581, 411, 5, 17);
 
         jlErrorFijo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorFijo.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorFijo.setText("!");
+        getContentPane().add(jlErrorFijo);
+        jlErrorFijo.setBounds(581, 455, 5, 17);
 
-        jrbCorreo.setText("No");
-        jrbCorreo.addActionListener(new java.awt.event.ActionListener() {
+        jrbCorreoNo.setText("No");
+        jrbCorreoNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrbCorreoActionPerformed(evt);
+                jrbCorreoNoActionPerformed(evt);
             }
         });
+        getContentPane().add(jrbCorreoNo);
+        jrbCorreoNo.setBounds(331, 410, 47, 28);
 
-        jrbCorreo1.setText("Si");
-        jrbCorreo1.addActionListener(new java.awt.event.ActionListener() {
+        jrbCorreoSi.setText("Si");
+        jrbCorreoSi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrbCorreo1ActionPerformed(evt);
+                jrbCorreoSiActionPerformed(evt);
             }
         });
+        getContentPane().add(jrbCorreoSi);
+        jrbCorreoSi.setBounds(370, 410, 43, 28);
 
-        jrbFijo.setText("No");
-        jrbFijo.addActionListener(new java.awt.event.ActionListener() {
+        jrbFijoNo.setText("No");
+        jrbFijoNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrbFijoActionPerformed(evt);
+                jrbFijoNoActionPerformed(evt);
             }
         });
+        getContentPane().add(jrbFijoNo);
+        jrbFijoNo.setBounds(340, 454, 47, 28);
 
-        jrbFijo1.setText("Si");
-        jrbFijo1.addActionListener(new java.awt.event.ActionListener() {
+        jrbFijoSi.setText("Si");
+        jrbFijoSi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrbFijo1ActionPerformed(evt);
+                jrbFijoSiActionPerformed(evt);
             }
         });
+        getContentPane().add(jrbFijoSi);
+        jrbFijoSi.setBounds(379, 454, 43, 28);
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel29.setText("0");
+        getContentPane().add(jLabel29);
+        jLabel29.setBounds(420, 459, 5, 13);
 
         jtfCorreo2.setBorder(null);
         jtfCorreo2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -417,258 +541,29 @@ public class ModificarBombero extends javax.swing.JFrame {
                 jtfCorreo2KeyReleased(evt);
             }
         });
+        getContentPane().add(jtfCorreo2);
+        jtfCorreo2.setBounds(409, 410, 166, 24);
 
         jcbEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INCENDIO", "RESCATE", "MAT. PELIGROSOS", "INC. FORESTALES", "ACUATICA", "CANINA ", "MONTAÑA", "BUCEO" }));
         jcbEspecialidad.setBorder(null);
-        jcbEspecialidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbEspecialidadActionPerformed(evt);
+        jcbEspecialidad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbEspecialidadMouseClicked(evt);
             }
         });
+        getContentPane().add(jcbEspecialidad);
+        jcbEspecialidad.setBounds(331, 319, 232, 24);
 
         jlErrorEspecialidad.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorEspecialidad.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorEspecialidad.setText("!");
+        getContentPane().add(jlErrorEspecialidad);
+        jlErrorEspecialidad.setBounds(567, 317, 5, 24);
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel30.setText("Especialidad *");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel28))
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(214, 214, 214)
-                                        .addComponent(jlErrorTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jbActualizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtfNombre, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtfDni, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jcbSexo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jdcFechaNac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jcbTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jcbRango, javax.swing.GroupLayout.Alignment.LEADING, 0, 210, Short.MAX_VALUE)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel24)
-                                                .addGap(4, 4, 4)
-                                                .addComponent(jlErrorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jlErrorSexo)
-                                                    .addComponent(jlErrorDni)
-                                                    .addComponent(jlErrorFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jlErrorRango, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
-                                                .addGap(98, 98, 98))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jtfCelular, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jcbSangre, 0, 210, Short.MAX_VALUE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jlErrorCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jlErrorSangre, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(72, 72, 72)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jbLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(jtfBuscarNombre)
-                                    .addComponent(jLabel13)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel21)
-                                                    .addComponent(jLabel6))
-                                                .addGap(61, 61, 61))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                            .addComponent(jrbCorreo)
-                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                            .addComponent(jrbCorreo1)
-                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                            .addComponent(jtfCorreo2))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                            .addComponent(jrbFijo)
-                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                            .addComponent(jrbFijo1)
-                                                            .addGap(8, 8, 8)
-                                                            .addComponent(jLabel29)
-                                                            .addGap(5, 5, 5)
-                                                            .addComponent(jtfFijo2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                                .addComponent(jLabel25)
-                                                                .addGap(198, 198, 198))
-                                                            .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                                        .addComponent(jlErrorEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jlErrorCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jlErrorFijo))
-                                        .addGap(37, 37, 37))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel30)
-                                            .addComponent(jcbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jlErrorEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addComponent(jtfIdBombero, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel28))
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(jLabel26)
-                                .addGap(0, 0, 0)
-                                .addComponent(jtfIdBombero, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel1)
-                                .addGap(1, 1, 1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jlErrorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jlErrorDni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel7)
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jcbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jlErrorSexo))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(jLabel24)))
-                        .addGap(0, 0, 0)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jlErrorFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 24, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(jtfBuscarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel17)
-                        .addGap(0, 0, 0)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jlErrorSangre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jcbSangre, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, 0)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtfCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlErrorCelular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel16)
-                        .addGap(0, 0, 0)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jcbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlErrorTipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jcbRango, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlErrorRango, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(30, 30, 30))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel30)
-                        .addGap(0, 0, 0)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlErrorEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel25)
-                        .addGap(0, 0, 0)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcbEstado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlErrorEstado))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlErrorCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jrbCorreo)
-                            .addComponent(jrbCorreo1)
-                            .addComponent(jtfCorreo2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel21)
-                        .addGap(0, 0, 0)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtfFijo2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlErrorFijo)
-                            .addComponent(jrbFijo)
-                            .addComponent(jrbFijo1)
-                            .addComponent(jLabel29))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
-        );
+        getContentPane().add(jLabel30);
+        jLabel30.setBounds(331, 304, 63, 13);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -710,9 +605,11 @@ public class ModificarBombero extends javax.swing.JFrame {
          
          BomberoData bdata = new BomberoData();
          String idBomb = jTable1.getValueAt(seleccion, 0).toString();
-         int idB = Integer.parseInt(idBomb);
-         Bombero b = bdata.traerDatos(idB);
-         jtfIdBombero.setText(idB+"");
+         idComparador = Integer.parseInt(idBomb);
+         
+         b = bdata.traerDatos(idComparador);
+         
+         jtfIdBombero.setText(idComparador+"");
          jtfNombre.setText(b.getNombreCompleto());
          jtfDni.setText(String.valueOf(b.getDni()));
          jtfCelular.setText(Long.toString(b.getCelular())); 
@@ -727,27 +624,30 @@ public class ModificarBombero extends javax.swing.JFrame {
          jcbRango.setSelectedItem(b.getRango());
          
          if(b.getCorreo()==null){
-             jrbCorreo.setSelected(true);
-             jrbCorreo1.setSelected(false);
+             jrbCorreoNo.setSelected(true);
+             jrbCorreoSi.setSelected(false);
              jtfCorreo2.setEnabled(false);
           } else{
-             jrbCorreo.setSelected(false);  
-             jrbCorreo1.setSelected(true);
+             jrbCorreoNo.setSelected(false);  
+             jrbCorreoSi.setSelected(true);
               jtfCorreo2.setEnabled(true);
          }
          
          if(b.getFijo()==null){
-             jrbFijo.setSelected(true);
-             jrbFijo1.setSelected(false);
+             jrbFijoNo.setSelected(true);
+             jrbFijoSi.setSelected(false);
               jtfFijo2.setEnabled(false);
           } else{
-             jrbFijo.setSelected(false);  
-             jrbFijo1.setSelected(true);
+             jrbFijoNo.setSelected(false);  
+             jrbFijoSi.setSelected(true);
              jtfFijo2.setEnabled(true);
          }
          
+        
          validacion();
-
+         chequearModificacion();
+         
+         
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jtfDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfDniKeyTyped
@@ -786,20 +686,13 @@ public class ModificarBombero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtfFijo2KeyTyped
 
-    private void jcbSangreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSangreActionPerformed
-        validacion();
-    }//GEN-LAST:event_jcbSangreActionPerformed
-
-    private void jcbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoActionPerformed
-        validacion();
-    }//GEN-LAST:event_jcbTipoActionPerformed
-
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimpiarActionPerformed
         limpiarCampos();
+        
     }//GEN-LAST:event_jbLimpiarActionPerformed
 
     private void jbActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarActionPerformed
@@ -813,12 +706,12 @@ public class ModificarBombero extends javax.swing.JFrame {
          bm.setDni(Integer.parseInt(jtfDni.getText()));
          bm.setCelular(Long.parseLong(jtfCelular.getText())); 
          
-         if (jrbFijo1.isSelected())
+         if (jrbFijoSi.isSelected())
              bm.setFijo(jtfFijo2.getText());
          else
              bm.setFijo(null);
          
-         if (jrbCorreo1.isSelected())
+         if (jrbCorreoSi.isSelected())
              bm.setCorreo(jtfCorreo2.getText());
          else
              bm.setCorreo(null);
@@ -840,65 +733,121 @@ public class ModificarBombero extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(this, "Error al intentar carga el número de celular. Intente nuevamente.");}
     }//GEN-LAST:event_jbActualizarActionPerformed
 
-    private void jrbCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCorreoActionPerformed
-         jrbCorreo1.setSelected(false);
+    private void jrbCorreoNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCorreoNoActionPerformed
+         jrbCorreoSi.setSelected(false);
          jtfCorreo2.setEnabled(false);
-        validacion();
+       
         
-    }//GEN-LAST:event_jrbCorreoActionPerformed
-
-    private void jrbCorreo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCorreo1ActionPerformed
-         jrbCorreo.setSelected(false);
-         jtfCorreo2.setEnabled(true);
         validacion();
-    }//GEN-LAST:event_jrbCorreo1ActionPerformed
+        chequearModificacion();
+    }//GEN-LAST:event_jrbCorreoNoActionPerformed
 
-    private void jrbFijoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbFijoActionPerformed
-        jrbFijo1.setSelected(false);
-         jtfFijo2.setEnabled(false);
-        validacion();    }//GEN-LAST:event_jrbFijoActionPerformed
+    private void jrbCorreoSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCorreoSiActionPerformed
+         jrbCorreoNo.setSelected(false);
+         jtfCorreo2.setEnabled(true);
+        
+       
+       validacion();
+        chequearModificacion();
+    }//GEN-LAST:event_jrbCorreoSiActionPerformed
 
-    private void jrbFijo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbFijo1ActionPerformed
-        jrbFijo.setSelected(false);
+    private void jrbFijoSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbFijoSiActionPerformed
+        jrbFijoNo.setSelected(false);
         jtfFijo2.setEnabled(true);
-        validacion();  
-    }//GEN-LAST:event_jrbFijo1ActionPerformed
+        
+     validacion();
+      chequearModificacion();
+    }//GEN-LAST:event_jrbFijoSiActionPerformed
 
     private void jtfNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNombreKeyReleased
-        validacion();
+              validacion();
+       chequearModificacion();
+      
+                
     }//GEN-LAST:event_jtfNombreKeyReleased
 
     private void jtfDniKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfDniKeyReleased
-         validacion();
+      validacion();
+       chequearModificacion();
+      
     }//GEN-LAST:event_jtfDniKeyReleased
 
-    private void jcbSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSexoActionPerformed
-         validacion();
-    }//GEN-LAST:event_jcbSexoActionPerformed
-
     private void jtfCelularKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCelularKeyReleased
-         validacion();
+         
+    validacion();
+       chequearModificacion();
+      
     }//GEN-LAST:event_jtfCelularKeyReleased
 
-    private void jcbRangoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRangoActionPerformed
-         validacion();
-    }//GEN-LAST:event_jcbRangoActionPerformed
-
-    private void jcbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEstadoActionPerformed
-         validacion();
-    }//GEN-LAST:event_jcbEstadoActionPerformed
-
     private void jtfFijo2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfFijo2KeyReleased
-         validacion();
+        
+     validacion();
+       chequearModificacion();
+       
     }//GEN-LAST:event_jtfFijo2KeyReleased
 
     private void jtfCorreo2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCorreo2KeyReleased
-        validacion();
+      
+       validacion();
+       chequearModificacion();
+      
     }//GEN-LAST:event_jtfCorreo2KeyReleased
 
-    private void jcbEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEspecialidadActionPerformed
+    private void jcbEspecialidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbEspecialidadMouseClicked
+        
+    validacion();
+       chequearModificacion();
+
+    }//GEN-LAST:event_jcbEspecialidadMouseClicked
+
+    private void jcbSexoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbSexoMouseClicked
+     validacion();
+       chequearModificacion();
+      
+    }//GEN-LAST:event_jcbSexoMouseClicked
+
+    private void jdcFechaNacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jdcFechaNacMouseClicked
+    validacion();
+       chequearModificacion();
+  
+    }//GEN-LAST:event_jdcFechaNacMouseClicked
+
+    private void jcbSangreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbSangreMouseClicked
+         
+     
+       validacion();
+       chequearModificacion();
+   
+    }//GEN-LAST:event_jcbSangreMouseClicked
+
+    private void jcbTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbTipoMouseClicked
+         
+validacion();
+       chequearModificacion();
+       
+    }//GEN-LAST:event_jcbTipoMouseClicked
+
+    private void jcbRangoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbRangoMouseClicked
         validacion();
-    }//GEN-LAST:event_jcbEspecialidadActionPerformed
+       chequearModificacion();
+      
+    }//GEN-LAST:event_jcbRangoMouseClicked
+
+    private void jcbEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbEstadoMouseClicked
+      
+validacion();
+       chequearModificacion();
+      
+         
+    }//GEN-LAST:event_jcbEstadoMouseClicked
+
+    private void jrbFijoNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbFijoNoActionPerformed
+        jrbFijoSi.setSelected(false);
+         jtfFijo2.setEnabled(false);
+       validacion();
+       chequearModificacion();
+       validacion();
+    }//GEN-LAST:event_jrbFijoNoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -983,10 +932,10 @@ public class ModificarBombero extends javax.swing.JFrame {
     private javax.swing.JLabel jlErrorSangre;
     private javax.swing.JLabel jlErrorSexo;
     private javax.swing.JLabel jlErrorTipo;
-    private javax.swing.JRadioButton jrbCorreo;
-    private javax.swing.JRadioButton jrbCorreo1;
-    private javax.swing.JRadioButton jrbFijo;
-    private javax.swing.JRadioButton jrbFijo1;
+    private javax.swing.JRadioButton jrbCorreoNo;
+    private javax.swing.JRadioButton jrbCorreoSi;
+    private javax.swing.JRadioButton jrbFijoNo;
+    private javax.swing.JRadioButton jrbFijoSi;
     private javax.swing.JTextField jtfBuscarNombre;
     private javax.swing.JTextField jtfCelular;
     private javax.swing.JTextField jtfCorreo2;
@@ -1051,13 +1000,14 @@ public void cargarTabla(){
          jcbTipo.setSelectedItem(null);
          jcbRango.setSelectedItem(null);
          jtfBuscarNombre.setText(null);
-         jrbFijo.setSelected(true);
-         jrbCorreo.setSelected(true);
-         jrbFijo1.setSelected(false);
-         jrbCorreo1.setSelected(false);
+         jrbFijoNo.setSelected(true);
+         jrbCorreoNo.setSelected(true);
+         jrbFijoSi.setSelected(false);
+         jrbCorreoSi.setSelected(false);
          jtfFijo2.setEnabled(false);
          jtfCorreo2.setEnabled(false);
 
+        
        
  }
  
@@ -1114,16 +1064,16 @@ public void cargarTabla(){
               else 
             jlErrorEspecialidad.setText("");
            
-             if(jrbFijo1.isSelected() && (jtfFijo2.getText().length() > 9 && jtfFijo2.getText().length() < 11))
+             if(jrbFijoSi.isSelected() && (jtfFijo2.getText().length() > 9 && jtfFijo2.getText().length() < 11))
                  jlErrorFijo.setText("");
-             else if (jrbFijo.isSelected())
+             else if (jrbFijoNo.isSelected())
                  jlErrorFijo.setText("");
              else                 
                  jlErrorFijo.setText("!");
              
-              if(jrbCorreo1.isSelected() && jtfCorreo2.getText().length() > 6 && jtfCorreo2.getText().contains("@") && jtfCorreo2.getText().contains("."))
+              if(jrbCorreoSi.isSelected() && jtfCorreo2.getText().length() > 6 && jtfCorreo2.getText().contains("@") && jtfCorreo2.getText().contains("."))
                  jlErrorCorreo.setText("");
-              else if (jrbCorreo.isSelected())
+              else if (jrbCorreoNo.isSelected())
                  jlErrorCorreo.setText("");
              else
                  jlErrorCorreo.setText("!");
@@ -1133,10 +1083,86 @@ public void cargarTabla(){
                 && jlErrorSangre.getText().equals("") && jlErrorTipo.getText().equals("") && jlErrorRango.getText().equals("") && jlErrorEstado.getText().equals("")
                 &&  jlErrorEspecialidad.getText().equals(""))
             
-                jbActualizar.setEnabled(true);
+             jbActualizar.setEnabled(true);
+        
         else 
             jbActualizar.setEnabled(false);
     }
         
+          private void disableCopy(JComponent component) {
+        component.getInputMap().put(KeyStroke.getKeyStroke("control C"), "none");
+    }
+
+    private void disablePaste(JComponent component) {
+        component.getInputMap().put(KeyStroke.getKeyStroke("control V"), "none");
+    }
+
+    private void disableCopyPaste(JComponent component) {
+        disableCopy(component);
+        disablePaste(component);
+
+    }
  
+    private void chequearModificacion() {
+
+        try{
+       
+        if (jtfNombre.getText().equals(b.getNombreCompleto()) &&  jtfDni.getText().equals(String.valueOf(b.getDni())) 
+                && jcbSexo.getSelectedItem().equals(b.getSexo())
+                && jdcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(b.getFechaNacimiento())
+                && jtfCelular.getText().equals(Long.toString(b.getCelular())) && jcbSangre.getSelectedItem().equals(b.getGrupoSanguineo()) 
+                && jcbTipo.getSelectedItem().equals(b.getTipo()) && jcbRango.getSelectedItem().equals(b.getRango())
+                && jcbEstado.getSelectedItem().equals(b.getEstado()) && jcbEspecialidad.getSelectedItem().equals(b.getEspecialidad())           
+                && (jrbFijoSi.isSelected() && jtfFijo2.getText().equals(b.getFijo())) && (jrbCorreoSi.isSelected() && jtfCorreo2.getText().equals(b.getCorreo())))
+             
+                jbActualizar.setEnabled(false); 
+        
+        else  if (jtfNombre.getText().equals(b.getNombreCompleto()) &&  jtfDni.getText().equals(String.valueOf(b.getDni())) 
+                && jcbSexo.getSelectedItem().equals(b.getSexo())
+                && jdcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(b.getFechaNacimiento())
+                && jtfCelular.getText().equals(Long.toString(b.getCelular())) && jcbSangre.getSelectedItem().equals(b.getGrupoSanguineo()) 
+                && jcbTipo.getSelectedItem().equals(b.getTipo()) && jcbRango.getSelectedItem().equals(b.getRango())
+                && jcbEstado.getSelectedItem().equals(b.getEstado()) && jcbEspecialidad.getSelectedItem().equals(b.getEspecialidad())           
+                && (jrbFijoSi.isSelected() && jtfFijo2.getText().equals(b.getFijo())) && (jrbCorreoNo.isSelected() && (b.getCorreo()==null)))
+            
+                 jbActualizar.setEnabled(false); 
+        
+        else  if (jtfNombre.getText().equals(b.getNombreCompleto()) &&  jtfDni.getText().equals(String.valueOf(b.getDni())) 
+                && jcbSexo.getSelectedItem().equals(b.getSexo())
+                && jdcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(b.getFechaNacimiento())
+                && jtfCelular.getText().equals(Long.toString(b.getCelular())) && jcbSangre.getSelectedItem().equals(b.getGrupoSanguineo()) 
+                && jcbTipo.getSelectedItem().equals(b.getTipo()) && jcbRango.getSelectedItem().equals(b.getRango())
+                && jcbEstado.getSelectedItem().equals(b.getEstado()) && jcbEspecialidad.getSelectedItem().equals(b.getEspecialidad())           
+                && (jrbFijoNo.isSelected() && (b.getFijo()==null)) && (jrbCorreoNo.isSelected() &&  (b.getCorreo()==null)))
+            
+                 jbActualizar.setEnabled(false); 
+            
+         else  if (jtfNombre.getText().equals(b.getNombreCompleto()) &&  jtfDni.getText().equals(String.valueOf(b.getDni())) 
+                && jcbSexo.getSelectedItem().equals(b.getSexo())
+                && jdcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(b.getFechaNacimiento())
+                && jtfCelular.getText().equals(Long.toString(b.getCelular())) && jcbSangre.getSelectedItem().equals(b.getGrupoSanguineo()) 
+                && jcbTipo.getSelectedItem().equals(b.getTipo()) && jcbRango.getSelectedItem().equals(b.getRango())
+                && jcbEstado.getSelectedItem().equals(b.getEstado()) && jcbEspecialidad.getSelectedItem().equals(b.getEspecialidad())           
+                && (jrbFijoNo.isSelected() && (b.getFijo()==null)) && (jrbCorreoSi.isSelected() && jtfCorreo2.getText().equals(b.getCorreo())))
+            
+                 jbActualizar.setEnabled(false); 
+               
+         else  if (jlErrorNombre.getText().equals("") &&   jlErrorDni.getText().equals("") &&  jlErrorDni.getText().equals("") && jlErrorSexo.getText().equals("")
+                && jlErrorFecha.getText().equals("") && jlErrorCelular.getText().equals("") && jlErrorFijo.getText().equals("") && jlErrorCorreo.getText().equals("")
+                && jlErrorSangre.getText().equals("") && jlErrorTipo.getText().equals("") && jlErrorRango.getText().equals("") && jlErrorEstado.getText().equals("")
+                &&  jlErrorEspecialidad.getText().equals("")) 
+             
+             
+            
+               jbActualizar.setEnabled(true); 
+               
+        }catch(NullPointerException nx){
+                      JOptionPane.showMessageDialog(null, "Error de control !!");
+                  }
+    
+
+        
+    }
+    
+    
 }

@@ -7,6 +7,8 @@ package Ignis66.acessoADatos;
 
 
 
+import Ignis66.acessoADatos.Conexion;
+import Ignis66.acessoADatos.Conexion;
 import Ignis66.entidades.Bombero;
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,6 +18,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -160,9 +163,48 @@ public void modificarDatosBombero(Bombero bombero, int idBombero){
             rs.close();
             ps.close();
         }catch(SQLException sqle){
-            JOptionPane.showMessageDialog(null, " bombero Error en la carga de datos ");
+            JOptionPane.showMessageDialog(null, "Error en la carga de datos ");
         }
         return bomber;
          
                  }
-}
+
+  public void asignarBomberoABrigada(int idBrigada, int idBombero){
+      
+        String sql = "UPDATE bomberos SET idBrigada = ?  WHERE idBombero = ? ";
+                try {
+                        PreparedStatement ps = con.prepareStatement(sql); 
+                        ps.setInt(1,idBrigada);
+                        ps.setInt(2,idBombero);
+                        
+             
+             int check = ps.executeUpdate();
+             if (check > 0) {
+                 JOptionPane.showMessageDialog(null, "Brigada asignada correctamente!");}
+             ps.close();
+                } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al intentar asignar a una Brigada");
+                }
+  }
+     
+   public void quitarBomberoDeBrigada(int idBombero){
+         
+        String sql = "UPDATE bomberos SET idBrigada = ?  WHERE idBombero = ? ";
+                try {
+                        PreparedStatement ps = con.prepareStatement(sql); 
+                        ps.setInt(1,0);
+                        ps.setInt(2,idBombero);
+                        
+             
+             int check = ps.executeUpdate();
+             if (check > 0) {
+                 JOptionPane.showMessageDialog(null, "El bombero ya no pertenece a ninguna Brigada!");}
+             ps.close();
+                } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al intentar quitar al bombero de la Brigada");
+                } 
+                
+                
+     };  // ok en Main   
+      
+ }

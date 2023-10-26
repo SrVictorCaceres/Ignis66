@@ -5,6 +5,8 @@
  */
 package Ignis66.entidades;
 
+import Ignis66.entidades.Brigada;
+import Ignis66.entidades.Brigada;
 import java.time.LocalDate;
 
 /**
@@ -31,11 +33,6 @@ public class Bombero {
     private String especialidad;
 
     public Bombero() {
-    }
-    
-    public Bombero(int idBombero, String nombreCompleto){
-        this.idBombero = idBombero;
-        this.nombreCompleto = nombreCompleto;
     }
 
     public Bombero(int dni, String nombreCompleto, String grupoSanguineo, LocalDate fechaNacimiento, long celular, String fijo, String rango, String tipo, String sexo, String correo, String estado, String especialidad) {
@@ -73,6 +70,10 @@ public class Bombero {
         this.nombreCompleto = nombreCompleto;
     }
     
+      public Bombero(int idBombero, String nombreCompleto) {
+        this.idBombero = idBombero;
+        this.nombreCompleto = nombreCompleto;
+    }
     
 
     public void setIdBombero(int idBombero) {
