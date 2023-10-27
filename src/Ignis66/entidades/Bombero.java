@@ -5,8 +5,7 @@
  */
 package Ignis66.entidades;
 
-import Ignis66.entidades.Brigada;
-import Ignis66.entidades.Brigada;
+
 import java.time.LocalDate;
 
 /**

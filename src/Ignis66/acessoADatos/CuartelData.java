@@ -36,24 +36,26 @@ public class CuartelData {
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
           /*ps.setInt(1, cuartel.getIdCuartel());*/
-            ps.setString(2, cuartel.getNombreCuartel());
-            ps.setString(3, cuartel.getDireccion());
-            ps.setString(4, cuartel.getCiudad());
-            ps.setString(5, cuartel.getProvincia());
-            ps.setString(6, cuartel.getTelefono());
-            ps.setString(7, cuartel.getCoordenadaX());
-            ps.setString(8, cuartel.getCoordenadaY());
-            ps.setString(9, cuartel.getCorreo());
-            ps.setString(10, cuartel.getEstado());
+            ps.setString(1, cuartel.getNombreCuartel());
+            ps.setString(2, cuartel.getDireccion());
+            ps.setString(3, cuartel.getCiudad());
+            ps.setString(4, cuartel.getProvincia());
+            ps.setString(5, cuartel.getTelefono());
+            ps.setString(6, cuartel.getCoordenadaX());
+            ps.setString(7, cuartel.getCoordenadaY());
+            ps.setString(8, cuartel.getCorreo());
+            ps.setString(9, cuartel.getEstado());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
 
                 mensaje("El cuartel " +cuartel.getNombreCuartel()+ " fue ingresado correctamente en la BD");
-
+             ps.close();
+            }else{
+            mensaje("No hay datos para grabar en la BD, complete todos los campos obligatorios");
             }
-            ps.close();
-
+          
+        
         } catch (SQLException ex) {
             mensaje("ERROR, El cuartel " +cuartel.getNombreCuartel()+ " no pudo ser ingresado correctamente a la BD");
 
@@ -62,13 +64,13 @@ public class CuartelData {
         }
     };
     
-    public void bajaCuartel(int idCuartel){
+  /*  public void bajaCuartel(int idCuartel){
     
-    String sql = "UPDATE Cuartel SET estado = 'Inactivo' WHERE idCuartel = ? ";
+    String sql = "UPDATE Cuartel SET estado = 'INACTIVO' WHERE idCuartel = ? ";
                 try {
                         PreparedStatement ps = con.prepareStatement(sql); 
                         
-                        ps.setString(1, "Inactivo");
+                        ps.setString(1, "INACTIVO");
                         ps.setInt(2, idCuartel);
              
              int check = ps.executeUpdate();
@@ -79,7 +81,25 @@ public class CuartelData {
             mensaje("Error al intentar acceder a la tabla. No se pudo ejecutar la baja.");
                 }
      
-     };
+     };*/
+    
+     public void eliminaCuartel(Cuartel cuartel, int idCuartel){
+    
+    String sql = "UPDATE Cuartel SET estado = 'INACTIVO' WHERE idCuartel = ?";
+          
+                try {
+                        PreparedStatement ps = con.prepareStatement(sql); 
+                         ps.setInt(1, idCuartel);
+                        int check = ps.executeUpdate();
+             if (check > 0) {
+               mensaje( "El Cuartel ha sido dado de baja (Estado Inactivo)");}
+             ps.close();
+                        
+                }catch (Exception e){
+              
+                    JOptionPane.showMessageDialog(null,e + " No fue Posible Eliminar el cuartel seleccionado");
+                }
+     }   
     
     public Cuartel buscarCuartel(int idCuartel) {
         String sql = "SELECT  idCuartel,nombreCuartel,direccion,Ciudad,Provincia, telefono,coordenadaX,coordenadaY,correo,estado FROM cuartel WHERE idCuartel=?";
@@ -118,18 +138,18 @@ public void modificarCuartel(Cuartel cuartel, int idCuartel){
     String sql = "UPDATE cuartel SET NombreCuartel = ?, Direccion = ?, Ciudad = ?, Provincia = ?, Telefono = ?, CoordenadaX = ?, CoordenadaY = ?, correo = ?,"
             + " estado = ? WHERE idCuartel = ? ";
                 try {
-                        PreparedStatement ps = con.prepareStatement(sql); 
-                        ps.setInt(1,cuartel.getIdCuartel());
-                        ps.setString(2,cuartel.getNombreCuartel());
-                        ps.setString(3, cuartel.getDireccion());    
-                        ps.setString(4, cuartel.getCiudad());
-                        ps.setString(5, cuartel.getProvincia());
-                        ps.setString(6,  cuartel.getTelefono());
-                        ps.setString(7, cuartel.getCoordenadaX());        
-                        ps.setString(8, cuartel.getCoordenadaY());         
-                        ps.setString(9, cuartel.getCorreo());
-                        ps.setString(10, cuartel.getEstado());         
-                                    
+                        PreparedStatement ps = con.prepareStatement(sql);
+                     
+                        ps.setString(1,cuartel.getNombreCuartel());
+                        ps.setString(2, cuartel.getDireccion());    
+                        ps.setString(3, cuartel.getCiudad());
+                        ps.setString(4, cuartel.getProvincia());
+                        ps.setString(5,  cuartel.getTelefono());
+                        ps.setString(6, cuartel.getCoordenadaX());        
+                        ps.setString(7, cuartel.getCoordenadaY());         
+                        ps.setString(8, cuartel.getCorreo());
+                        ps.setString(9, cuartel.getEstado());         
+                          ps.setInt(10,idCuartel);           
              int check = ps.executeUpdate();
              if (check > 0) {
                 mensaje( "Los datos del cuartel, han sido actualizados!!");}
@@ -143,5 +163,21 @@ public void modificarCuartel(Cuartel cuartel, int idCuartel){
            mensaje("Debe completar correctamente todos los campos obligatorios");}
      };
     
- 
+  public ArrayList<Cuartel> listarCuartel() {
+        ArrayList<Cuartel> lista = new ArrayList<>();
+        try (PreparedStatement ps = con.prepareStatement("SELECT idCuartel,nombreCuartel,direccion,Ciudad,estado FROM cuartel")) {
+            try (ResultSet rs = ps.executeQuery();) {
+                while (rs.next()) {
+                    
+                    lista.add(new Cuartel(rs.getInt("idCuartel"),rs.getString("nombreCuartel"),rs.getString("direccion"),rs.getString("Ciudad"),rs.getString("estado")));
+                }
+            } catch (SQLException ex) {
+               JOptionPane.showMessageDialog(null, "Error al intentar acceder a la tabla!!");
+            }
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error al intentar acceder a la tabla!!");
+        }
+        
+        return lista;
+    }  //ok
 }

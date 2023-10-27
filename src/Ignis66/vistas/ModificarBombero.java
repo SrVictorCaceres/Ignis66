@@ -139,7 +139,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(465, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +147,7 @@ public class ModificarBombero extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 669, 0);
+        jPanel1.setBounds(0, 0, 669, 27);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel13.setText("Introduza el nombre y/o apellido:");
@@ -287,7 +287,7 @@ public class ModificarBombero extends javax.swing.JFrame {
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel26.setText("ID del Bombero");
         getContentPane().add(jLabel26);
-        jLabel26.setBounds(40, 103, 71, 13);
+        jLabel26.setBounds(40, 103, 71, 20);
 
         jtfIdBombero.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jtfIdBombero.setText("-");
@@ -335,6 +335,11 @@ public class ModificarBombero extends javax.swing.JFrame {
         jcbEstado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jcbEstadoMouseClicked(evt);
+            }
+        });
+        jcbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbEstadoActionPerformed(evt);
             }
         });
         getContentPane().add(jcbEstado);
@@ -848,6 +853,10 @@ validacion();
        chequearModificacion();
        validacion();
     }//GEN-LAST:event_jrbFijoNoActionPerformed
+
+    private void jcbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbEstadoActionPerformed
 
     /**
      * @param args the command line arguments

@@ -46,6 +46,14 @@ public class Cuartel {
         this.estado = estado;
     }
 
+    public Cuartel(int idCuartel, String nombreCuartel, String direccion, String Ciudad, String estado) {
+        this.idCuartel = idCuartel;
+        this.nombreCuartel = nombreCuartel;
+        this.direccion = direccion;
+        this.Ciudad = Ciudad;
+        this.estado = estado;
+    }
+
     public int getIdCuartel() {
         return idCuartel;
     }

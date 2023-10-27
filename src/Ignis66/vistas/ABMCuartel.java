@@ -2,10 +2,12 @@ package Ignis66.vistas;
 
 import Ignis66.acessoADatos.Conexion;
 import Ignis66.acessoADatos.CuartelData;
+import Ignis66.entidades.Bombero;
 import Ignis66.entidades.Cuartel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JComponent;
@@ -26,13 +28,13 @@ public class ABMCuartel extends javax.swing.JFrame {
     public ABMCuartel() {
         initComponents();
         setLocationRelativeTo(null);
-        btnGuardar.setEnabled(false);
+        btnGuardar.setEnabled(true);
         btnActualizar.setEnabled(false);
-        btnLimpiar.setEnabled(false);
+        btnLimpiar.setEnabled(true);
         btnEliminar.setEnabled(false);
-       /* modelarTabla();*/
+        modelarTabla();
         cargarCuartel();
-
+         validar();
         disableCopyPaste(txtNombre);  //deshabilita el copy paste en el textfield
         disableCopyPaste(txtDireccion);
         disableCopyPaste(txtCiudad);
@@ -48,6 +50,7 @@ public class ABMCuartel extends javax.swing.JFrame {
 
     private void disableCopy(JComponent component) {
         component.getInputMap().put(KeyStroke.getKeyStroke("control C"), "none");
+        component.getInputMap().put(KeyStroke.getKeyStroke("control c"), "none");
     }
 
     private void disablePaste(JComponent component) {
@@ -80,7 +83,6 @@ public class ABMCuartel extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        rbEstado = new javax.swing.JRadioButton();
         txtCoordX = new javax.swing.JTextField();
         txtCoordY = new javax.swing.JTextField();
         txtMail = new javax.swing.JTextField();
@@ -117,6 +119,8 @@ public class ABMCuartel extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblCuarte = new javax.swing.JTable();
+        jcbEstado = new javax.swing.JComboBox<>();
+        lblEstado = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -132,8 +136,8 @@ public class ABMCuartel extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 204, 204));
         setFocusable(false);
-        setUndecorated(true);
-        getContentPane().setLayout(null);
+        setPreferredSize(new java.awt.Dimension(700, 500));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnLimpiar.setBackground(new java.awt.Color(204, 204, 0));
         btnLimpiar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -144,8 +148,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 btnLimpiarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLimpiar);
-        btnLimpiar.setBounds(20, 460, 70, 31);
+        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, -1, -1));
 
         btnActualizar.setBackground(new java.awt.Color(0, 204, 204));
         btnActualizar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -156,8 +159,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 btnActualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnActualizar);
-        btnActualizar.setBounds(130, 460, 83, 31);
+        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 460, -1, -1));
 
         btnEliminar.setBackground(new java.awt.Color(255, 153, 153));
         btnEliminar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -168,8 +170,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar);
-        btnEliminar.setBounds(270, 460, 73, 31);
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 460, -1, -1));
 
         btnGuardar.setBackground(new java.awt.Color(153, 255, 153));
         btnGuardar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -180,8 +181,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar);
-        btnGuardar.setBounds(390, 460, 72, 31);
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 460, -1, -1));
 
         btnSalir.setBackground(new java.awt.Color(153, 153, 255));
         btnSalir.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -192,42 +192,27 @@ public class ABMCuartel extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalir);
-        btnSalir.setBounds(550, 460, 67, 31);
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 460, 67, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel6.setText("* Telefono:");
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(400, 100, 47, 13);
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel7.setText("* Coordenada X:");
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(10, 190, 80, 13);
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 80, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel3.setText("* Coordenada Y:");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(400, 190, 90, 13);
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 90, -1));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel8.setText("* Email:");
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(10, 240, 50, 13);
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 50, -1));
 
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel9.setText("* Estado:");
-        getContentPane().add(jLabel9);
-        jLabel9.setBounds(410, 240, 50, 13);
-
-        rbEstado.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
-        rbEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbEstadoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(rbEstado);
-        rbEstado.setBounds(410, 260, 30, 20);
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 50, -1));
 
         txtCoordX.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtCoordX.addActionListener(new java.awt.event.ActionListener() {
@@ -239,18 +224,22 @@ public class ABMCuartel extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCoordXKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCoordXKeyTyped(evt);
+            }
         });
-        getContentPane().add(txtCoordX);
-        txtCoordX.setBounds(10, 210, 230, 21);
+        getContentPane().add(txtCoordX, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 230, -1));
 
         txtCoordY.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtCoordY.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCoordYKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCoordYKeyTyped(evt);
+            }
         });
-        getContentPane().add(txtCoordY);
-        txtCoordY.setBounds(400, 210, 190, 21);
+        getContentPane().add(txtCoordY, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, 190, -1));
 
         txtMail.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtMail.addActionListener(new java.awt.event.ActionListener() {
@@ -262,9 +251,11 @@ public class ABMCuartel extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtMailKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMailKeyTyped(evt);
+            }
         });
-        getContentPane().add(txtMail);
-        txtMail.setBounds(10, 260, 230, 21);
+        getContentPane().add(txtMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 230, -1));
 
         txtNroTel.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtNroTel.addActionListener(new java.awt.event.ActionListener() {
@@ -276,139 +267,135 @@ public class ABMCuartel extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNroTelKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNroTelKeyTyped(evt);
+            }
         });
-        getContentPane().add(txtNroTel);
-        txtNroTel.setBounds(400, 120, 190, 21);
+        getContentPane().add(txtNroTel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 120, 190, -1));
 
         jLabel10.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel10.setText("* Barrio /Ciudad:");
-        getContentPane().add(jLabel10);
-        jLabel10.setBounds(10, 140, 71, 13);
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel11.setText("* Provincia:");
-        getContentPane().add(jLabel11);
-        jLabel11.setBounds(400, 140, 48, 21);
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, -1, 21));
 
         txtCiudad.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtCiudad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCiudadKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCiudadKeyTyped(evt);
+            }
         });
-        getContentPane().add(txtCiudad);
-        txtCiudad.setBounds(10, 160, 230, 21);
+        getContentPane().add(txtCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 230, -1));
 
         txtProvincia.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         txtProvincia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtProvinciaKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtProvinciaKeyTyped(evt);
+            }
         });
-        getContentPane().add(txtProvincia);
-        txtProvincia.setBounds(400, 160, 190, 22);
+        getContentPane().add(txtProvincia, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 190, -1));
 
         jLabel12.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel12.setText("Código:");
-        getContentPane().add(jLabel12);
-        jLabel12.setBounds(10, 50, 80, 13);
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 80, -1));
 
         lblIdCuartel.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
-        getContentPane().add(lblIdCuartel);
-        lblIdCuartel.setBounds(10, 63, 60, 20);
+        getContentPane().add(lblIdCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 63, 60, 20));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel2.setText("* Nombre:");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(400, 50, 44, 13);
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
 
         txtNombre.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNombreKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
         });
-        getContentPane().add(txtNombre);
-        txtNombre.setBounds(400, 70, 190, 21);
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, 190, -1));
 
         txtDireccion.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtDireccionKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
+            }
         });
-        getContentPane().add(txtDireccion);
-        txtDireccion.setBounds(10, 110, 230, 21);
+        getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 230, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel4.setText("* Dirección:");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(10, 90, 60, 13);
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 60, -1));
 
+        lblDireccion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         lblDireccion.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblDireccion);
-        lblDireccion.setBounds(269, 39, 80, 21);
+        getContentPane().add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(249, 109, 140, 20));
 
         lblCiudad.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         lblCiudad.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblCiudad);
-        lblCiudad.setBounds(342, 194, 100, 21);
+        getContentPane().add(lblCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 110, 20));
 
-        lblCoordX.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        lblCoordX.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         lblCoordX.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblCoordX);
-        lblCoordX.setBounds(250, 210, 112, 21);
+        getContentPane().add(lblCoordX, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 112, 21));
 
         jLabel15.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(jLabel15);
-        jLabel15.setBounds(408, 391, 112, 0);
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 391, 112, -1));
 
-        lblMail.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
+        lblMail.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         lblMail.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblMail);
-        lblMail.setBounds(414, 391, 106, 0);
+        getContentPane().add(lblMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 261, 130, 20));
 
-        lblNombre.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
+        lblNombre.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblNombre);
-        lblNombre.setBounds(1039, 33, 71, 0);
+        getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 73, 140, 20));
 
-        lblTelefono.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
+        lblTelefono.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         lblTelefono.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblTelefono);
-        lblTelefono.setBounds(1039, 39, 76, 21);
+        getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 130, 20));
 
-        lblPcia.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
+        lblPcia.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         lblPcia.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblPcia);
-        lblPcia.setBounds(791, 93, 342, 22);
+        getContentPane().add(lblPcia, new org.netbeans.lib.awtextra.AbsoluteConstraints(593, 163, 150, 20));
 
-        lblCoordY.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
+        lblCoordY.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         lblCoordY.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblCoordY);
-        lblCoordY.setBounds(791, 338, 342, 0);
+        getContentPane().add(lblCoordY, new org.netbeans.lib.awtextra.AbsoluteConstraints(593, 208, 140, 20));
 
         lblBuscId.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         lblBuscId.setForeground(new java.awt.Color(0, 0, 0));
-        lblBuscId.setText("Ingrese ID a Bucar:");
-        getContentPane().add(lblBuscId);
-        lblBuscId.setBounds(20, 320, 81, 13);
+        lblBuscId.setText("Ingrese ID a buscar:");
+        getContentPane().add(lblBuscId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
 
         txtBuscId.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtBuscId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBuscIdKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscIdKeyTyped(evt);
+            }
         });
-        getContentPane().add(txtBuscId);
-        txtBuscId.setBounds(20, 340, 80, 23);
+        getContentPane().add(txtBuscId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 80, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Ingrese Nombre a Bucar:");
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(200, 320, 107, 13);
+        jLabel5.setText("Ingrese Nombre a buscar:");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, -1, -1));
 
         txtBusNom.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         txtBusNom.addActionListener(new java.awt.event.ActionListener() {
@@ -421,14 +408,12 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtBusNomKeyReleased(evt);
             }
         });
-        getContentPane().add(txtBusNom);
-        txtBusNom.setBounds(200, 340, 154, 21);
+        getContentPane().add(txtBusNom, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 154, -1));
 
         jLabel13.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel13.setText("Ingrese Ciudad a Buscar:");
-        getContentPane().add(jLabel13);
-        jLabel13.setBounds(410, 320, 116, 13);
+        jLabel13.setText("Ingrese ciudad a buscar:");
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 116, -1));
 
         txtBusCiu.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         txtBusCiu.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -436,8 +421,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtBusCiuKeyReleased(evt);
             }
         });
-        getContentPane().add(txtBusCiu);
-        txtBusCiu.setBounds(400, 340, 130, 21);
+        getContentPane().add(txtBusCiu, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 340, 130, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 51, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(177, 27));
@@ -459,48 +443,60 @@ public class ABMCuartel extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 730, 27);
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, -1));
 
         jLabel14.setFont(new java.awt.Font("Roboto", 3, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(153, 0, 51));
         jLabel14.setText("(*) <-- Campos obligatorios ");
-        getContentPane().add(jLabel14);
-        jLabel14.setBounds(252, 30, 150, 15);
-        getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(6, 46, 720, 10);
-        getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(10, 302, 710, 20);
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 30, 150, -1));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 46, 720, 10));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 302, 710, 20));
 
         tblCuarte.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCuarte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCuarteMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblCuarte);
         if (tblCuarte.getColumnModel().getColumnCount() > 0) {
-            tblCuarte.getColumnModel().getColumn(0).setMinWidth(20);
-            tblCuarte.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tblCuarte.getColumnModel().getColumn(0).setMaxWidth(20);
-            tblCuarte.getColumnModel().getColumn(1).setMinWidth(80);
-            tblCuarte.getColumnModel().getColumn(1).setPreferredWidth(80);
-            tblCuarte.getColumnModel().getColumn(1).setMaxWidth(80);
-            tblCuarte.getColumnModel().getColumn(2).setMinWidth(50);
-            tblCuarte.getColumnModel().getColumn(2).setPreferredWidth(50);
-            tblCuarte.getColumnModel().getColumn(2).setMaxWidth(50);
-            tblCuarte.getColumnModel().getColumn(3).setMinWidth(30);
-            tblCuarte.getColumnModel().getColumn(3).setPreferredWidth(30);
-            tblCuarte.getColumnModel().getColumn(3).setMaxWidth(30);
+            tblCuarte.getColumnModel().getColumn(0).setResizable(false);
+            tblCuarte.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblCuarte.getColumnModel().getColumn(1).setResizable(false);
+            tblCuarte.getColumnModel().getColumn(1).setPreferredWidth(300);
+            tblCuarte.getColumnModel().getColumn(2).setResizable(false);
+            tblCuarte.getColumnModel().getColumn(2).setPreferredWidth(300);
+            tblCuarte.getColumnModel().getColumn(3).setResizable(false);
+            tblCuarte.getColumnModel().getColumn(3).setPreferredWidth(120);
+            tblCuarte.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(20, 370, 510, 70);
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 700, 90));
+
+        jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ACTIVO", "INACTIVO" }));
+        getContentPane().add(jcbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 180, -1));
+
+        lblEstado.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        lblEstado.setForeground(new java.awt.Color(255, 51, 51));
+        getContentPane().add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 260, 140, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -515,10 +511,11 @@ public class ABMCuartel extends javax.swing.JFrame {
         txtCoordX.setText(null);
         txtCoordY.setText(null);
         txtMail.setText(null);
-        rbEstado.setSelected(false);
         txtBusCiu.setText(null);
         txtBusNom.setText(null);
         txtBuscId.setText(null);
+        jcbEstado.setSelectedItem(null);
+         validar();
 
     }
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
@@ -535,26 +532,24 @@ public class ABMCuartel extends javax.swing.JFrame {
             ctl.setCoordenadaX(txtCoordX.getText());
             ctl.setCoordenadaY(txtCoordY.getText());
             ctl.setCorreo(txtMail.getText());
-            ctl.setEstado((String) rbEstado.getText());
-              
-            cdata.modificarCuartel(ctl, Integer.parseInt(lblIdCuartel.getText()));
+            ctl.setEstado((String) jcbEstado.getSelectedItem());
             
-           limpiarCampos();
-           /* modelarTabla();*/
-            cargarCuartel();
-      
-        
-        } catch (NumberFormatException ne) {
-            mensaje("Error al intentar guardar el Registro. Intente nuevamente.");
-        }catch(NullPointerException np){
-           mensaje("Debe completar correctamente todos los campos obligatorios");}
-    
-           
-    }//GEN-LAST:event_btnActualizarActionPerformed
+            cdata.modificarCuartel(ctl, Integer.parseInt(lblIdCuartel.getText()));
 
-    private void rbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbEstadoActionPerformed
+              limpiarCampos();
+              cargarCuartel();
+             
+
+        
+          
+        } catch (NumberFormatException ne) {
+            mensaje("No existen datos para modificar. Intente nuevamente.");
+        } catch (NullPointerException np) {
+            mensaje("Debe completar correctamente todos los campos obligatorios");
+        }
+
+
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         if (JOptionPane.showConfirmDialog(null, "Esta seguro que desea salir de esta pantalla?", "Ignis - Salir de la Aplicación", JOptionPane.YES_NO_OPTION) == 0) {
@@ -572,7 +567,24 @@ public class ABMCuartel extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNroTelActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        CuartelData cdata = new CuartelData();
+        Cuartel ctl = new Cuartel();
+try{
+        if (JOptionPane.showConfirmDialog(null, "Esta seguro que desea eliminar el registro seleccionado?", "Ignis - Advertencia de la Aplicación", JOptionPane.YES_NO_OPTION) == 0) {
+            cdata.eliminaCuartel(ctl, Integer.parseInt(lblIdCuartel.getText()));
+         
+          
+            cargarCuartel();
+            limpiarCampos();
+            txtBusCiu.setEnabled(false);
+            txtBuscId.setEnabled(false);
+            txtBusNom.setEnabled(false);
+
+        }
+
+}catch (NullPointerException np) {
+            mensaje("Debe completar correctamente todos los campos obligatorios");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMailActionPerformed
@@ -668,16 +680,20 @@ public class ABMCuartel extends javax.swing.JFrame {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiarCampos();
         cargarCuartel();
+        validar();
         txtBusNom.setEnabled(true);
-            txtBusCiu.setEnabled(true);
-         txtBuscId.setEnabled(true);
+        txtBusCiu.setEnabled(true);
+        txtBuscId.setEnabled(true);
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(false);
+        btnActualizar.setEnabled(false);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       CuartelData cdata = new CuartelData();
-        Cuartel cuartel = new Cuartel();     
-           try {
-             cuartel.setNombreCuartel(txtNombre.getText());
+        CuartelData cdata = new CuartelData();
+        Cuartel cuartel = new Cuartel();
+        try {
+            cuartel.setNombreCuartel(txtNombre.getText());
             cuartel.setDireccion(txtDireccion.getText());
             cuartel.setCiudad(txtCiudad.getText());
             cuartel.setProvincia(txtProvincia.getText());
@@ -685,34 +701,151 @@ public class ABMCuartel extends javax.swing.JFrame {
             cuartel.setCoordenadaX(txtCoordX.getText());
             cuartel.setCoordenadaY(txtCoordY.getText());
             cuartel.setCorreo(txtMail.getText());
-            cuartel.setEstado((String) rbEstado.getText());
-              
-            cdata.altaCuartel(cuartel);
-            
-           limpiarCampos();
-            /*modelarTabla();*/
-            cargarCuartel();
+            cuartel.setEstado((String)jcbEstado.getSelectedItem());
         
-         } catch (NumberFormatException ne) {
+            cdata.altaCuartel(cuartel);
+
+            limpiarCampos();
+          
+            cargarCuartel();
+          } catch (NullPointerException np) {
+            mensaje("Debe completar correctamente todos los campos obligatorios");
+        } catch (NumberFormatException ne) {
             mensaje("Error al intentar guardar el Registro. Intente nuevamente.");
-        }catch(NullPointerException np){
-           mensaje("Debe completar correctamente todos los campos obligatorios");}
-    
-           
-                 
+        
+        }
 
 
-
-
-// TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void tblCuarteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCuarteMouseClicked
+
+        int filaSelec = tblCuarte.getSelectedRow();
+        // String[] registros = new String[10];//
+        CuartelData cdata = new CuartelData();
+        String idCuartel = tblCuarte.getValueAt(filaSelec, 0).toString();
+        int idC = Integer.parseInt(idCuartel);
+        Cuartel c = cdata.buscarCuartel(idC);
+        lblIdCuartel.setText(idC + "");
+
+        txtNombre.setText(c.getNombreCuartel());
+
+        txtDireccion.setText(c.getDireccion());
+
+        txtCiudad.setText(c.getCiudad());
+        txtNroTel.setText(c.getTelefono());
+        txtProvincia.setText(c.getProvincia());
+
+        txtCoordX.setText(c.getCoordenadaX());
+
+        txtCoordY.setText(c.getCoordenadaY());
+
+        txtMail.setText(c.getCorreo());
+
+        jcbEstado.setSelectedItem(c.getEstado());
+
+        validar();
+        btnGuardar.setEnabled(false);
+        btnActualizar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnLimpiar.setEnabled(true);
+        btnSalir.setEnabled(true);
+        txtBusNom.setEnabled(false);
+        txtBusCiu.setEnabled(false);
+        txtBuscId.setEnabled(false);
+    }//GEN-LAST:event_tblCuarteMouseClicked
+
+    private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
+
+          if (txtDireccion.getText().length() >= 30) {
+              evt.consume();
+               mensaje("Solo se admiten 30 caracteres");
+        }
+
+     
+    }//GEN-LAST:event_txtDireccionKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+
+    if (txtNombre.getText().length() >= 30) {
+              evt.consume();
+                 mensaje("Solo se admiten 30 caracteres");
+        }
+
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtNroTelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroTelKeyTyped
+
+    if (txtNroTel.getText().length() >= 10) {
+              evt.consume();
+              mensaje("Solo se admiten 10 caracteres númericos");
+        }
+  
+    }//GEN-LAST:event_txtNroTelKeyTyped
+
+    private void txtCiudadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCiudadKeyTyped
+ if (txtCiudad.getText().length() >= 30) {
+              evt.consume();
+                 mensaje("Solo se admiten 30 caracteres");
+        }
+
+    }//GEN-LAST:event_txtCiudadKeyTyped
+
+    private void txtProvinciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProvinciaKeyTyped
+
+ if (txtProvincia.getText().length() >= 20) {
+              evt.consume();
+                 mensaje("Solo se admiten 20 caracteres");
+    }//GEN-LAST:event_txtProvinciaKeyTyped
+    }
+    private void txtCoordXKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordXKeyTyped
+      if (txtCoordX.getText().length() >= 20) {
+              evt.consume();
+                 mensaje("Solo se admiten 20 caracteres");
+    }                                     
+
+    }//GEN-LAST:event_txtCoordXKeyTyped
+
+    private void txtCoordYKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordYKeyTyped
+ if (txtCoordY.getText().length() >= 20) {
+              evt.consume();
+                 mensaje("Solo se admiten 20 caracteres");
+    }                                     
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCoordYKeyTyped
+
+    private void txtMailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMailKeyTyped
+ if (txtMail.getText().length() >= 30) {
+              evt.consume();
+                 mensaje("Solo se admiten 30 caracteres");
+    }                                     
+
+    }//GEN-LAST:event_txtMailKeyTyped
+
+    private void txtBuscIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscIdKeyTyped
+
+
+
+
+    }//GEN-LAST:event_txtBuscIdKeyTyped
+    
     public void validar() {
 
         if (txtNombre.getText().isEmpty()) {
             lblNombre.setText("Campo Requerido");
-        } else {
-            lblNombre.setText("");
+            
+        }  else if (txtNombre.getText().length() >= 30) {
+        }else {
+          lblNombre.setText("");
+          txtBusNom.setEnabled(false);
+        txtBusCiu.setEnabled(false);
+        txtBuscId.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(false);
+        btnActualizar.setEnabled(true);
         }
         if (txtCiudad.getText().isEmpty()) {
             lblCiudad.setText("Campo Requerido");
@@ -733,18 +866,28 @@ public class ABMCuartel extends javax.swing.JFrame {
             lblDireccion.setText("Campo Requerido");
         } else {
             lblDireccion.setText("");
+              txtBusNom.setEnabled(false);
+        txtBusCiu.setEnabled(false);
+        txtBuscId.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(false);
+        btnActualizar.setEnabled(true);
         }
         if (txtMail.getText().isEmpty()) {
             lblMail.setText("Campo Requerido");
         } else {
-
             lblMail.setText("");
-
         }
+            if (jcbEstado.getSelectedItem() == null) {
+                lblEstado.setText("Campo Requerido");
+            } else {
+                lblEstado.setText("");
+            }
 
+        
         if (txtNroTel.getText().isEmpty()) {
             lblTelefono.setText("Campo Requerido");
-        } else if (txtNroTel.getText().length() != 10) {
+        
         } else {
             lblTelefono.setText("");
         }
@@ -764,9 +907,10 @@ public class ABMCuartel extends javax.swing.JFrame {
             btnLimpiar.setEnabled(false);
         } else {
             btnGuardar.setEnabled(true);
-            btnActualizar.setEnabled(true);
-            btnEliminar.setEnabled(true);
-            btnLimpiar.setEnabled(true);
+              btnLimpiar.setEnabled(true);
+         btnActualizar.setEnabled(true);
+            /*btnEliminar.setEnabled(true);*/
+          
         }
 
     }
@@ -810,7 +954,7 @@ public class ABMCuartel extends javax.swing.JFrame {
         String nCol[] = {"ID", "Nombre", "Dirección", "Ciudad", "Estado"};
         String sql = "SELECT idCuartel, nombreCuartel, direccion, Ciudad, Provincia, telefono, coordenadaX, coordenadaY, correo, estado FROM Cuartel where idCuartel LIKE'%" + idCuartel + "%'";
         DefaultTableModel model = new DefaultTableModel(null, nCol) {
-          
+
             @Override
             public boolean isCellEditable(int f, int c) {
                 return false;
@@ -830,7 +974,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 reg[2] = rs.getString(3);
                 reg[3] = rs.getString(4);
                 reg[4] = rs.getString(10);
-                
+
                 model.addRow(reg);
             }
 
@@ -868,7 +1012,6 @@ public class ABMCuartel extends javax.swing.JFrame {
                 reg[2] = rs.getString(3);
                 reg[3] = rs.getString(4);
                 reg[4] = rs.getString(10);
-         
 
                 model.addRow(reg);
             }
@@ -906,7 +1049,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 reg[2] = rs.getString(3);
                 reg[3] = rs.getString(4);
                 reg[4] = rs.getString(10);
-                
+
                 model.addRow(reg);
             }
 
@@ -930,63 +1073,34 @@ public class ABMCuartel extends javax.swing.JFrame {
         return mather.find();
     }
 
-    public DefaultTableModel cargarCuartel() {
-
-        String[] nCol = {"ID", "Nombre", "Barrio/Ciudad", "Telefono", "Estado"};
-        String[] reg = new String[5];
-       /*tblCuarte.setModel(modelo);*/
-     tblCuarte.getTableHeader().setReorderingAllowed(false);//no mueve tabla
-       /*  tblCuarte.getColumnModel().getColumn(0).setPreferredWidth(5);
-        tblCuarte.getColumnModel().getColumn(1).setPreferredWidth(30);
-        tblCuarte.getColumnModel().getColumn(2).setPreferredWidth(30);
-        tblCuarte.getColumnModel().getColumn(3).setPreferredWidth(20);
-        tblCuarte.getColumnModel().getColumn(4).setPreferredWidth(12);*/
-    DefaultTableModel modelo = new DefaultTableModel(null, nCol) {
-        
-        public boolean isCellEditable(int f, int c) {
-                return false;
-            };
-        };
-        tblCuarte.setModel(modelo);
-
-        String sql = "SELECT idCuartel, nombreCuartel, direccion, Ciudad, Provincia, telefono, coordenadaX, coordenadaY, correo, estado FROM Cuartel ";
-
-        try {
-
-            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                reg[0] = rs.getString(1);
-                reg[1] = rs.getString(2);
-                reg[2] = rs.getString(4);
-                reg[3] = rs.getString(6);
-                reg[4] = rs.getString(10);
-
-                modelo.addRow(reg);
-            }
-            ps.close();
-
-        } catch (SQLException sqle) {
-            JOptionPane.showMessageDialog(null, "Error en la carga de datos " + sqle.getMessage());
+    public void cargarCuartel() {
+        limpiarCampos();
+        CuartelData cdata = new CuartelData();
+        for (Cuartel cuartel : cdata.listarCuartel()) {
+            modelo.addRow(new Object[]{cuartel.getIdCuartel(), cuartel.getNombreCuartel(), cuartel.getDireccion(), cuartel.getCiudad(), cuartel.getEstado()});
+         tblCuarte.setVisible(false);
+            tblCuarte.setModel(modelo);
+            modelo.fireTableDataChanged();
+            tblCuarte.setVisible(true);
         }
-        return modelo;
 
     }
 
-  /*  private void modelarTabla() {
-        modelo.addColumn("bbID");
-        modelo.addColumn("bbNombre");
-        modelo.addColumn("bbBarrio / Ciudad");
-        modelo.addColumn("bbProvincia");
-        modelo.addColumn("bbEstado");
+
+ 
+    private void modelarTabla() {
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Barrio / Ciudad");
+        modelo.addColumn("Provincia");
+        modelo.addColumn("Estado");
         tblCuarte.setModel(modelo);
-        tblCuarte.getColumnModel().getColumn(0).setPreferredWidth(5);
-        tblCuarte.getColumnModel().getColumn(1).setPreferredWidth(30);
-        tblCuarte.getColumnModel().getColumn(2).setPreferredWidth(30);
-        tblCuarte.getColumnModel().getColumn(3).setPreferredWidth(20);
-        tblCuarte.getColumnModel().getColumn(4).setPreferredWidth(12);
-    }*/
+        tblCuarte.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tblCuarte.getColumnModel().getColumn(1).setPreferredWidth(300);
+        tblCuarte.getColumnModel().getColumn(2).setPreferredWidth(300);
+        tblCuarte.getColumnModel().getColumn(3).setPreferredWidth(200);
+        tblCuarte.getColumnModel().getColumn(4).setPreferredWidth(120);
+    }
 
     private void limpiarTabla() {
         int i = 0;
@@ -996,11 +1110,11 @@ public class ABMCuartel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnSalir;
+    public static javax.swing.JButton btnActualizar;
+    public static javax.swing.JButton btnEliminar;
+    public static javax.swing.JButton btnGuardar;
+    public static javax.swing.JButton btnLimpiar;
+    public static javax.swing.JButton btnSalir;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
@@ -1022,18 +1136,19 @@ public class ABMCuartel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    public static javax.swing.JComboBox<String> jcbEstado;
     private javax.swing.JLabel lblBuscId;
     private javax.swing.JLabel lblCiudad;
     private javax.swing.JLabel lblCoordX;
     private javax.swing.JLabel lblCoordY;
     private javax.swing.JLabel lblDireccion;
+    private javax.swing.JLabel lblEstado;
     public static javax.swing.JLabel lblIdCuartel;
     private javax.swing.JLabel lblMail;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPcia;
     private javax.swing.JLabel lblTelefono;
-    public static javax.swing.JRadioButton rbEstado;
-    private javax.swing.JTable tblCuarte;
+    public static javax.swing.JTable tblCuarte;
     private javax.swing.JTextField txtBusCiu;
     private javax.swing.JTextField txtBusNom;
     private javax.swing.JTextField txtBuscId;
