@@ -1,9 +1,12 @@
-
 package Ignis66.vistas;
 
-import Ignis66.acessoADatos.Conexion;
+import Ignis66.acessoADatos.BrigadaData;
+import Ignis66.acessoADatos.CuartelData;
+import Ignis66.acessoADatos.SiniestroData;
 import Ignis66.entidades.Brigada;
+import Ignis66.entidades.Cuartel;
 import Ignis66.entidades.Siniestro;
+import Ignis66.acessoADatos.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,21 +14,30 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
 
 
 public class SiniestroVista extends javax.swing.JFrame {
 private Connection conexion;
+ private BrigadaData brigadaData; 
+
    
     public SiniestroVista() {
         this.conexion = Conexion.getConexion();
+        
+        
         initComponents();
+        brigadaData = new BrigadaData();
         jCBTipoS.addItem("Siniestro Natural");
         jCBTipoS.addItem("Siniestro Accidental");
         jCBTipoS.addItem("Siniestro Intencional");
         jTDatos.getTableHeader().setReorderingAllowed(false);
         jBActualizarBrigadasActionPerformed(null);
+        jTFCoordX.setTransferHandler(null);
+        jTFCoordY.setTransferHandler(null);
+        jTADet.setTransferHandler(null);
     }
 
     
@@ -49,11 +61,10 @@ private Connection conexion;
         jScrollPane3 = new javax.swing.JScrollPane();
         jTDatos = new javax.swing.JTable();
         jLBrigSelec = new javax.swing.JLabel();
-        jBActualizarBrigadas = new javax.swing.JButton();
         jBDesingBrig = new javax.swing.JButton();
         jBLimpiar = new javax.swing.JButton();
-        jBConfSini = new javax.swing.JButton();
-        jBSalir = new javax.swing.JButton();
+        jBActualizarBrigadas = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,51 +104,57 @@ private Connection conexion;
 
         jTDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Proximidad", "IdBrigada", "Nombre Brigada", "IdCuartel", "Nombre Cuartel", "Ciudad", "Teléfono"
+                "Id Cuartel", "Nombre Cuartel", "Dirección", "Ciudad", "Id Brigada", "Teléfono"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(jTDatos);
-        if (jTDatos.getColumnModel().getColumnCount() > 0) {
-            jTDatos.getColumnModel().getColumn(1).setMinWidth(60);
-            jTDatos.getColumnModel().getColumn(1).setMaxWidth(60);
-            jTDatos.getColumnModel().getColumn(3).setMinWidth(60);
-            jTDatos.getColumnModel().getColumn(3).setMaxWidth(60);
-        }
 
         jLBrigSelec.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLBrigSelec.setText("Brigada Seleccionada");
 
-        jBActualizarBrigadas.setText("ActualizarBrigadas");
+        jBDesingBrig.setText("Designar Brigada");
+        jBDesingBrig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBDesingBrigActionPerformed(evt);
+            }
+        });
+
+        jBLimpiar.setText("Limpiar Campos");
+        jBLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBLimpiarActionPerformed(evt);
+            }
+        });
+
+        jBActualizarBrigadas.setText("Actualizar Brigadas");
         jBActualizarBrigadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBActualizarBrigadasActionPerformed(evt);
             }
         });
 
-        jBDesingBrig.setText("Designar Brigada");
-
-        jBLimpiar.setText("Limpiar Campos");
-
-        jBConfSini.setText("Confirmar Siniestro");
-        jBConfSini.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBConfSiniActionPerformed(evt);
-            }
-        });
-
-        jBSalir.setText("Salir");
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel1.setText("DE MAS CERCANAS A MAS LEJANAS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,8 +169,9 @@ private Connection conexion;
                             .addComponent(jLX)
                             .addComponent(jTFCoordX, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLY)
-                            .addComponent(jTFCoordY, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBActualizarBrigadas))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jBActualizarBrigadas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTFCoordY, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(167, 167, 167)
@@ -172,24 +190,21 @@ private Connection conexion;
                         .addGap(221, 221, 221))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane3)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jBConfSini)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(153, 153, 153)
-                                .addComponent(jLBrigSelec)
-                                .addGap(0, 264, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(170, 170, 170)
-                                .addComponent(jBLimpiar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBSalir)))
                         .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBDesingBrig, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(266, 266, 266))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(jBDesingBrig)
+                        .addGap(153, 153, 153)
+                        .addComponent(jBLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(280, 280, 280)
+                        .addComponent(jLBrigSelec))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(241, 241, 241)
+                        .addComponent(jLabel1)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,78 +231,104 @@ private Connection conexion;
                         .addComponent(jBActualizarBrigadas)))
                 .addGap(18, 18, 18)
                 .addComponent(jLAsigBrig, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLBrigSelec, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBDesingBrig)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBConfSini)
-                    .addComponent(jBLimpiar)
-                    .addComponent(jBSalir))
-                .addGap(34, 34, 34))
+                    .addComponent(jBDesingBrig)
+                    .addComponent(jBLimpiar))
+                .addGap(41, 41, 41))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBConfSiniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfSiniActionPerformed
-   // Obtener otros datos, tipo, coordenadas, detalles, etc.
-        String tipoSiniestro = jCBTipoS.getSelectedItem().toString();
-        String coordXText = jTFCoordX.getText();
-        String coordYText = jTFCoordY.getText();
+    private void jBConfSiniActionPerformed(java.awt.event.ActionEvent evt) {
+    // Lógica para confirmar el siniestro
+    confirmarSiniestro();
+}
+    private void confirmarSiniestro() {
+    // Obtener otros datos, tipo, coordenadas, detalles, etc.
+    String tipoSiniestro = jCBTipoS.getSelectedItem().toString();
+    String coordXText = jTFCoordX.getText().trim();
+    String coordYText = jTFCoordY.getText().trim();
 
-        if (!coordXText.isEmpty() && !coordYText.isEmpty()) {
-            try {
-                double coordenadaX = Double.parseDouble(coordXText);
-                double coordenadaY = Double.parseDouble(coordYText);
-
-                Siniestro nuevoSiniestro = new Siniestro(tipoSiniestro, coordenadaX, coordenadaY, jTADet.getText());
-                LocalDateTime fechaHoraActual = LocalDateTime.now();
-                nuevoSiniestro.setFechaSiniestro(fechaHoraActual);
-
-                // acá se puede hacer lo que necesitemos con el nuevo siniestro
-                // Por ejemplo, llamar a un método para guardarlo en la base de datos
-                // SiniestroData siniestroData = new SiniestroData(conexion); // Hay que asegurarse de tener la conexión a la base de datos
-                // siniestroData.agregarSiniestro(nuevoSiniestro);
-
-            } catch (NumberFormatException e) {
-                System.err.println("Error: Uno o ambos campos no son números válidos.");
-            }
-        } else {
-            System.err.println("Error: Uno o ambos campos están vacíos.");
-        }
-    }//GEN-LAST:event_jBConfSiniActionPerformed
-
-    private void jBActualizarBrigadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarBrigadasActionPerformed
-     String coordXText = jTFCoordX.getText();
-    String coordYText = jTFCoordY.getText();
-
-    if (coordXText.isEmpty() || coordYText.isEmpty()) {
-        System.err.println("Error: Uno o ambos campos están vacíos.");
-       
-    } else {
+    if (!coordXText.isEmpty() && !coordYText.isEmpty()) {
         try {
-            double coordX = Double.parseDouble(coordXText);
-            double coordY = Double.parseDouble(coordYText);
+            double coordenadaX = Double.parseDouble(coordXText);
+            double coordenadaY = Double.parseDouble(coordYText);
 
-            try {
-                // revisar si está el método obtenerBrigadasDesdeBaseDeDatos
-                List<Brigada> brigadas = obtenerBrigadasDesdeBaseDeDatos(conexion, coordX, coordY);
-                cargarBrigadasEnJTable(brigadas);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                
-            }
+            Siniestro nuevoSiniestro = new Siniestro(tipoSiniestro, coordenadaX, coordenadaY, jTADet.getText());
+            LocalDateTime fechaHoraActual = LocalDateTime.now();
+            nuevoSiniestro.setFechaSiniestro(fechaHoraActual);
+
+            // acá se puede hacer lo que necesitemos con el nuevo siniestro
+            // Por ejemplo, llamar a un método para guardarlo en la base de datos
+            // SiniestroData siniestroData = new SiniestroData(conexion); // Hay que asegurarse de tener la conexión a la base de datos
+            // siniestroData.agregarSiniestro(nuevoSiniestro);
 
         } catch (NumberFormatException e) {
             System.err.println("Error: Uno o ambos campos no son números válidos.");
-            
         }
+    } else {
+        System.err.println("Error: Uno o ambos campos están vacíos.");
+    }
+}
+    private void jBActualizarBrigadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarBrigadasActionPerformed
+    try {
+        // Obtiene las coordenadas ingresadas por el usuario
+        double latitud = Double.parseDouble(jTFCoordX.getText());
+        double longitud = Double.parseDouble(jTFCoordY.getText());
+        
+        // Llama al método brigadasLibres para obtener las brigadas libres
+      List<Brigada> brigadasLibres = brigadaData.brigadasLibres();
+        
+        // Actualiza el JTable con las brigadas libres
+        cargarBrigadasEnJTable(brigadasLibres);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Ingresa coordenadas válidas (números) en los campos de latitud y longitud.");
     }
     }//GEN-LAST:event_jBActualizarBrigadasActionPerformed
+
+    private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
+                                         
+    // Limpia los campos de texto
+    jTFCoordX.setText("");  // Reemplaza jTFCampo1 con el nombre del campo texto
+    jTFCoordY.setText("");
+    jTADet.setText(""); 
+    // Se pueden agregar mas campos si queremos
+
+    DefaultTableModel modelo = (DefaultTableModel) jTDatos.getModel();
+    modelo.setRowCount(0); // Elimina todas las filas del modelo
+
+    
+    jTFCoordX.requestFocus();
+   
+    }//GEN-LAST:event_jBLimpiarActionPerformed
+
+    private void jBDesingBrigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDesingBrigActionPerformed
+    int filaSeleccionada = jTDatos.getSelectedRow();
+
+    if (filaSeleccionada != -1) {
+        // Obtiene ID de brigada seleccionada desde la fila JTable
+        int idBrigada = (int) jTDatos.getValueAt(filaSeleccionada, 0);
+
+        System.out.println("Valor de idBrigada: " + idBrigada); // Línea de depuración
+
+        // Crear una instancia de BrigadaData con la conexión
+        BrigadaData brigadaData = new BrigadaData(conexion);
+
+        // Llama al método para marcar la brigada como activa
+        brigadaData.marcarBrigadaActiva(idBrigada);
+    } else {
+        JOptionPane.showMessageDialog(null, "Por favor, selecciona una brigada de la tabla antes de designarla.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    }//GEN-LAST:event_jBDesingBrigActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,6 +359,10 @@ private Connection conexion;
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -329,10 +374,8 @@ private Connection conexion;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBActualizarBrigadas;
-    private javax.swing.JButton jBConfSini;
     private javax.swing.JButton jBDesingBrig;
     private javax.swing.JButton jBLimpiar;
-    private javax.swing.JButton jBSalir;
     private javax.swing.JComboBox<String> jCBTipoS;
     private javax.swing.JLabel jLAsigBrig;
     private javax.swing.JLabel jLBrigSelec;
@@ -341,6 +384,7 @@ private Connection conexion;
     private javax.swing.JLabel jLTSiniestro;
     private javax.swing.JLabel jLX;
     private javax.swing.JLabel jLY;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -351,42 +395,58 @@ private Connection conexion;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
-    private List<Brigada> obtenerBrigadasDesdeBaseDeDatos(Connection conexion, double coordX, double coordY) throws SQLException {
-    List<Brigada> brigadas = new ArrayList<>();
-    
-    // Consulta SQL para obtener las brigadas basadas en coordenadas acá está el chiquero mas grande
-    String consultaSQL = "SELECT * FROM brigada WHERE coordenadaX = ? AND coordenadaY = ?";
-    
+private List<Cuartel> obtenerCuartelesDesdeBaseDeDatos(double coordX, double coordY) {
+    List<Cuartel> cuarteles = new ArrayList<>();
+
+    // Consulta SQL para tener los cuarteles ordenados por proximidad
+    String consultaSQL = "SELECT idCuartel, nombreCuartel, direccion, ciudad, provincia, telefono, coordenadaX, coordenadaY, correo, estado, " +
+                        "SQRT(POW(coordenadaX - ?, 2) + POW(coordenadaY - ?, 2)) AS proximidad " +
+                        "FROM Cuartel " +
+                        "ORDER BY proximidad";
+
     try (PreparedStatement preparedStatement = conexion.prepareStatement(consultaSQL)) {
         preparedStatement.setDouble(1, coordX);
         preparedStatement.setDouble(2, coordY);
 
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                int idBrigada = resultSet.getInt("idBrigada");
-                String nombreBrigada = resultSet.getString("nombreBrigada");
-                String especialidad = "Especialidad de Ejemplo";
-                int idCuartel = 2; // Reemplaza con el valor real de idCuartel no funciona
-              boolean libre = true; // Reemplaza con el valor real de libre no funciona
-                boolean estado = true; // Reemplaza con el valor real del estado no funciona  
+                int idCuartel = resultSet.getInt("idCuartel");
+                String nombreCuartel = resultSet.getString("nombreCuartel");
+                // Se pueden agregar mas datos del cuartel
 
-                // Crear un objeto Brigada con los datos obtenidos de la base de datos, no tengo idea si funciona
-           Brigada brigada = new Brigada(idBrigada, nombreBrigada, especialidad, idCuartel, libre, estado);
-                brigadas.add(brigada);
+                // Crea un objeto Cuartel y lo agregaría a la lista
+             Cuartel cuartel = new Cuartel(idCuartel, nombreCuartel, "Dirección de ejemplo", "Ciudad de ejemplo", "Provincia de ejemplo", "1234567890", "", "", "correo@ejemplo.com", "Activo");
+                cuarteles.add(cuartel);
             }
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
-    
-    return brigadas;
+
+    return cuarteles;
 }
 
-private void cargarBrigadasEnJTable(List<Brigada> brigadas) {
+private void cargarBrigadasEnJTable(List<Brigada> brigada) {
     DefaultTableModel model = (DefaultTableModel) jTDatos.getModel();
-        model.setRowCount(0);
+    model.setRowCount(0);
 
-        for (Brigada brigada : brigadas) {
-            // Agregar cada brigada al JTable
-            model.addRow(new Object[]{brigada.getIdBrigada(), brigada.getNombreBrigada()});
-        }
+    for (Brigada cuartel : brigada) {
+        // Agregar cuartel al JTable
+        model.addRow(new Object[]{cuartel.getIdCuartel(), cuartel.getNombreBrigada(), cuartel.getIdBrigada(), cuartel.getIdCuartel()});
     }
+    
+    jTDatos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+    }
+
+    private void cargarCuartelesEnJTable(List<Cuartel> cuarteles) {
+    DefaultTableModel model = (DefaultTableModel) jTDatos.getModel();
+    model.setRowCount(0);
+
+    for (Cuartel cuartel : cuarteles) {
+        // Agregar cuartel al JTable
+        model.addRow(new Object[]{cuartel.getIdCuartel(), cuartel.getNombreCuartel(), cuartel.getDireccion(), cuartel.getCiudad()});   
+    }
+     jTDatos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+}
+
 }

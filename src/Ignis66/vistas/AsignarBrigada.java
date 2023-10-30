@@ -59,7 +59,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
         armarTabla2();
         armarTablaFinal();
         cargarCuarteles();
-        
+        setDefaultCloseOperation(0); //para desactivar la X(cerrar) del formulario.
 
         disableCopyPaste(txtBrigada);
         disableCopyPaste(txtEspecialidad);
@@ -617,6 +617,30 @@ public class AsignarBrigada extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -698,7 +722,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
             cData.buscarCuartel(bri.getIdCuartel());
          
             if(bri.getIdCuartel()==idCuartel){
-                modelo2.addRow(new Object[]{bri.getIdBrigada(), bri.getNombreBrigada(), bData.traerNombreCuartel(bri.getIdCuartel()),bri.getEspecialidad(), bri.isLibre(), bri.isActivo()});
+                modelo2.addRow(new Object[]{bri.getIdBrigada(), bri.getNombreBrigada(), bData.traerNombreCuartel(bri.getIdCuartel()),bri.getEspecialidad(), bri.getLibre(), bri.getActivo()});
             }
         }
         tablaBrigadas.setModel(modelo2);

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
@@ -47,6 +48,8 @@ public class ABMCuartel extends javax.swing.JFrame {
         disableCopyPaste(txtBusCiu);
         disableCopyPaste(txtBusNom);
         disableCopyPaste(txtBuscId);
+        setDefaultCloseOperation(0); //para desactivar la X(cerrar) del formulario.
+             
     }
 
     private void disableCopy(JComponent component) {

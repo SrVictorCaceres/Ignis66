@@ -141,6 +141,11 @@ public class Inicio extends javax.swing.JFrame {
 
         jLBtnMov.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Móvil.png"))); // NOI18N
         jLBtnMov.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLBtnMov.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLBtnMovMouseClicked(evt);
+            }
+        });
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Salir.png"))); // NOI18N
         jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -157,6 +162,11 @@ public class Inicio extends javax.swing.JFrame {
 
         jLBtnSini.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Siniestro.png"))); // NOI18N
         jLBtnSini.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLBtnSini.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLBtnSiniMouseClicked(evt);
+            }
+        });
 
         jLBtnCuar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Cuartel.png"))); // NOI18N
         jLBtnCuar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -287,14 +297,28 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jLBtnBombMouseClicked
 
     private void jLBtnBrigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLBtnBrigMouseClicked
-        PruebaFormularioBombero pruebaFormulario = new PruebaFormularioBombero();//cambiar a brigada
-         pruebaFormulario.setVisible(true);
+      AsignarBrigada asigBrig = new AsignarBrigada();
+         asigBrig.setVisible(true);
     }//GEN-LAST:event_jLBtnBrigMouseClicked
 
     private void jLBtnCuarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLBtnCuarMouseClicked
         ABMCuartel abmCuartel = new ABMCuartel();
          abmCuartel.setVisible(true);
     }//GEN-LAST:event_jLBtnCuarMouseClicked
+
+    private void jLBtnSiniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLBtnSiniMouseClicked
+      
+    SiniestroVista SiVista = new SiniestroVista();
+         SiVista.setVisible(true);
+    }//GEN-LAST:event_jLBtnSiniMouseClicked
+
+    private void jLBtnMovMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLBtnMovMouseClicked
+       
+        MovilFormulario MF = new MovilFormulario();
+          MF.setVisible(true);
+
+
+    }//GEN-LAST:event_jLBtnMovMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

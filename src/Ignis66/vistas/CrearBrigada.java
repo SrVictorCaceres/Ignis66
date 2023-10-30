@@ -33,6 +33,7 @@ public class CrearBrigada extends javax.swing.JFrame {
         llenarComboNBrigada();
         
         cargarCuarteles();
+        setDefaultCloseOperation(0); //para desactivar la X(cerrar) del formulario.
         
     }
 
@@ -176,8 +177,8 @@ public class CrearBrigada extends javax.swing.JFrame {
                                 .addComponent(jLabel2))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(150, 150, 150)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jcbB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jcbE, 0, 190, Short.MAX_VALUE))))
@@ -217,8 +218,8 @@ public class CrearBrigada extends javax.swing.JFrame {
         Brigada brigada = new Brigada();
         brigada.setNombreBrigada(jcbB.getSelectedItem().toString());
         brigada.setEspecialidad(jcbE.getSelectedItem().toString());
-        brigada.setActivo(true);
-        brigada.setLibre(true);
+        brigada.setActivo("ACTIVO");
+        brigada.setLibre("LIBRE");
         
          
         BrigadaData bData = new BrigadaData();
@@ -430,6 +431,12 @@ public class CrearBrigada extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(CrearBrigada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

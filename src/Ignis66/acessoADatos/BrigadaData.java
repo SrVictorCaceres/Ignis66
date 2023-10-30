@@ -1,25 +1,30 @@
 
 package Ignis66.acessoADatos;
 
-import Ignis66.acessoADatos.Conexion;
 import Ignis66.entidades.Bombero;
 import Ignis66.entidades.Brigada;
 import Ignis66.entidades.Cuartel;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.util.List;
 
 
 public class BrigadaData {
-    
     private Connection con;
+    
 
     public BrigadaData() {
         con = Conexion.getConexion();
+        
+    }
+
+    public BrigadaData(Connection conexion) {
+         this.con = conexion;
     }
     
     public void agregarBrigada(Brigada brigada, int id){
@@ -46,28 +51,30 @@ public class BrigadaData {
        }
     }
     
-    public ArrayList<Brigada> brigadasLibres(){
-        
-        ArrayList<Brigada> lista = new ArrayList();
-        String sql = "SELECT * FROM brigada WHERE libre = LIBRE";
-        
-    try{    
-        PreparedStatement ps = con.prepareStatement(sql);
-        
-        ResultSet rs = ps.executeQuery();
-        
-        while (rs.next()) {
-             lista.add(new Brigada(rs.getInt("idBrigada"), rs.getString("nombreBrigada"), rs.getString("especialidad"), rs.getInt("idCuartel"), rs.getString("LIBRE"), rs.getString("ACTIVO")));
+    public List<Brigada> brigadasLibres() {
+        List<Brigada> brigadas = new ArrayList<>();
+        String consultaSQL = "SELECT * FROM Brigada WHERE libre = 'LIBRE'"; // Ajusta la consulta según tu estructura de base de datos
+
+        try (PreparedStatement preparedStatement = con.prepareStatement(consultaSQL);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int idBrigada = resultSet.getInt("idBrigada");
+                String nombreBrigada = resultSet.getString("nombreBrigada");
+                // Otras columnas que desees recuperar
+
+                // Crea una instancia de Brigada y agrégala a la lista
+                Brigada brigada = new Brigada(idBrigada, nombreBrigada);
+                brigadas.add(brigada);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        
-        ps.close();
-        
-       }catch(SQLException sqle){
-           JOptionPane.showMessageDialog(null, "Error en la busqueda de Brigadas " + sqle.getMessage());
-       } 
-    
-        return lista;
+
+        return brigadas;
     }
+
+    
     
      public ArrayList<Brigada> brigadasTodas(){
         
@@ -365,4 +372,23 @@ public class BrigadaData {
         }catch(NullPointerException np){
            JOptionPane.showMessageDialog(null,"Debe completar correctamente todos los campos obligatorios");}
      };
+        public void marcarBrigadaActiva(int idBrigada) {
+        String sql = "UPDATE brigada SET libre = ? WHERE idBrigada = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, "OCUPADO");
+            ps.setInt(2, idBrigada);
+
+            int rowsUpdated = ps.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("La brigada con ID " + idBrigada + " ha sido marcada como libre.");
+            } else {
+                System.out.println("No se pudo marcar la brigada como ocupada.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al marcar la brigada como libre.");
+        }
+    }
 }
