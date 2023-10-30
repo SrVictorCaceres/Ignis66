@@ -891,7 +891,7 @@ public class ABMCuartel extends javax.swing.JFrame {
             evt.consume();
 
         }
-        if (txtCoordY.getText().trim().length() == 18) {
+        if (txtCoordX.getText().trim().length() == 18) {
             evt.consume();
             mensaje("Solo se admiten hasta 18 caracteres");
         }
@@ -955,7 +955,8 @@ public class ABMCuartel extends javax.swing.JFrame {
 
     public static boolean validaCoordenadas(String id) {
         boolean valido = true;
-        Pattern pc = Pattern.compile("^[-]{2}[.]{14}$");
+         Pattern pc = Pattern.compile("^*-[0-9]+([.][0-9]+)?$");
+        /*Pattern pc = Pattern.compile("^*-[0-9-{0,1}\\+]+(\\.[0-9-]+)$");*/
         Matcher m = pc.matcher(id);
         valido = m.matches();
 
