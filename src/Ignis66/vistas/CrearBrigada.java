@@ -217,8 +217,8 @@ public class CrearBrigada extends javax.swing.JFrame {
         Brigada brigada = new Brigada();
         brigada.setNombreBrigada(jcbB.getSelectedItem().toString());
         brigada.setEspecialidad(jcbE.getSelectedItem().toString());
-        brigada.setActivo("ACTIVO");
-        brigada.setLibre("LIBRE");
+        brigada.setActivo(true);
+        brigada.setLibre(true);
         
          
         BrigadaData bData = new BrigadaData();
