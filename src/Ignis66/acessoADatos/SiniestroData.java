@@ -1,4 +1,3 @@
-
 package Ignis66.acessoADatos;
 
 import Ignis66.entidades.Brigada;
@@ -11,19 +10,20 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import geolocalizacion.GeolocalizacionEspacial;
 
 public class SiniestroData {
     private Connection conexion;
-    private int calificacion;
-    private LocalDateTime fechaResolucion;
 
     public SiniestroData(Connection conexion) {
         this.conexion = conexion;
-        
+    }
+    
+    public double calcularDistanciaEntrePuntos(double coordenadaX1, double coordenadaY1, double coordenadaX2, double coordenadaY2) {
+        GeolocalizacionEspacial geolocalizacion = new GeolocalizacionEspacial(conexion);
+        return geolocalizacion.calcularDistanciaEntrePuntos(coordenadaX1, coordenadaY1, coordenadaX2, coordenadaY2);
     }
 
-    //metodo para asignar brigadas
-    // Método para agregar siniestro a la base de datos
     public void agregarSiniestro(Siniestro siniestro) {
         try {
             String sql = "INSERT INTO siniestros (fechaSiniestro, coordenadaX, coordenadaY, tipo, detalles, idBrigada) VALUES (?, ?, ?, ?, ?, ?)";
@@ -35,7 +35,7 @@ public class SiniestroData {
             statement.setString(5, siniestro.getDetalles());
             statement.setInt(6, siniestro.getIdBrigada());
             statement.executeUpdate();
-            
+
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 siniestro.setIdSiniestro(generatedKeys.getInt(1));
@@ -44,17 +44,33 @@ public class SiniestroData {
             e.printStackTrace();
         }
     }
+
     public Siniestro buscarSiniestroPorId(int idSiniestro) {
-        Iterable<Siniestro> siniestros = null;
-        for (Siniestro siniestro : siniestros) {
-            if (siniestro.getIdSiniestro() == idSiniestro) {
+        try {
+            String sql = "SELECT * FROM siniestros WHERE idSiniestro = ?";
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            statement.setInt(1, idSiniestro);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                Siniestro siniestro = new Siniestro();
+                siniestro.setIdSiniestro(resultSet.getInt("idSiniestro"));
+                siniestro.setFechaSiniestro(resultSet.getObject("fechaSiniestro", LocalDateTime.class));
+                siniestro.setCoordenadaX(resultSet.getDouble("coordenadaX"));
+                siniestro.setCoordenadaY(resultSet.getDouble("coordenadaY"));
+                siniestro.setTipo(resultSet.getString("tipo"));
+                siniestro.setDetalles(resultSet.getString("detalles"));
+                siniestro.setFechaResolucion(resultSet.getObject("fechaResolucion", LocalDateTime.class));
+                siniestro.setPuntuacion(resultSet.getInt("puntuacion"));
+                siniestro.setIdBrigada(resultSet.getInt("idBrigada"));
                 return siniestro;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null; // Si no se encuentra el siniestro, devuelve null
+        return null;
     }
 
-    // Método para marcar un siniestro como que ya está resuelto
     public void marcarSiniestroComoResuelto(Siniestro siniestro, LocalDateTime fechaResolucion, int puntuacion) {
         try {
             String sql = "UPDATE siniestros SET fechaResolucion = ?, puntuacion = ? WHERE idSiniestro = ?";
@@ -67,44 +83,47 @@ public class SiniestroData {
             e.printStackTrace();
         }
     }
-    // Método para asignar calificación
-    public void asignarCalificacion(int calificacion) {
-        if (calificacion >= 1 && calificacion <= 10) {
-            this.calificacion = calificacion;
-            this.fechaResolucion = LocalDateTime.now(); // Establecer la fecha de resolución al asignar la calificación
-        } else {
-            // Manejar un valor de calificación inválido
-            System.out.println("La calificación debe estar en el rango de 1 a 10.");
-        }
-    }
-    public void asignarBrigada(int idSiniestro, int idBrigada) {
-    // Acá aplicamos la lógica que corresponda para asignar una brigada a un siniestro
-    // Por ejemplo buscar el siniestro por su ID en una lista o base de datos,
-    // y luego asignar la brigada que corresponda.
 
-    Siniestro siniestro = buscarSiniestroPorId(idSiniestro); 
-    Brigada brigada = buscarBrigadaPorId(idBrigada); 
-
-    if (siniestro != null && brigada != null) {
-        siniestro.setIdBrigada(idBrigada);
-        // También see puede poner la fecha de asignación o algo para complementar mass info
-    } else {
-        // Manejar el caso cuando el siniestro o la brigada no se encuentren
-        // o realizar alguna validación, no se se me ocurre
-    }
-    
-   }
     public Brigada buscarBrigadaPorId(int idBrigada) {
-        Iterable<Brigada> brigadas = null;
-        for (Brigada brigada : brigadas) {
-            if (brigada.getIdBrigada() == idBrigada) {
+        try {
+            String sql = "SELECT * FROM brigadas WHERE idBrigada = ?";
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            statement.setInt(1, idBrigada);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                Brigada brigada = new Brigada();
+                brigada.setIdBrigada(resultSet.getInt("idBrigada"));
+              
                 return brigada;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null; // Si no se encuentra la brigada, devuelve null
+        return null;
     }
 
-    // Método para obtener lista de siniestros que ocurrieron entre dos fechas
+    public void asignarBrigadaASiniestro(int idSiniestro, int idBrigada) {
+        try {
+            Siniestro siniestro = buscarSiniestroPorId(idSiniestro);
+            Brigada brigada = buscarBrigadaPorId(idBrigada);
+
+            if (siniestro != null && brigada != null) {
+                siniestro.setIdBrigada(idBrigada);
+
+                String sql = "UPDATE siniestros SET idBrigada = ? WHERE idSiniestro = ?";
+                PreparedStatement statement = conexion.prepareStatement(sql);
+                statement.setInt(1, idBrigada);
+                statement.setInt(2, idSiniestro);
+                statement.executeUpdate();
+            } else {
+                System.err.println("No se pudo asignar la brigada al siniestro. Verifique que el siniestro y la brigada existan.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Siniestro> obtenerSiniestrosEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         List<Siniestro> siniestros = new ArrayList<>();
         try {
@@ -113,7 +132,7 @@ public class SiniestroData {
             statement.setObject(1, fechaInicio);
             statement.setObject(2, fechaFin);
             ResultSet resultSet = statement.executeQuery();
-            
+
             while (resultSet.next()) {
                 Siniestro siniestro = new Siniestro();
                 siniestro.setIdSiniestro(resultSet.getInt("idSiniestro"));
@@ -132,5 +151,4 @@ public class SiniestroData {
         }
         return siniestros;
     }
-   
 }

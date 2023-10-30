@@ -100,8 +100,6 @@ public final class PruebaFormularioBombero extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setUndecorated(true);
-        setResizable(false);
         getContentPane().setLayout(null);
 
         jtfNombre.setBorder(null);
@@ -210,7 +208,7 @@ public final class PruebaFormularioBombero extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10)
-                .addContainerGap(499, Short.MAX_VALUE))
+                .addContainerGap(495, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,7 +216,7 @@ public final class PruebaFormularioBombero extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 670, 27);
+        jPanel1.setBounds(0, 0, 670, 0);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel12.setText("Complete el siguiente formulario:");

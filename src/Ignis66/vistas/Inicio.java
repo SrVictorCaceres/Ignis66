@@ -1,12 +1,8 @@
 package Ignis66.vistas;
 
+import Ignis66.vistas.ABMCuartel;
 import desplazable.Desface;
 import java.awt.Dimension;
-import Ignis66.vistas.PruebaFormularioBombero;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
 
 public class Inicio extends javax.swing.JFrame {
 
@@ -47,10 +43,10 @@ public class Inicio extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLBtnSini = new javax.swing.JLabel();
         jLBtnCuar = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(700, 500));
         setSize(new java.awt.Dimension(0, 0));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -128,8 +124,12 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         jLBtnBrig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Brigada.png"))); // NOI18N
-        jLBtnBrig.setToolTipText("");
         jLBtnBrig.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLBtnBrig.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLBtnBrigMouseClicked(evt);
+            }
+        });
 
         jLBtnBomb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Bombero.png"))); // NOI18N
         jLBtnBomb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -204,6 +204,9 @@ public class Inicio extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPMenúPlegable, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 26, -1, 500));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/tipos-de-fuego.jpg"))); // NOI18N
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 1140, 500));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -283,10 +286,14 @@ public class Inicio extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLBtnBombMouseClicked
 
-    private void jLBtnCuarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLBtnCuarMouseClicked
- ABMCuartel ventana =new ABMCuartel();
+    private void jLBtnBrigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLBtnBrigMouseClicked
+        PruebaFormularioBombero pruebaFormulario = new PruebaFormularioBombero();//cambiar a brigada
+         pruebaFormulario.setVisible(true);
+    }//GEN-LAST:event_jLBtnBrigMouseClicked
 
-ventana.setVisible(true); 
+    private void jLBtnCuarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLBtnCuarMouseClicked
+        ABMCuartel abmCuartel = new ABMCuartel();
+         abmCuartel.setVisible(true);
     }//GEN-LAST:event_jLBtnCuarMouseClicked
 
     public static void main(String args[]) {
@@ -312,6 +319,9 @@ ventana.setVisible(true);
             java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -334,6 +344,7 @@ ventana.setVisible(true);
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPMenúPlegable;
     private javax.swing.JPanel jPanel1;

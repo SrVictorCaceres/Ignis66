@@ -3,9 +3,15 @@ package Ignis66.vistas;
 
 import Ignis66.acessoADatos.BomberoData;
 import Ignis66.acessoADatos.BrigadaData;
+import Ignis66.acessoADatos.Conexion;
+import Ignis66.acessoADatos.CuartelData;
 import Ignis66.entidades.Bombero;
 import Ignis66.entidades.Brigada;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -14,6 +20,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class AsignarBrigada extends javax.swing.JFrame {
 
+    int idCuartel;
+    int idBrigada;
+    
     ArrayList<Brigada> lista = new ArrayList();
         
         DefaultTableModel modelo = new DefaultTableModel(){
@@ -31,22 +40,29 @@ public class AsignarBrigada extends javax.swing.JFrame {
             }
         };
         
+        DefaultTableModel modelo3 = new DefaultTableModel(){
+            
+            @Override
+            public boolean isCellEditable(int f, int c){
+                return false;
+            }
+        };
+        
         
     /**
      * Creates new form AsignarBrigada
      */
     public AsignarBrigada() {
         initComponents();
+        validacion();
         armarTabla();
         armarTabla2();
-        armarTabla3();
-        disableCopyPaste(b1);//deshabilita el copy paste en el textfield
-        disableCopyPaste(b2);
-        disableCopyPaste(b3);
-        disableCopyPaste(b4);
-        disableCopyPaste(b5);
-        disableCopyPaste(txtB);
-        disableCopyPaste(txtE);
+        armarTablaFinal();
+        cargarCuarteles();
+        
+
+        disableCopyPaste(txtBrigada);
+        disableCopyPaste(txtEspecialidad);
     }
 
     private void disableCopy(JComponent component) {
@@ -74,37 +90,40 @@ public class AsignarBrigada extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabla = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        b1 = new javax.swing.JTextField();
-        b2 = new javax.swing.JTextField();
-        b3 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        b4 = new javax.swing.JTextField();
-        b5 = new javax.swing.JTextField();
+        tablaBomberos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tabla2 = new javax.swing.JTable();
-        limpCampos = new javax.swing.JButton();
-        asignarBri = new javax.swing.JButton();
+        tablaBrigadas = new javax.swing.JTable();
+        botonOK = new javax.swing.JButton();
+        asignarBrigada = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtB = new javax.swing.JTextField();
+        txtBrigada = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtE = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tabla3 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        txtEspecialidad = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        errorBomberos = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        TablaBB = new javax.swing.JTable();
+        quitarBombero = new javax.swing.JButton();
+        limpiarCampos = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        cantidadBomberos = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        ComboBoxCuarteles = new javax.swing.JComboBox<>();
+        botonAgregar = new javax.swing.JButton();
+        jVaciarBrigada = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
+        getContentPane().setLayout(null);
 
         jPanel1.setBackground(java.awt.Color.red);
 
         jLabel1.setBackground(java.awt.Color.white);
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(java.awt.Color.white);
         jLabel1.setText("Asignación de Brigadas");
 
@@ -113,16 +132,48 @@ public class AsignarBrigada extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(298, 298, 298)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(747, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
         );
 
-        tabla.setModel(new javax.swing.table.DefaultTableModel(
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 0, 916, 0);
+
+        tablaBomberos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "ID", "Nombre Completo", "DNI"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablaBomberos);
+        if (tablaBomberos.getColumnModel().getColumnCount() > 0) {
+            tablaBomberos.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tablaBomberos.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tablaBomberos.getColumnModel().getColumn(2).setPreferredWidth(60);
+        }
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(40, 380, 370, 170);
+
+        tablaBrigadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -133,120 +184,57 @@ public class AsignarBrigada extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablaBrigadas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaMouseClicked(evt);
+                tablaBrigadasMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tabla);
+        jScrollPane2.setViewportView(tablaBrigadas);
 
-        jLabel4.setText("Bombero 1: ");
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(40, 150, 820, 130);
 
-        jLabel5.setText("Bombero 2: ");
-
-        jLabel6.setText("Bombero 3: ");
-
-        b1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                b1KeyTyped(evt);
-            }
-        });
-
-        b2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                b2KeyTyped(evt);
-            }
-        });
-
-        b3.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                b3KeyTyped(evt);
-            }
-        });
-
-        jLabel7.setText("Bombero 4: ");
-
-        jLabel8.setText("Bombero 5: ");
-
-        b4.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                b4KeyTyped(evt);
-            }
-        });
-
-        b5.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                b5KeyTyped(evt);
-            }
-        });
-
-        tabla2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tabla2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabla2MouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tabla2);
-
-        limpCampos.setText("Limpiar Campos");
-        limpCampos.addActionListener(new java.awt.event.ActionListener() {
+        botonOK.setText("OK");
+        botonOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                limpCamposActionPerformed(evt);
+                botonOKActionPerformed(evt);
             }
         });
+        getContentPane().add(botonOK);
+        botonOK.setBounds(530, 80, 50, 30);
 
-        asignarBri.setText("Asignar Brigada");
-        asignarBri.addActionListener(new java.awt.event.ActionListener() {
+        asignarBrigada.setText("Asignar Brigada");
+        asignarBrigada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                asignarBriActionPerformed(evt);
+                asignarBrigadaActionPerformed(evt);
             }
         });
+        getContentPane().add(asignarBrigada);
+        asignarBrigada.setBounds(700, 520, 175, 32);
 
         jLabel2.setText("Brigada: ");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(190, 300, 90, 16);
 
-        txtB.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtBrigada.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBKeyTyped(evt);
+                txtBrigadaKeyTyped(evt);
             }
         });
+        getContentPane().add(txtBrigada);
+        txtBrigada.setBounds(290, 290, 110, 30);
 
         jLabel3.setText("Especialidad: ");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(510, 300, 140, 16);
 
-        txtE.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtEspecialidad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtEKeyTyped(evt);
+                txtEspecialidadKeyTyped(evt);
             }
         });
-
-        tabla3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(tabla3);
-
-        jButton1.setText("Modificar Brigada");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        getContentPane().add(txtEspecialidad);
+        txtEspecialidad.setBounds(650, 290, 140, 30);
 
         jButton2.setText("Salir");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -254,124 +242,169 @@ public class AsignarBrigada extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(700, 570, 175, 32);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(b2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(b4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(b3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jLabel2)
-                        .addGap(27, 27, 27)
-                        .addComponent(txtB, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(130, 130, 130)
-                        .addComponent(jLabel3)
-                        .addGap(27, 27, 27)
-                        .addComponent(txtE, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel8)
-                            .addGap(22, 22, 22)
-                            .addComponent(b5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(51, 51, 51))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(66, 66, 66)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(limpCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(95, 95, 95)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(asignarBri, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
-                        .addGap(109, 109, 109)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(195, 195, 195)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(199, 199, 199)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel8)
-                    .addComponent(b5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(b2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(b4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(asignarBri)
-                    .addComponent(limpCampos)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(20, 20, 20))
-        );
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel12.setText("Brigadas del Cuartel seleccionado");
+        getContentPane().add(jLabel12);
+        jLabel12.setBounds(40, 130, 210, 15);
+        getContentPane().add(jSeparator3);
+        jSeparator3.setBounds(40, 70, 820, 10);
+
+        errorBomberos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        errorBomberos.setForeground(new java.awt.Color(204, 0, 0));
+        errorBomberos.setText("!");
+        getContentPane().add(errorBomberos);
+        errorBomberos.setBounds(710, 360, 10, 15);
+        getContentPane().add(jSeparator4);
+        jSeparator4.setBounds(40, 360, 370, 10);
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel14.setText("Asigne los 5 Bomberos que conformaran la Brigada");
+        getContentPane().add(jLabel14);
+        jLabel14.setBounds(40, 340, 330, 15);
+
+        TablaBB.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "ID", "Nombre Completo", "DNI"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(TablaBB);
+        if (TablaBB.getColumnModel().getColumnCount() > 0) {
+            TablaBB.getColumnModel().getColumn(0).setPreferredWidth(30);
+            TablaBB.getColumnModel().getColumn(1).setPreferredWidth(200);
+            TablaBB.getColumnModel().getColumn(2).setPreferredWidth(150);
+        }
+
+        getContentPane().add(jScrollPane5);
+        jScrollPane5.setBounds(520, 380, 350, 130);
+
+        quitarBombero.setText("Quitar Bombero");
+        quitarBombero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitarBomberoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(quitarBombero);
+        quitarBombero.setBounds(520, 520, 160, 32);
+
+        limpiarCampos.setText("Limpiar Campos");
+        limpiarCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limpiarCamposActionPerformed(evt);
+            }
+        });
+        getContentPane().add(limpiarCampos);
+        limpiarCampos.setBounds(510, 570, 175, 32);
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel15.setText("Integrantes de la Brigada:");
+        getContentPane().add(jLabel15);
+        jLabel15.setBounds(520, 360, 170, 15);
+
+        cantidadBomberos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        cantidadBomberos.setText("8");
+        getContentPane().add(cantidadBomberos);
+        cantidadBomberos.setBounds(690, 360, 10, 15);
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel13.setText("Por favor seleccione el Cuartel, y posteriormente una Brigada:");
+        getContentPane().add(jLabel13);
+        jLabel13.setBounds(40, 50, 400, 15);
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel16.setText("Cuarteles");
+        getContentPane().add(jLabel16);
+        jLabel16.setBounds(40, 90, 60, 15);
+
+        ComboBoxCuarteles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ComboBoxCuartelesMouseClicked(evt);
+            }
+        });
+        getContentPane().add(ComboBoxCuarteles);
+        ComboBoxCuarteles.setBounds(110, 80, 410, 30);
+
+        botonAgregar.setText(">");
+        botonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonAgregar);
+        botonAgregar.setBounds(440, 450, 50, 32);
+
+        jVaciarBrigada.setText("Vacíar Brigada");
+        jVaciarBrigada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jVaciarBrigadaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jVaciarBrigada);
+        jVaciarBrigada.setBounds(310, 570, 180, 20);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void limpCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpCamposActionPerformed
-        limpCampos();
-    }//GEN-LAST:event_limpCamposActionPerformed
+    private void botonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOKActionPerformed
+       
+      
+      limpiarTablaBrigadas();
+       String sacarId = ComboBoxCuarteles.getSelectedItem().toString().substring(0, 2);
+       idCuartel=Integer.parseInt(sacarId);
+      
+        cargarTabla2(idCuartel);
+        
+       
+        
+    }//GEN-LAST:event_botonOKActionPerformed
 
-    private void asignarBriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignarBriActionPerformed
-        Bombero bombero = new Bombero();
+    private void asignarBrigadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignarBrigadaActionPerformed
+        Brigada brigada = new Brigada();
+        BomberoData bomData = new BomberoData();
+        BrigadaData brData = new BrigadaData();
+        
+         bomData.quitarBomberoDeBrigada(brData.buscarBrigada(idBrigada).getBombero1());
+         bomData.quitarBomberoDeBrigada(brData.buscarBrigada(idBrigada).getBombero2());
+         bomData.quitarBomberoDeBrigada(brData.buscarBrigada(idBrigada).getBombero3());
+         bomData.quitarBomberoDeBrigada(brData.buscarBrigada(idBrigada).getBombero4());
+         bomData.quitarBomberoDeBrigada(brData.buscarBrigada(idBrigada).getBombero5());
+        
+         bomData.asignarBomberoABrigada(idBrigada,(int) TablaBB.getValueAt(0, 0));
+         bomData.asignarBomberoABrigada(idBrigada,(int) TablaBB.getValueAt(1, 0));
+         bomData.asignarBomberoABrigada(idBrigada,(int) TablaBB.getValueAt(2, 0));
+         bomData.asignarBomberoABrigada(idBrigada,(int) TablaBB.getValueAt(3, 0));
+         bomData.asignarBomberoABrigada(idBrigada,(int) TablaBB.getValueAt(4, 0));
+         
+        brigada.setBombero1((int) TablaBB.getValueAt(0, 0));
+        brigada.setBombero2((int) TablaBB.getValueAt(1, 0));
+        brigada.setBombero3((int) TablaBB.getValueAt(2, 0));
+        brigada.setBombero4((int) TablaBB.getValueAt(3, 0));
+        brigada.setBombero5((int) TablaBB.getValueAt(4, 0));
+       
+        brData.cargarBrigada(brigada, idBrigada);
+       limpiarTablaBrigadas();
+        cargarCuarteles();
+        
+         
+        
+        /*  Bombero bombero = new Bombero();
         bombero.setNombreCompleto(b1.getText());
         Bombero bombero2 = new Bombero();
         bombero2.setNombreCompleto(b2.getText());
@@ -382,241 +415,174 @@ public class AsignarBrigada extends javax.swing.JFrame {
         Bombero bombero5 = new Bombero();
         bombero5.setNombreCompleto(b5.getText());
         Brigada brigada = new Brigada();
-        brigada.setNombreBrigada(txtB.getText());
-        brigada.setEspecialidad(txtE.getText());
+        brigada.setNombreBrigada(txtBrigada.getText());
+        brigada.setEspecialidad(txtEspecialidad.getText());
         
-        if(b1.getText().isEmpty() || b2.getText().isEmpty() || b3.getText().isEmpty() || b4.getText().isEmpty() || b5.getText().isEmpty() || txtB.getText().isEmpty() || txtE.getText().isEmpty()){
+        if(b1.getText().isEmpty() || b2.getText().isEmpty() || b3.getText().isEmpty() || b4.getText().isEmpty() || b5.getText().isEmpty() || txtBrigada.getText().isEmpty() || txtEspecialidad.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Para asignar una brigada se necesita que todos los campos esten completos");
         }else{
             lista.add(new Brigada(brigada.getNombreBrigada(), bombero, bombero2, bombero3, bombero4, bombero5, brigada.getEspecialidad(), true, false));
         
             modelo.addRow(new Object[]{brigada.getNombreBrigada(), bombero.getNombreCompleto(), bombero2.getNombreCompleto(), bombero3.getNombreCompleto(), bombero4.getNombreCompleto(), bombero5.getNombreCompleto(), brigada.getEspecialidad()});
-            modelo2.removeRow(tabla2.getSelectedRow());
+            modelo2.removeRow(tablaBrigadas.getSelectedRow());
         }
         
         
         
-        limpCampos();
-    }//GEN-LAST:event_asignarBriActionPerformed
+        limpCampos();*/
+    }//GEN-LAST:event_asignarBrigadaActionPerformed
 
-    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-    
-      if(b1.getText().isEmpty() && tabla.getSelectedRow() != -1 && evt.getClickCount() == 2){
-            b1.setText(tabla.getValueAt(tabla.getSelectedRow(), 1).toString());
-        }else if(b2.getText().isEmpty() && !b1.getText().isEmpty() && tabla.getSelectedRow() != -1 && evt.getClickCount() == 2){
-            b2.setText(tabla.getValueAt(tabla.getSelectedRow(), 1).toString());
-        }else if(b3.getText().isEmpty() && !b1.getText().isEmpty() && !b2.getText().isEmpty() && tabla.getSelectedRow() != -1 && evt.getClickCount() == 2){
-            b3.setText(tabla.getValueAt(tabla.getSelectedRow(), 1).toString());
-        }else if(b4.getText().isEmpty() && !b1.getText().isEmpty() && !b2.getText().isEmpty() && !b3.getText().isEmpty() && tabla.getSelectedRow() != -1 && evt.getClickCount() == 2){
-            b4.setText(tabla.getValueAt(tabla.getSelectedRow(), 1).toString());
-        }else if(b5.getText().isEmpty() && !b1.getText().isEmpty() && !b2.getText().isEmpty() && !b3.getText().isEmpty() && !b4.getText().isEmpty() && tabla.getSelectedRow() != -1 && evt.getClickCount() == 2){
-            b5.setText(tabla.getValueAt(tabla.getSelectedRow(), 1).toString());
-        }
-        String bombero = b1.getText();
-        String bombero2 = b2.getText();
-        String bombero3 = b3.getText();
-        String bombero4 = b4.getText();
-        String bombero5 = b5.getText();
+    private void tablaBrigadasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaBrigadasMouseClicked
+            limpiarTablaBomberos();
+            limpiarTablaFinal();
+            BrigadaData brData = new BrigadaData();
+            BomberoData bomData = new BomberoData();
         
-        try{
-            if(!b1.getText().isEmpty() && !b2.getText().isEmpty() && !b3.getText().isEmpty() && !b4.getText().isEmpty() && !b5.getText().isEmpty() && evt.getClickCount() == 2){
-                
-            String id = JOptionPane.showInputDialog("Ingrese el id del bombero 1");
-            int idB = Integer.parseInt(id);
-            Bombero bom1 = new Bombero(idB, bombero);
-            String id2 = JOptionPane.showInputDialog("Ingrese el id del bombero 2");
-            int idB2 = Integer.parseInt(id2);
-            Bombero bom2 = new Bombero(idB2, bombero2);
-            String id3 = JOptionPane.showInputDialog("Ingrese el id del bombero 3");
-            int idB3 = Integer.parseInt(id3);
-            Bombero bom3 = new Bombero(idB3, bombero3);
-            String id4 = JOptionPane.showInputDialog("Ingrese el id del bombero 4");
-            int idB4 = Integer.parseInt(id4);
-            Bombero bom4 = new Bombero(idB4, bombero4);
-            String id5 = JOptionPane.showInputDialog("Ingrese el id del bombero 5");
-            int idB5 = Integer.parseInt(id5);
-            Bombero bom5 = new Bombero(idB5, bombero5);
+            txtBrigada.setText(tablaBrigadas.getValueAt(tablaBrigadas.getSelectedRow(), 1).toString());
+            txtEspecialidad.setText(tablaBrigadas.getValueAt(tablaBrigadas.getSelectedRow(), 3).toString());
+            if(txtEspecialidad.getText()!=null)
+            cargarTabla(txtEspecialidad.getText());
+           
+            idBrigada=(int) tablaBrigadas.getValueAt(tablaBrigadas.getSelectedRow(), 0);
+           
             
-
-            if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom4.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
-                b2.setText("");
-                b3.setText("");
-                b4.setText("");
-                b5.setText("");
-            }else if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom4.getIdBombero()){
-                b2.setText("");
-                b3.setText("");
-                b4.setText("");
-            }else if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom3.getIdBombero()){
-                b2.setText("");
-                b3.setText("");
-            }else if(bom1.getIdBombero() == bom2.getIdBombero()){
-                b2.setText("");
-            }else if(bom1.getIdBombero() == bom3.getIdBombero()){
-                b3.setText("");
-            }else if(bom1.getIdBombero() == bom4.getIdBombero()){
-                b4.setText("");
-            }else if(bom1.getIdBombero() == bom5.getIdBombero()){
-                b5.setText("");
-            }else if(bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom4.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
-                b3.setText("");
-                b4.setText("");
-                b5.setText("");
-            }else if(bom1.getIdBombero() == bom4.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
-                b4.setText("");
-                b5.setText("");
-            }else if(bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom4.getIdBombero()){
-                b3.setText("");
-                b4.setText("");
-            }else if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
-                b2.setText("");
-                b5.setText("");
-            }else if(bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
-                b3.setText("");
-                b5.setText("");
-            }else if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom4.getIdBombero()){
-                b2.setText("");
-                b4.setText("");
-            }else if(bom1.getIdBombero() == bom2.getIdBombero() && bom1.getIdBombero() == bom3.getIdBombero() && bom1.getIdBombero() == bom5.getIdBombero()){
-                b2.setText("");
-                b3.setText("");
-                b5.setText("");
-            }else if(bom2.getIdBombero() == bom3.getIdBombero() && bom2.getIdBombero() == bom4.getIdBombero() && bom2.getIdBombero() == bom5.getIdBombero()){
-                b3.setText("");
-                b4.setText("");
-                b5.setText("");
-            }else if(bom2.getIdBombero() == bom3.getIdBombero()){
-                b3.setText("");
-            }else if(bom2.getIdBombero() == bom4.getIdBombero()){
-                b4.setText("");
-            }else if(bom2.getIdBombero() == bom5.getIdBombero()){
-                b5.setText("");
-            }else if(bom2.getIdBombero() == bom3.getIdBombero() && bom2.getIdBombero() == bom5.getIdBombero()){
-                b3.setText("");
-                b5.setText("");
-            }else if(bom2.getIdBombero() == bom4.getIdBombero() && bom2.getIdBombero() == bom5.getIdBombero()){
-                b4.setText("");
-                b5.setText("");
-            }else if(bom2.getIdBombero() == bom3.getIdBombero() && bom2.getIdBombero() == bom4.getIdBombero()){
-                b3.setText("");
-                b4.setText("");
-            }else if(bom3.getIdBombero() == bom4.getIdBombero()){
-                b4.setText("");
-            }else if(bom3.getIdBombero() == bom5.getIdBombero()){
-                b5.setText("");
-            }else if(bom3.getIdBombero() == bom4.getIdBombero() && bom3.getIdBombero() == bom5.getIdBombero()){
-                b4.setText("");
-                b5.setText("");
-            }else if(bom4.getIdBombero() == bom5.getIdBombero()){
-                b5.setText("");
-            }
+           if (brData.buscarBrigada(idBrigada).getBombero1()!=0){
+                int idB = brData.buscarBrigada(idBrigada).getBombero1();
+                modelo3.addRow(new Object[]{idB,bomData.traerDatos(idB).getNombreCompleto()});}
+           if (brData.buscarBrigada(idBrigada).getBombero2()!=0){
+                int idB2 = brData.buscarBrigada(idBrigada).getBombero2();
+                modelo3.addRow(new Object[]{idB2,bomData.traerDatos(idB2).getNombreCompleto()});}
+           if (brData.buscarBrigada(idBrigada).getBombero3()!=0){
+                int idB3 = brData.buscarBrigada(idBrigada).getBombero3();
+                modelo3.addRow(new Object[]{idB3,bomData.traerDatos(idB3).getNombreCompleto()});}
+           if (brData.buscarBrigada(idBrigada).getBombero4()!=0){
+                int idB4 = brData.buscarBrigada(idBrigada).getBombero4();
+                modelo3.addRow(new Object[]{idB4,bomData.traerDatos(idB4).getNombreCompleto()});    } 
+           if (brData.buscarBrigada(idBrigada).getBombero5()!=0){
+                int idB5 = brData.buscarBrigada(idBrigada).getBombero5();
+                modelo3.addRow(new Object[]{idB5,bomData.traerDatos(idB5).getNombreCompleto()});     }       
+              
+          
             
-           } 
-        }catch(NumberFormatException nf){
-            JOptionPane.showMessageDialog(this, "Ingrese un número ");
-        }
-
-     
-    }//GEN-LAST:event_tablaMouseClicked
-
-    private void tabla2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla2MouseClicked
-        
-        if(txtB.getText().isEmpty() && tabla2.getSelectedRow() != -1 && evt.getClickCount() == 2){
-            txtB.setText(tabla2.getValueAt(tabla2.getSelectedRow(), 1).toString());
-        }else if(txtE.getText().isEmpty() && tabla2.getSelectedRow() != -1 && evt.getClickCount() == 2){
-            txtE.setText(tabla2.getValueAt(tabla2.getSelectedRow(), 2).toString());
-        }
-    }//GEN-LAST:event_tabla2MouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-        try{
-        
-        if(b1.getText().isEmpty() || b2.getText().isEmpty() || b3.getText().isEmpty() || b4.getText().isEmpty() || b5.getText().isEmpty() || txtB.getText().isEmpty() || txtE.getText().isEmpty() && tabla3.getSelectedRow() != -1){
-            JOptionPane.showMessageDialog(this, "Para modificar una Brigada se necesitan todos los campos completos");
-        }else{
-            Bombero bombero = new Bombero();
-            bombero.setNombreCompleto(b1.getText());
-            Bombero bombero2 = new Bombero();
-            bombero2.setNombreCompleto(b2.getText());
-            Bombero bombero3 = new Bombero();
-            bombero3.setNombreCompleto(b3.getText());
-            Bombero bombero4 = new Bombero();
-            bombero4.setNombreCompleto(b4.getText());
-            Bombero bombero5 = new Bombero();
-            bombero5.setNombreCompleto(b5.getText());
-            Brigada brigada = new Brigada();
-            brigada.setNombreBrigada(txtB.getText());
-            brigada.setEspecialidad(txtE.getText());
+            validacion();
             
-            lista.set(tabla3.getSelectedRow(), new Brigada(brigada.getNombreBrigada(), bombero, bombero2, bombero3, bombero4, bombero5, brigada.getEspecialidad(), true, false));
-            
-            modelo.removeRow(tabla3.getSelectedRow());
+    }//GEN-LAST:event_tablaBrigadasMouseClicked
 
-            modelo.addRow(new Object[]{brigada.getNombreBrigada(), bombero.getNombreCompleto(), bombero2.getNombreCompleto(), bombero3.getNombreCompleto(), bombero4.getNombreCompleto(), bombero5.getNombreCompleto(), brigada.getEspecialidad()});
-            
-            
-        }
-        
-        }catch(ArrayIndexOutOfBoundsException arr){
-            JOptionPane.showMessageDialog(this, "Seleccione la brigada a modificar");
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void b1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_b1KeyTyped
+    private void txtBrigadaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBrigadaKeyTyped
         char c = evt.getKeyChar();
         if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
             evt.consume();
         }
-    }//GEN-LAST:event_b1KeyTyped
+    }//GEN-LAST:event_txtBrigadaKeyTyped
 
-    private void b2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_b2KeyTyped
+    private void txtEspecialidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEspecialidadKeyTyped
         char c = evt.getKeyChar();
         if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
             evt.consume();
         }
-    }//GEN-LAST:event_b2KeyTyped
-
-    private void b3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_b3KeyTyped
-        char c = evt.getKeyChar();
-        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
-            evt.consume();
-        }
-    }//GEN-LAST:event_b3KeyTyped
-
-    private void b4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_b4KeyTyped
-        char c = evt.getKeyChar();
-        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
-            evt.consume();
-        }
-    }//GEN-LAST:event_b4KeyTyped
-
-    private void b5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_b5KeyTyped
-        char c = evt.getKeyChar();
-        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
-            evt.consume();
-        }
-    }//GEN-LAST:event_b5KeyTyped
-
-    private void txtBKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBKeyTyped
-        char c = evt.getKeyChar();
-        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtBKeyTyped
-
-    private void txtEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEKeyTyped
-        char c = evt.getKeyChar();
-        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != 32)&& (c!='\u00f1')&&(c!='\u00d1')) { 
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtEKeyTyped
+    }//GEN-LAST:event_txtEspecialidadKeyTyped
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (JOptionPane.showConfirmDialog(null, "Esta seguro que desea salir de esta pantalla?", "Ignis - Salir de la Aplicación", JOptionPane.YES_NO_OPTION) == 0) {
             dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void quitarBomberoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarBomberoActionPerformed
+        BomberoData bomData = new BomberoData(); 
+        BrigadaData brData = new BrigadaData(); 
+        int b = (int) TablaBB.getValueAt(TablaBB.getSelectedRow(), 0);
+        Bombero bomb = bomData.traerDatos(b);
+        System.out.println(b);
+        System.out.println(brData.buscarBrigada(idBrigada).getBombero1());
+          System.out.println(brData.buscarBrigada(idBrigada).getBombero2());  
+          System.out.println(brData.buscarBrigada(idBrigada).getBombero3());
+            System.out.println(brData.buscarBrigada(idBrigada).getBombero4());
+              System.out.println(brData.buscarBrigada(idBrigada).getBombero5());
+            
+          
+
+                
+      if(b==brData.buscarBrigada(idBrigada).getBombero1())
+            brData.quitarBombero1DeBrigada(b,idBrigada);
+     if(b==brData.buscarBrigada(idBrigada).getBombero2())
+            brData.quitarBombero2DeBrigada(b,idBrigada);
+     if(b==brData.buscarBrigada(idBrigada).getBombero3())
+            brData.quitarBombero3DeBrigada(b,idBrigada);
+     if(b==brData.buscarBrigada(idBrigada).getBombero4())
+            brData.quitarBombero4DeBrigada(b,idBrigada);
+     if(b==brData.buscarBrigada(idBrigada).getBombero5())
+            brData.quitarBombero5DeBrigada(b,idBrigada);
+            
+     
+          
+       
+        
+        bomData.quitarBomberoDeBrigada((int) TablaBB.getValueAt(TablaBB.getSelectedRow(), 0));
+        modelo3.removeRow(TablaBB.getSelectedRow());
+        limpiarTablaBomberos();
+        limpiarTablaBrigadas();
+        cargarTabla2(idCuartel);
+        cargarTabla(txtEspecialidad.getText());
+        validacion();
+    }//GEN-LAST:event_quitarBomberoActionPerformed
+
+    private void limpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarCamposActionPerformed
+        
+        limpCampos();
+        
+    }//GEN-LAST:event_limpiarCamposActionPerformed
+
+    private void ComboBoxCuartelesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ComboBoxCuartelesMouseClicked
+    
+        
+    }//GEN-LAST:event_ComboBoxCuartelesMouseClicked
+
+    private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
+          
+            int pos = tablaBomberos.getSelectedRow();
+      //  if (pos != 1){
+            int id = (int) tablaBomberos.getValueAt(pos, 0);
+            String nombre =  tablaBomberos.getValueAt(pos, 1).toString();
+                     
+            boolean check = validarDuplicados(id);
+            
+            if (check)
+                 JOptionPane.showMessageDialog(this, "Error!! El Bombero ya fue seleccionado");
+            else if (check == false)
+                modelo3.addRow(new Object[]{id,nombre});
+           else
+                JOptionPane.showMessageDialog(this, "Error!! Debe seleccionar un Bombero");
+             
+          
+            
+            validacion();
+        
+    }//GEN-LAST:event_botonAgregarActionPerformed
+
+    private void jVaciarBrigadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jVaciarBrigadaActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Esta seguro que desea guardar la Brigada vacía?", "Ignis - Vacíar Brigada", JOptionPane.YES_NO_OPTION) == 0) {
+            //metodo para vacias la brigada
+            BrigadaData brData = new BrigadaData();
+            BomberoData bomData = new BomberoData();
+            bomData.quitarBomberoDeBrigada(brData.buscarBrigada(idBrigada).getBombero1());
+            bomData.quitarBomberoDeBrigada(brData.buscarBrigada(idBrigada).getBombero2());
+            bomData.quitarBomberoDeBrigada(brData.buscarBrigada(idBrigada).getBombero3());
+            bomData.quitarBomberoDeBrigada(brData.buscarBrigada(idBrigada).getBombero4());
+            bomData.quitarBomberoDeBrigada(brData.buscarBrigada(idBrigada).getBombero5());
+
+            
+            brData.buscarBrigada(idBrigada).setBombero1(0);
+            brData.buscarBrigada(idBrigada).setBombero2(0);
+            brData.buscarBrigada(idBrigada).setBombero3(0);
+            brData.buscarBrigada(idBrigada).setBombero4(0);
+            brData.buscarBrigada(idBrigada).setBombero5(0);
+            
+            brData.vaciarBrigada(idBrigada);
+        }
+        
+        
+    }//GEN-LAST:event_jVaciarBrigadaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -644,6 +610,13 @@ public class AsignarBrigada extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AsignarBrigada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -654,99 +627,188 @@ public class AsignarBrigada extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton asignarBri;
-    private javax.swing.JTextField b1;
-    private javax.swing.JTextField b2;
-    private javax.swing.JTextField b3;
-    private javax.swing.JTextField b4;
-    private javax.swing.JTextField b5;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> ComboBoxCuarteles;
+    private javax.swing.JTable TablaBB;
+    private javax.swing.JButton asignarBrigada;
+    private javax.swing.JButton botonAgregar;
+    private javax.swing.JButton botonOK;
+    private javax.swing.JLabel cantidadBomberos;
+    private javax.swing.JLabel errorBomberos;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JButton limpCampos;
-    private javax.swing.JTable tabla;
-    public javax.swing.JTable tabla2;
-    private javax.swing.JTable tabla3;
-    private javax.swing.JTextField txtB;
-    private javax.swing.JTextField txtE;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JButton jVaciarBrigada;
+    private javax.swing.JButton limpiarCampos;
+    private javax.swing.JButton quitarBombero;
+    private javax.swing.JTable tablaBomberos;
+    public javax.swing.JTable tablaBrigadas;
+    private javax.swing.JTextField txtBrigada;
+    private javax.swing.JTextField txtEspecialidad;
     // End of variables declaration//GEN-END:variables
 
 
     public void armarTabla(){
-        String [] nombreColumnas = {"ID", "Nombre y Apellido", "Dni"};
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombre Completo");        
+        modelo.addColumn("DNI");
         
-        DefaultTableModel modelo = new DefaultTableModel(null, nombreColumnas){
-            @Override
-            public boolean isCellEditable(int f, int c){
-                return false;
-            }
-        };
+          tablaBomberos.setModel(modelo);
+    }
+        
+        public void cargarTabla(String especialidad){
         
         BomberoData bData = new BomberoData();
-        for(Bombero bombero: bData.listarBomberos()){
+        for(Bombero bombero: bData.listarBomberosPorEspecialidad(especialidad)){
+      
             modelo.addRow(new Object[]{bombero.getIdBombero(), bombero.getNombreCompleto(), bombero.getDni()});
         }
         
-        
-        tabla.setModel(modelo);
     }
     
     public void armarTabla2(){
         
-        modelo2.addColumn("ID Brigada");
+        modelo2.addColumn("ID");
         modelo2.addColumn("Brigada");
+        modelo2.addColumn("Nombre");        
         modelo2.addColumn("Especialidad");
         modelo2.addColumn("Activa");
         modelo2.addColumn("Libre");
+      
+        tablaBrigadas.setModel(modelo2);
+    }
+    
+       public void cargarTabla2(int idCuartel){
+                   
         BrigadaData bData = new BrigadaData();
-        String activa = "No";
-        String libre = "Si";
-        for(Brigada bri: bData.brigadasLibres()){
-            if(!bri.isLibre()){
-                modelo2.addRow(new Object[]{bri.getIdBrigada(), bri.getNombreBrigada(), bri.getEspecialidad(), activa, libre});
+        CuartelData cData = new CuartelData();        
+      
+        for(Brigada bri: bData.brigadasTodas()){
+            cData.buscarCuartel(bri.getIdCuartel());
+         
+            if(bri.getIdCuartel()==idCuartel){
+                modelo2.addRow(new Object[]{bri.getIdBrigada(), bri.getNombreBrigada(), bData.traerNombreCuartel(bri.getIdCuartel()),bri.getEspecialidad(), bri.isLibre(), bri.isActivo()});
             }
         }
-        tabla2.setModel(modelo2);
+        tablaBrigadas.setModel(modelo2);
     }
     
-    public void armarTabla3(){
-        modelo.addColumn("Brigada");
-        modelo.addColumn("Bombero 1");
-        modelo.addColumn("Bombero 2");
-        modelo.addColumn("Bombero 3");
-        modelo.addColumn("Bombero 4");
-        modelo.addColumn("Bombero 5");
-        modelo.addColumn("Especialidad");
-        tabla3.setModel(modelo);
-    }
-    
-    public void limpiarFilas(){
-        int filas = tabla3.getRowCount() - 1;
-        for (int f = filas; f >= 0; f--) {
-            modelo.removeRow(f);
+    public void validacion(){
+        BrigadaData bData = new BrigadaData();
+        cantidadBomberos.setText("" +modelo3.getRowCount());
+        
+        
+        if (modelo3.getRowCount()==5){
+            asignarBrigada.setEnabled(true);
+            errorBomberos.setText("");
+        }else{
+            asignarBrigada.setEnabled(false);
+            errorBomberos.setText("!");
+        }
+        
+        int id;
+        for (Brigada brigada : bData.brigadasTodas()){
+             id = brigada.getIdBrigada();
+         
+            if (bData.buscarBrigada(id).getBombero1()==0 || bData.buscarBrigada(id).getBombero2()==0 || bData.buscarBrigada(id).getBombero3()==0 || 
+                    bData.buscarBrigada(id).getBombero4()==0 || bData.buscarBrigada(id).getBombero5()==0 ){
+                bData.desactivarBrigada(id);}
+            else {
+                 bData.activarBrigada(id);}
         }
     }
+  
     
-    public void limpCampos(){
-        b1.setText("");
-        b2.setText("");
-        b3.setText("");
-        b4.setText("");
-        b5.setText("");
-        txtB.setText("");
-        txtE.setText("");
+    public void armarTablaFinal(){
+        modelo3.addColumn("ID");
+        modelo3.addColumn("Nombre Completo");
+   
+        TablaBB.setModel(modelo3);
     }
     
+    public boolean validarDuplicados(int id){
+        
+        for (int i =0; i < modelo3.getRowCount(); i++){
+                 int idVal = (int) modelo3.getValueAt(i, 0);
+                 if (idVal == id)
+                     return true;
+        }
+        return false;
+    }
+
+ 
+    
+    public DefaultComboBoxModel cargarCuarteles() {
+
+    DefaultComboBoxModel modeloC = new DefaultComboBoxModel();
+       ComboBoxCuarteles.setModel(modeloC);
+
+        String sql = "SELECT idCuartel, nombreCuartel, direccion, Ciudad, Provincia, telefono, coordenadaX, coordenadaY, correo, estado FROM cuartel";
+
+        try {
+
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {      
+                            modeloC.addElement(rs.getString(1) + " - " +rs.getString(2) +" (" +rs.getString(4) +")");
+                            }
+            ps.close();
+
+        } catch (SQLException sqle) {
+            JOptionPane.showMessageDialog(null, "Error en la carga de datos " + sqle.getMessage());
+        }
+        return modeloC;
+
+    }
+    
+   public void  limpiarTablaBomberos(){
+          if (tablaBomberos.getRowCount()> 0){
+ 
+      do{
+       modelo.removeRow(tablaBomberos.getRowCount()-1);
+         }while (tablaBomberos.getRowCount()>0);  
+      } 
    
+    }
+        
+   public void limpiarTablaFinal(){
+  if (TablaBB.getRowCount()> 0){
+ 
+      do{
+       modelo3.removeRow(TablaBB.getRowCount()-1);
+         }while (TablaBB.getRowCount()>0);  
+      } 
+   }
+   
+   public void limpiarTablaBrigadas(){
+        if (tablaBrigadas.getRowCount()> 0){
+ 
+      do{
+       modelo2.removeRow(tablaBrigadas.getRowCount()-1);
+         }while (tablaBrigadas.getRowCount()>0);  
+      } 
+    
+   }
+   
+    public void limpCampos(){
+        limpiarTablaBrigadas();
+        limpiarTablaBomberos();
+        ComboBoxCuarteles.setSelectedItem(null);
+        
+        txtBrigada.setText("");
+        txtEspecialidad.setText("");
+    }
+    
 }

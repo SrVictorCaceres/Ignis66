@@ -435,6 +435,9 @@ public class ABMCuartel extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBusCiuKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBusCiuKeyTyped(evt);
+            }
         });
         getContentPane().add(txtBusCiu, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, 130, -1));
 
@@ -599,9 +602,9 @@ public class ABMCuartel extends javax.swing.JFrame {
             ctl.setCorreo(txtMail.getText());
             ctl.setEstado((String) jcbEstado.getSelectedItem());
             cdata.modificarCuartel(ctl, Integer.parseInt(lblIdCuartel.getText()));
-            
+
             limpiarCampos();
-              limpiarTabla(); 
+            limpiarTabla();
             cargarCuartel();
 
         } catch (NumberFormatException ne) {
@@ -634,11 +637,11 @@ public class ABMCuartel extends javax.swing.JFrame {
         try {
             if (JOptionPane.showConfirmDialog(null, "Esta seguro que desea eliminar el registro seleccionado?", "Ignis - Advertencia de la Aplicación", JOptionPane.YES_NO_OPTION) == 0) {
                 cdata.eliminaCuartel(ctl, Integer.parseInt(lblIdCuartel.getText()));
-               
-                limpiarTabla(); 
+
+                limpiarTabla();
                 cargarCuartel();
                 limpiarCampos();
-               
+
                 txtBusCiu.setEnabled(false);
                 txtBuscId.setEnabled(false);
                 txtBusNom.setEnabled(false);
@@ -652,49 +655,32 @@ public class ABMCuartel extends javax.swing.JFrame {
 
     private void txtMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMailActionPerformed
         validarCorreo();
-
     }//GEN-LAST:event_txtMailActionPerformed
-
     private void txtDireccionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyReleased
         validar();
-
-
     }//GEN-LAST:event_txtDireccionKeyReleased
-
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
-
         validar();
-
     }//GEN-LAST:event_txtNombreKeyReleased
-
     private void txtNroTelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroTelKeyReleased
         validar();
-
     }//GEN-LAST:event_txtNroTelKeyReleased
-
     private void txtCiudadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCiudadKeyReleased
         validar();
-
     }//GEN-LAST:event_txtCiudadKeyReleased
-
     private void txtProvinciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProvinciaKeyReleased
         validar();
-
     }//GEN-LAST:event_txtProvinciaKeyReleased
-
     private void txtCoordXKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordXKeyReleased
         validar();
-
+        validarCoordx();
     }//GEN-LAST:event_txtCoordXKeyReleased
-
     private void txtCoordYKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordYKeyReleased
         validar();
-
+        validarCoordy();
     }//GEN-LAST:event_txtCoordYKeyReleased
-
     private void txtMailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMailKeyReleased
         validar();
-
     }//GEN-LAST:event_txtMailKeyReleased
 
     private void txtBusNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusNomActionPerformed
@@ -773,7 +759,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 cdata.altaCuartel(cuartel);
 
                 limpiarCampos();
-                limpiarTabla(); 
+                limpiarTabla();
                 cargarCuartel();
             } catch (NullPointerException np) {
                 mensaje("Debe completar correctamente todos los campos obligatorios");
@@ -825,9 +811,15 @@ public class ABMCuartel extends javax.swing.JFrame {
 
     private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
 
-        if (txtDireccion.getText().length() >= 30) {
+        int key = evt.getKeyChar();
+        boolean numylet = (key >= 48 && key <= 57) || (key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (evt.getKeyChar() == KeyEvent.VK_SPACE) || (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE);
+        if (!numylet) {
             evt.consume();
-            mensaje("Solo se admiten 30 caracteres");
+
+        }
+        if (txtDireccion.getText().trim().length() == 40) {
+            evt.consume();
+            mensaje("Solo se admiten hasta 40 letras y numeros");
         }
 
 
@@ -835,48 +827,51 @@ public class ABMCuartel extends javax.swing.JFrame {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
 
-        if (txtNombre.getText().length() >= 30) {
+        int key = evt.getKeyChar();
+        boolean numylet = (key >= 48 && key <= 57) || (key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (evt.getKeyChar() == KeyEvent.VK_SPACE) || (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE);
+        if (!numylet) {
             evt.consume();
-            mensaje("Solo se admiten 30 caracteres");
+
+        }
+        if (txtNombre.getText().trim().length() == 30) {
+            evt.consume();
+            mensaje("Solo se admiten hasta 30 letras y numeros");
         }
 
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtNroTelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroTelKeyTyped
         int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57;
-
+        boolean numeros = key >= 48 && key <= 57 && (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE);
         if (!numeros) {
+            evt.consume();
+
+        }
+        if (txtNroTel.getText().trim().length() == 10) {
             evt.consume();
             mensaje("Solo se admiten 10 caracteres númericos");
         }
-
-        if (txtNroTel.getText().trim().length() == 10) {
-            evt.consume();
-        }
-
-
     }//GEN-LAST:event_txtNroTelKeyTyped
 
     private void txtCiudadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCiudadKeyTyped
-       if (!(Character.isLetter(evt.getKeyChar())) && !(evt.getKeyChar() == KeyEvent.VK_SPACE)) {
+
+        int key = evt.getKeyChar();
+        boolean numylet = (key >= 48 && key <= 57) || (key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (evt.getKeyChar() == KeyEvent.VK_SPACE) || (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE);
+        if (!numylet) {
             evt.consume();
 
         }
-
-        if (txtCiudad.getText().length() == 22) {
-
-            mensaje("Solo se admiten 22 caracteres");
+        if (txtCiudad.getText().trim().length() == 30) {
             evt.consume();
+            mensaje("Solo se admiten hasta 30 letras y numeros");
+        }
 
-    }     
 
     }//GEN-LAST:event_txtCiudadKeyTyped
 
     private void txtProvinciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProvinciaKeyTyped
 
-        if (!(Character.isLetter(evt.getKeyChar())) && !(evt.getKeyChar() == KeyEvent.VK_SPACE)) {
+        if (!(Character.isLetter(evt.getKeyChar())) && !(evt.getKeyChar() == KeyEvent.VK_SPACE) && !(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
             evt.consume();
 
         }
@@ -889,26 +884,43 @@ public class ABMCuartel extends javax.swing.JFrame {
     }//GEN-LAST:event_txtProvinciaKeyTyped
     }
     private void txtCoordXKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordXKeyTyped
-        if (txtCoordX.getText().trim().length() == 20) {
+        /* numeros, signo menos y punto*/
+        int key = evt.getKeyChar();
+        boolean numylet = (key >= 48 && key <= 57) || (key >= 45 && key <= 46) || (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE);
+        if (!numylet) {
             evt.consume();
-            mensaje("Solo se admiten 20 caracteres");
-        }
 
+        }
+        if (txtCoordY.getText().trim().length() == 18) {
+            evt.consume();
+            mensaje("Solo se admiten hasta 18 caracteres");
+        }
     }//GEN-LAST:event_txtCoordXKeyTyped
 
     private void txtCoordYKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordYKeyTyped
-        if (txtCoordY.getText().length() >= 20) {
+        /* numeros, signo menos,punto */
+        int key = evt.getKeyChar();
+        boolean numylet = (key >= 48 && key <= 57) || (key >= 45 && key <= 46) || (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE);
+        if (!numylet) {
             evt.consume();
-            mensaje("Solo se admiten 20 caracteres");
         }
-
-        // TODO add your handling code here:
+        if (txtCoordY.getText().trim().length() == 18) {
+            evt.consume();
+            mensaje("Solo se admiten hasta 18 caracteres");
+        }
     }//GEN-LAST:event_txtCoordYKeyTyped
 
     private void txtMailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMailKeyTyped
+ /*numeros, signo menos,punto, arroba,guion bajo*/
+        int key = evt.getKeyChar();
+        boolean numylet = (key >= 48 && key <= 57) ||(key == 64)||(key == 95)||(key >= 45 && key <= 46)||(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) ;
+        if (!numylet) {
+            evt.consume();
+         
+        }
         if (txtMail.getText().trim().length() >= 30) {
             evt.consume();
-            mensaje("Solo se admiten 30 caracteres");
+            mensaje("Solo se admiten hasta 30 caracteres");
         }
 
     }//GEN-LAST:event_txtMailKeyTyped
@@ -917,7 +929,7 @@ public class ABMCuartel extends javax.swing.JFrame {
 
         int key = evt.getKeyChar();
 
-        boolean numeros = key >= 48 && key <= 57 && !(evt.getKeyChar() == KeyEvent.VK_SPACE); //Solo caracteres númericos
+        boolean numeros = key >= 48 && key <= 57 && !(evt.getKeyChar() == KeyEvent.VK_SPACE) && !(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE); //Solo caracteres númericos https://ascii.cl/es/codigos-html.htm
 
         if (!numeros) {
             evt.consume();
@@ -926,16 +938,58 @@ public class ABMCuartel extends javax.swing.JFrame {
 
         if (txtBuscId.getText().trim().length() == 4) {
             evt.consume();
-            mensaje("Solo se admiten 4 caracteres númericos");
+            mensaje("Solo se admiten hasta 4 caracteres númericos");
         }
 
 
     }//GEN-LAST:event_txtBuscIdKeyTyped
+    private void validarCoordx() {
+        lblCoordX.setText((ABMCuartel.validaCoordenadas(txtCoordX.getText().trim())) ? "Coordenada valida" : "Coordenada invalida");//con trim obviamos espacios al principio o al final del textfield.
 
+    }
+
+    private void validarCoordy() {
+        lblCoordY.setText((ABMCuartel.validaCoordenadas(txtCoordY.getText().trim())) ? "Coordenada valida" : "Coordenada invalida");//con trim obviamos espacios al principio o al final del textfield.
+
+    }
+
+    public static boolean validaCoordenadas(String id) {
+        boolean valido = true;
+        Pattern pc = Pattern.compile("^[-]{2}[.]{14}$");
+        Matcher m = pc.matcher(id);
+        valido = m.matches();
+
+        return valido;
+        /*return mather.find();*/
+    }
     private void txtBusNomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusNomKeyTyped
 
+        int key = evt.getKeyChar();
+        boolean numylet = (key >= 48 && key <= 57) || (key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (evt.getKeyChar() == KeyEvent.VK_SPACE) || (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE);
+        if (!numylet) {
+            evt.consume();
+
+        }
+        if (txtBusNom.getText().trim().length() == 15) {
+            evt.consume();
+            mensaje("Solo se admiten hasta 15 letras y / o números");
+        }
 
     }//GEN-LAST:event_txtBusNomKeyTyped
+
+    private void txtBusCiuKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusCiuKeyTyped
+        int key = evt.getKeyChar();
+        boolean numylet = (key >= 48 && key <= 57) || (key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (evt.getKeyChar() == KeyEvent.VK_SPACE) || (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE);
+        if (!numylet) {
+            evt.consume();
+
+        }
+        if (txtBusCiu.getText().trim().length() == 15) {
+            evt.consume();
+            mensaje("Solo se admiten hasta 15 letras y / o números");
+        }
+
+    }//GEN-LAST:event_txtBusCiuKeyTyped
 
     public void validar() {
         if (lblIdCuartel.getText() == null) {
@@ -1170,13 +1224,18 @@ public class ABMCuartel extends javax.swing.JFrame {
     }
 
     private void validarCorreo() {
-        txtMail.setText((ABMCuartel.ValidarEmail(txtMail.getText().trim())) ? "mail valido" : "mail invalido");//con trim obviamos espacios al principio o al final del textfield.
-
+        if (ABMCuartel.ValidarEmail(txtMail.getText().trim())) { //con trim obviamos espacios al principio o al final del textfield.
+            /*lblMail.setText("mail valido");*/
+            mensaje("mail valido");
+        } else {
+            /*lblMail.setText("mail invalido");*/
+            mensaje("mail invalido");
+        }
     }
 
     public static boolean ValidarEmail(String email) {
         // Patron para validar el email
-        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z]+(\\.[A-Za-z0-9]+)$");
         Matcher mather = pattern.matcher(email);
         return mather.find();
     }

@@ -17,7 +17,18 @@ public class Siniestro {
     public Siniestro() {
     }
 
-    public Siniestro(String tipo, LocalDateTime fechaSiniestro, double coordenadaX, double coordenadaY, String detalles, LocalDateTime fechaResolucion, int puntuacion, int idBrigada) {
+    
+    public Siniestro(String tipo, double coordenadaX, double coordenadaY, String detalles) {
+        this.tipo = tipo;
+        this.coordenadaX = coordenadaX;
+        this.coordenadaY = coordenadaY;
+        this.detalles = detalles;
+        this.fechaSiniestro = LocalDateTime.now(); //  fecha y hora actual
+    }
+
+     // Constructor crea instancias con todos los atributos (para recuperar de la base de datos  o es la idea)
+    public Siniestro(int idSiniestro, String tipo, LocalDateTime fechaSiniestro, double coordenadaX, double coordenadaY, String detalles, LocalDateTime fechaResolucion, int puntuacion, int idBrigada) {
+        this.idSiniestro = idSiniestro;
         this.tipo = tipo;
         this.fechaSiniestro = fechaSiniestro;
         this.coordenadaX = coordenadaX;
@@ -26,7 +37,8 @@ public class Siniestro {
         this.fechaResolucion = fechaResolucion;
         this.puntuacion = puntuacion;
         this.idBrigada = idBrigada;
-    }
+    
+}
 
     public int getIdSiniestro() {
         return idSiniestro;

@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Ignis66.acessoADatos;
+
 
 
 
@@ -103,8 +100,8 @@ public void modificarDatosBombero(Bombero bombero, int idBombero){
                         ps.setString(9, bombero.getTipo());
                         ps.setString(10, bombero.getRango());         
                         ps.setString(11, bombero.getEstado());         
-                        ps.setInt(13,idBombero);
                         ps.setString(12, bombero.getEspecialidad());   
+                        ps.setInt(13,idBombero);
              
              int check = ps.executeUpdate();
              if (check > 0) {
@@ -192,7 +189,7 @@ public void modificarDatosBombero(Bombero bombero, int idBombero){
         String sql = "UPDATE bomberos SET idBrigada = ?  WHERE idBombero = ? ";
                 try {
                         PreparedStatement ps = con.prepareStatement(sql); 
-                        ps.setInt(1,0);
+                        ps.setInt(1,9999);
                         ps.setInt(2,idBombero);
                         
              
@@ -207,4 +204,23 @@ public void modificarDatosBombero(Bombero bombero, int idBombero){
                 
      };  // ok en Main   
       
+    public ArrayList<Bombero> listarBomberosPorEspecialidad(String especialidad) {
+        ArrayList<Bombero> lista = new ArrayList<>();
+        try (PreparedStatement ps = con.prepareStatement("SELECT idBombero, dni, nombreCompleto FROM bomberos WHERE especialidad = ? AND idBrigada = 9999")) {
+             
+            ps.setString(1, especialidad);
+            try (ResultSet rs = ps.executeQuery();) {
+                while (rs.next()) {
+                    
+                    lista.add(new Bombero(rs.getInt("idBombero"), rs.getInt("dni"), rs.getString("nombreCompleto")));
+                }
+            } catch (SQLException ex) {
+               JOptionPane.showMessageDialog(null, "Error al intentar acceder a la tabla!!");
+            }
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error al intentar acceder a la tabla!!");
+        }
+        
+        return lista;
+    }  //ok
  }

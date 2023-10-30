@@ -1,17 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Ignis66.entidades;
 
-
+import Ignis66.entidades.Brigada;
+import Ignis66.entidades.Brigada;
 import java.time.LocalDate;
 
-/**
- *
- * @author fdicocco
- */
+
 public class Bombero {
 
     private int idBombero;
@@ -27,9 +21,10 @@ public class Bombero {
     private String tipo;  /// Zapador o Voluntario //
     private String sexo;  // Femenino, Masculino o "Otros" //
     private String correo;
-    private Brigada brigada;
+    private int idBrigada;
     private String estado;
     private String especialidad;
+   
 
     public Bombero() {
     }
@@ -47,10 +42,13 @@ public class Bombero {
         this.correo  = correo;  
         this.estado  = estado;
         this.especialidad  = especialidad;
+        
 
 
         
     }
+
+
 
     public String getEspecialidad() {
         return especialidad;
@@ -155,13 +153,15 @@ public String getNombreCompleto() {
         this.sexo = sexo;
     }
 
-    public Brigada getBrigada() {
-        return brigada;
+    public int getIdBrigada() {
+        return idBrigada;
     }
 
-    public void setBrigada(Brigada brigada) {
-        this.brigada = brigada;
+    public void setIdBrigada(int idBrigada) {
+        this.idBrigada = idBrigada;
     }
+
+
 
     public String getCorreo() {
         return correo;
