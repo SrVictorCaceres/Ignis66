@@ -60,7 +60,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
         armarTablaFinal();
         cargarCuarteles();
         setDefaultCloseOperation(0); //para desactivar la X(cerrar) del formulario.
-
+        botAgregar();
         disableCopyPaste(txtBrigada);
         disableCopyPaste(txtEspecialidad);
     }
@@ -118,6 +118,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
         jVaciarBrigada = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(java.awt.Color.red);
@@ -142,7 +143,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 916, 0);
+        jPanel1.setBounds(0, 0, 916, 29);
 
         tablaBomberos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -161,6 +162,11 @@ public class AsignarBrigada extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        tablaBomberos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaBomberosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tablaBomberos);
@@ -537,7 +543,14 @@ public class AsignarBrigada extends javax.swing.JFrame {
     
         
     }//GEN-LAST:event_ComboBoxCuartelesMouseClicked
-
+public void botAgregar(){
+        if(tablaBomberos.getSelectedRow() == -1){
+            botonAgregar.setEnabled(false);
+        }else if(tablaBomberos.getSelectedRow() != -1){
+            botonAgregar.setEnabled(true);
+            
+        }
+    }
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
           
             int pos = tablaBomberos.getSelectedRow();
@@ -545,16 +558,18 @@ public class AsignarBrigada extends javax.swing.JFrame {
             int id = (int) tablaBomberos.getValueAt(pos, 0);
             String nombre =  tablaBomberos.getValueAt(pos, 1).toString();
                      
-            boolean check = validarDuplicados(id);
+           /* boolean check = validarDuplicados(id);
             
             if (check)
                  JOptionPane.showMessageDialog(this, "Error!! El Bombero ya fue seleccionado");
             else if (check == false)
                 modelo3.addRow(new Object[]{id,nombre});
            else
-                JOptionPane.showMessageDialog(this, "Error!! Debe seleccionar un Bombero");
+                JOptionPane.showMessageDialog(this, "Error!! Debe seleccionar un Bombero");*/
              
-          
+          modelo3.addRow(new Object[]{id, nombre});
+            
+            modelo.removeRow(tablaBomberos.getSelectedRow());
             
             validacion();
         
@@ -583,6 +598,10 @@ public class AsignarBrigada extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jVaciarBrigadaActionPerformed
+
+    private void tablaBomberosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaBomberosMouseClicked
+    botAgregar();
+    }//GEN-LAST:event_tablaBomberosMouseClicked
 
     /**
      * @param args the command line arguments

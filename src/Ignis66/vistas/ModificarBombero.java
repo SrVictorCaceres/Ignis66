@@ -8,9 +8,12 @@ package Ignis66.vistas;
 import Ignis66.acessoADatos.BomberoData;
 import Ignis66.acessoADatos.Conexion;
 import Ignis66.entidades.Bombero;
+import static java.lang.String.valueOf;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.JComponent;
@@ -38,11 +41,12 @@ public class ModificarBombero extends javax.swing.JFrame {
      * Creates new form PruebaModificarBombero
      */
     public ModificarBombero() {
-               
+        setBounds(230, 30, 600 , 600);       
         initComponents();
         modelarTabla();
         cargarTabla();
         validacion();
+        jtfIdBombero.setText(null);
         disableCopyPaste(jtfNombre);
         disableCopyPaste(jtfDni);
         disableCopyPaste(jtfFijo2);
@@ -122,11 +126,16 @@ public class ModificarBombero extends javax.swing.JFrame {
         jLabel27.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         jLabel27.setText("(*) Campos obligatorios");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
-        jPanel1.setBackground(new java.awt.Color(204, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -149,10 +158,9 @@ public class ModificarBombero extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 669, 0);
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel13.setText("Introduza el nombre y/o apellido:");
         getContentPane().add(jLabel13);
-        jLabel13.setBounds(331, 91, 152, 13);
+        jLabel13.setBounds(331, 91, 230, 16);
 
         jtfBuscarNombre.setBorder(null);
         jtfBuscarNombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -176,22 +184,19 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jtfCelular);
-        jtfCelular.setBounds(40, 363, 210, 22);
+        jtfCelular.setBounds(40, 390, 210, 22);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel7.setText("Sexo *");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(40, 222, 31, 13);
+        jLabel7.setBounds(40, 216, 70, 20);
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel6.setText("Correo Electrónico");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(331, 396, 85, 13);
+        jLabel6.setBounds(330, 420, 160, 20);
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel21.setText("Teléfono Fijo (Cód. de Área + Nro Tel)");
         getContentPane().add(jLabel21);
-        jLabel21.setBounds(331, 440, 176, 13);
+        jLabel21.setBounds(330, 470, 230, 20);
         getContentPane().add(jLabel24);
         jLabel24.setBounds(250, 170, 0, 0);
 
@@ -207,47 +212,38 @@ public class ModificarBombero extends javax.swing.JFrame {
         getContentPane().add(jtfNombre);
         jtfNombre.setBounds(40, 151, 210, 22);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel1.setText("Nombre Completo *");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(40, 137, 91, 13);
+        jLabel1.setBounds(40, 131, 170, 20);
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel17.setText("Grupo Sanguíneo *");
         getContentPane().add(jLabel17);
-        jLabel17.setBounds(40, 307, 89, 13);
+        jLabel17.setBounds(40, 320, 150, 20);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel3.setText("DNI *");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(40, 181, 27, 13);
+        jLabel3.setBounds(40, 175, 70, 20);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel4.setText("Fecha de Nacimiento *");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(40, 265, 102, 12);
+        jLabel4.setBounds(40, 270, 160, 20);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel5.setText("Celular (sin 0 ni 15) *");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(40, 350, 95, 13);
+        jLabel5.setBounds(40, 370, 150, 20);
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel16.setText("Tipo de Bombero *");
         getContentPane().add(jLabel16);
-        jLabel16.setBounds(40, 401, 87, 13);
+        jLabel16.setBounds(40, 420, 150, 20);
 
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel18.setText("Rango *");
         getContentPane().add(jLabel18);
-        jLabel18.setBounds(40, 444, 38, 12);
+        jLabel18.setBounds(40, 470, 100, 20);
 
-        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel25.setText("Estado *");
         getContentPane().add(jLabel25);
-        jLabel25.setBounds(331, 353, 39, 13);
+        jLabel25.setBounds(330, 370, 100, 20);
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -282,17 +278,15 @@ public class ModificarBombero extends javax.swing.JFrame {
         }
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(331, 137, 292, 149);
+        jScrollPane1.setBounds(331, 137, 292, 170);
 
-        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel26.setText("ID del Bombero");
         getContentPane().add(jLabel26);
-        jLabel26.setBounds(40, 103, 71, 13);
+        jLabel26.setBounds(40, 97, 100, 20);
 
         jtfIdBombero.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jtfIdBombero.setText("-");
         getContentPane().add(jtfIdBombero);
-        jtfIdBombero.setBounds(40, 116, 14, 17);
+        jtfIdBombero.setBounds(160, 97, 14, 20);
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(102, 102, 102));
@@ -318,7 +312,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jdcFechaNac);
-        jdcFechaNac.setBounds(40, 277, 210, 24);
+        jdcFechaNac.setBounds(40, 290, 210, 24);
 
         jcbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino", "Otro" }));
         jcbSexo.setBorder(null);
@@ -338,7 +332,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jcbEstado);
-        jcbEstado.setBounds(331, 366, 235, 24);
+        jcbEstado.setBounds(330, 390, 235, 24);
 
         jcbSangre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" }));
         jcbSangre.setBorder(null);
@@ -348,7 +342,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jcbSangre);
-        jcbSangre.setBounds(40, 320, 210, 24);
+        jcbSangre.setBounds(40, 340, 210, 24);
 
         jcbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Voluntario", "Zapador" }));
         jcbTipo.setBorder(null);
@@ -358,7 +352,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jcbTipo);
-        jcbTipo.setBounds(40, 414, 210, 24);
+        jcbTipo.setBounds(40, 440, 210, 24);
 
         jtfFijo2.setBorder(null);
         jtfFijo2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -370,7 +364,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jtfFijo2);
-        jtfFijo2.setBounds(430, 453, 145, 24);
+        jtfFijo2.setBounds(435, 490, 140, 24);
 
         jbSalir.setBackground(new java.awt.Color(255, 51, 51));
         jbSalir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -383,7 +377,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jbSalir);
-        jbSalir.setBounds(523, 510, 100, 31);
+        jbSalir.setBounds(520, 540, 100, 31);
 
         jbLimpiar.setBackground(new java.awt.Color(255, 255, 102));
         jbLimpiar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -396,7 +390,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jbLimpiar);
-        jbLimpiar.setBounds(386, 510, 119, 31);
+        jbLimpiar.setBounds(360, 540, 140, 31);
 
         jbActualizar.setBackground(new java.awt.Color(153, 255, 51));
         jbActualizar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -409,7 +403,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jbActualizar);
-        jbActualizar.setBounds(40, 510, 210, 31);
+        jbActualizar.setBounds(40, 540, 210, 31);
 
         jcbRango.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BOMBERO", "CABO", "CABO PRIMERO", "SARGENTO", "SARGENTO 1°", "SUBOFICIAL PRINCIPAL", "SUBOFICIAL MAYOR", "OFICIAL AYUDANTE", "OFICIAL INSPECTOR", "OFICIAL PRINCIPAL", "SUBCOMANDANTE", "COMANDANTE", "COMANDANTE MAYOR", "COMANDANTE GENERAL" }));
         jcbRango.setBorder(null);
@@ -419,7 +413,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jcbRango);
-        jcbRango.setBounds(40, 456, 210, 24);
+        jcbRango.setBounds(40, 490, 210, 24);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel12.setText("Seleccione de la tabla el bombero cuyos datos desea actualizar:");
@@ -450,49 +444,49 @@ public class ModificarBombero extends javax.swing.JFrame {
         jlErrorFecha.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorFecha.setText("!");
         getContentPane().add(jlErrorFecha);
-        jlErrorFecha.setBounds(254, 277, 5, 24);
+        jlErrorFecha.setBounds(260, 290, 5, 24);
 
         jlErrorSangre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorSangre.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorSangre.setText("!");
         getContentPane().add(jlErrorSangre);
-        jlErrorSangre.setBounds(254, 320, 5, 24);
+        jlErrorSangre.setBounds(260, 340, 5, 24);
 
         jlErrorCelular.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorCelular.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorCelular.setText("!");
         getContentPane().add(jlErrorCelular);
-        jlErrorCelular.setBounds(254, 363, 5, 17);
+        jlErrorCelular.setBounds(260, 390, 5, 17);
 
         jlErrorTipo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorTipo.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorTipo.setText("!");
         getContentPane().add(jlErrorTipo);
-        jlErrorTipo.setBounds(254, 416, 5, 17);
+        jlErrorTipo.setBounds(260, 440, 5, 17);
 
         jlErrorRango.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorRango.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorRango.setText("!");
         getContentPane().add(jlErrorRango);
-        jlErrorRango.setBounds(254, 458, 5, 17);
+        jlErrorRango.setBounds(260, 490, 5, 17);
 
         jlErrorEstado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorEstado.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorEstado.setText("!");
         getContentPane().add(jlErrorEstado);
-        jlErrorEstado.setBounds(570, 366, 5, 17);
+        jlErrorEstado.setBounds(570, 390, 5, 17);
 
         jlErrorCorreo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorCorreo.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorCorreo.setText("!");
         getContentPane().add(jlErrorCorreo);
-        jlErrorCorreo.setBounds(581, 411, 5, 17);
+        jlErrorCorreo.setBounds(580, 440, 10, 20);
 
         jlErrorFijo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorFijo.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorFijo.setText("!");
         getContentPane().add(jlErrorFijo);
-        jlErrorFijo.setBounds(581, 455, 5, 17);
+        jlErrorFijo.setBounds(580, 490, 5, 17);
 
         jrbCorreoNo.setText("No");
         jrbCorreoNo.addActionListener(new java.awt.event.ActionListener() {
@@ -501,7 +495,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jrbCorreoNo);
-        jrbCorreoNo.setBounds(331, 410, 47, 28);
+        jrbCorreoNo.setBounds(330, 440, 47, 28);
 
         jrbCorreoSi.setText("Si");
         jrbCorreoSi.addActionListener(new java.awt.event.ActionListener() {
@@ -510,7 +504,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jrbCorreoSi);
-        jrbCorreoSi.setBounds(370, 410, 43, 28);
+        jrbCorreoSi.setBounds(370, 440, 43, 28);
 
         jrbFijoNo.setText("No");
         jrbFijoNo.addActionListener(new java.awt.event.ActionListener() {
@@ -519,7 +513,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jrbFijoNo);
-        jrbFijoNo.setBounds(340, 454, 47, 28);
+        jrbFijoNo.setBounds(329, 490, 40, 28);
 
         jrbFijoSi.setText("Si");
         jrbFijoSi.addActionListener(new java.awt.event.ActionListener() {
@@ -528,12 +522,11 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jrbFijoSi);
-        jrbFijoSi.setBounds(379, 454, 43, 28);
+        jrbFijoSi.setBounds(370, 490, 40, 28);
 
-        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel29.setText("0");
         getContentPane().add(jLabel29);
-        jLabel29.setBounds(420, 459, 5, 13);
+        jLabel29.setBounds(420, 490, 10, 24);
 
         jtfCorreo2.setBorder(null);
         jtfCorreo2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -542,7 +535,7 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jtfCorreo2);
-        jtfCorreo2.setBounds(409, 410, 166, 24);
+        jtfCorreo2.setBounds(410, 440, 166, 24);
 
         jcbEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INCENDIO", "RESCATE", "MAT. PELIGROSOS", "INC. FORESTALES", "ACUATICA", "CANINA ", "MONTAÑA", "BUCEO" }));
         jcbEspecialidad.setBorder(null);
@@ -552,18 +545,17 @@ public class ModificarBombero extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jcbEspecialidad);
-        jcbEspecialidad.setBounds(331, 319, 232, 24);
+        jcbEspecialidad.setBounds(330, 340, 232, 24);
 
         jlErrorEspecialidad.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlErrorEspecialidad.setForeground(new java.awt.Color(255, 0, 0));
         jlErrorEspecialidad.setText("!");
         getContentPane().add(jlErrorEspecialidad);
-        jlErrorEspecialidad.setBounds(567, 317, 5, 24);
+        jlErrorEspecialidad.setBounds(570, 340, 5, 24);
 
-        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel30.setText("Especialidad *");
         getContentPane().add(jLabel30);
-        jLabel30.setBounds(331, 304, 63, 13);
+        jLabel30.setBounds(330, 320, 120, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -595,21 +587,23 @@ public class ModificarBombero extends javax.swing.JFrame {
             evt.consume();
         }
 
-        if (jtfNombre.getText().length() >= 40) {
+        if (jtfNombre.getText().length() >= 45) {
             evt.consume();
         }
     }//GEN-LAST:event_jtfNombreKeyTyped
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-         int seleccion = jTable1.getSelectedRow();
+        
+        int seleccion = jTable1.getSelectedRow();
          
          BomberoData bdata = new BomberoData();
          String idBomb = jTable1.getValueAt(seleccion, 0).toString();
          idComparador = Integer.parseInt(idBomb);
+         jtfBuscarNombre.setText( jTable1.getValueAt(seleccion, 1).toString());
          
          b = bdata.traerDatos(idComparador);
          
-         jtfIdBombero.setText(idComparador+"");
+         jtfIdBombero.setText(valueOf(idComparador)); 
          jtfNombre.setText(b.getNombreCompleto());
          jtfDni.setText(String.valueOf(b.getDni()));
          jtfCelular.setText(Long.toString(b.getCelular())); 
@@ -622,7 +616,7 @@ public class ModificarBombero extends javax.swing.JFrame {
          jcbSangre.setSelectedItem(b.getGrupoSanguineo());
          jcbTipo.setSelectedItem(b.getTipo());
          jcbRango.setSelectedItem(b.getRango());
-         
+         System.out.println(b.getFechaNacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant());
          if(b.getCorreo()==null){
              jrbCorreoNo.setSelected(true);
              jrbCorreoSi.setSelected(false);
@@ -646,8 +640,8 @@ public class ModificarBombero extends javax.swing.JFrame {
         
          validacion();
          chequearModificacion();
-         
-         
+         limpiarTabla();
+        
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jtfDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfDniKeyTyped
@@ -849,6 +843,11 @@ validacion();
        validacion();
     }//GEN-LAST:event_jrbFijoNoActionPerformed
 
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+       validacion();
+       chequearModificacion();
+    }//GEN-LAST:event_formMouseMoved
+
     /**
      * @param args the command line arguments
      */
@@ -878,6 +877,10 @@ validacion();
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ModificarBombero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -962,6 +965,7 @@ public void buscarNombre(String nombreBuscado){
 }    
         
 public void cargarTabla(){
+    
     limpiarCampos();
      BomberoData bdata = new BomberoData();    
     for ( Bombero bomb : bdata.listarBomberos())
@@ -1000,18 +1004,26 @@ public void cargarTabla(){
          jcbTipo.setSelectedItem(null);
          jcbRango.setSelectedItem(null);
          jtfBuscarNombre.setText(null);
+         buscarNombre(jtfBuscarNombre.getText());
          jrbFijoNo.setSelected(true);
          jrbCorreoNo.setSelected(true);
          jrbFijoSi.setSelected(false);
          jrbCorreoSi.setSelected(false);
          jtfFijo2.setEnabled(false);
          jtfCorreo2.setEnabled(false);
+         
 
         
        
  }
  
  private void validacion(){
+         
+    LocalDateTime edadMinima = LocalDateTime.now().minusYears(18);
+    
+        
+   
+     
         if (jtfNombre.getText().isEmpty())
             jlErrorNombre.setText("!");
         else 
@@ -1029,6 +1041,8 @@ public void cargarTabla(){
         
          if (jdcFechaNac.getDate()==null)
              jlErrorFecha.setText("!");
+         else if (jdcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().isAfter(edadMinima))
+              jlErrorFecha.setText("!");
            else 
             jlErrorFecha.setText("");
          
@@ -1078,10 +1092,10 @@ public void cargarTabla(){
              else
                  jlErrorCorreo.setText("!");
            
-        if (jlErrorNombre.getText().equals("") &&   jlErrorDni.getText().equals("") &&  jlErrorDni.getText().equals("") && jlErrorSexo.getText().equals("")
+        if (   jlErrorNombre.getText().equals("") &&   jlErrorDni.getText().equals("") &&  jlErrorDni.getText().equals("") && jlErrorSexo.getText().equals("")
                 && jlErrorFecha.getText().equals("") && jlErrorCelular.getText().equals("") && jlErrorFijo.getText().equals("") && jlErrorCorreo.getText().equals("")
                 && jlErrorSangre.getText().equals("") && jlErrorTipo.getText().equals("") && jlErrorRango.getText().equals("") && jlErrorEstado.getText().equals("")
-                &&  jlErrorEspecialidad.getText().equals(""))
+                &&  jlErrorEspecialidad.getText().equals("") && jtfIdBombero.getText()!= null)
             
              jbActualizar.setEnabled(true);
         
@@ -1107,13 +1121,15 @@ public void cargarTabla(){
 
         try{
        
-        if (jtfNombre.getText().equals(b.getNombreCompleto()) &&  jtfDni.getText().equals(String.valueOf(b.getDni())) 
+            if (jtfIdBombero.getText()!= null){ 
+            
+        if (   jtfNombre.getText().equals(b.getNombreCompleto()) &&  jtfDni.getText().equals(String.valueOf(b.getDni())) 
                 && jcbSexo.getSelectedItem().equals(b.getSexo())
                 && jdcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(b.getFechaNacimiento())
                 && jtfCelular.getText().equals(Long.toString(b.getCelular())) && jcbSangre.getSelectedItem().equals(b.getGrupoSanguineo()) 
                 && jcbTipo.getSelectedItem().equals(b.getTipo()) && jcbRango.getSelectedItem().equals(b.getRango())
                 && jcbEstado.getSelectedItem().equals(b.getEstado()) && jcbEspecialidad.getSelectedItem().equals(b.getEspecialidad())           
-                && (jrbFijoSi.isSelected() && jtfFijo2.getText().equals(b.getFijo())) && (jrbCorreoSi.isSelected() && jtfCorreo2.getText().equals(b.getCorreo())))
+                && (jrbFijoSi.isSelected() && jtfFijo2.getText().equals(b.getFijo())) && (jrbCorreoSi.isSelected() && jtfCorreo2.getText().equals(b.getCorreo()  )))
              
                 jbActualizar.setEnabled(false); 
         
@@ -1155,7 +1171,8 @@ public void cargarTabla(){
              
             
                jbActualizar.setEnabled(true); 
-               
+            }else
+                jbActualizar.setEnabled(false); 
         }catch(NullPointerException nx){
                       JOptionPane.showMessageDialog(null, "Error de control !!");
                   }

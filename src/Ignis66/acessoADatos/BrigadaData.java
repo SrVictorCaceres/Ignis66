@@ -52,23 +52,34 @@ public class BrigadaData {
     }
     
     public List<Brigada> brigadasLibres() {
+ 
+        //CuartelData cData = new CuartelData();
         List<Brigada> brigadas = new ArrayList<>();
-        String consultaSQL = "SELECT * FROM Brigada WHERE libre = 'LIBRE'"; // Ajusta la consulta según tu estructura de base de datos
+        String consultaSQL = "SELECT idBrigada, nombreBrigada, especialidad, brigada.idCuartel, cuartel.nombreCuartel, cuartel.Ciudad FROM brigada, cuartel WHERE brigada.idCuartel = cuartel.idCuartel AND libre = LIBRE"; // Ajusta la consulta según tu estructura de base de datos
 
         try (PreparedStatement preparedStatement = con.prepareStatement(consultaSQL);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             ResultSet rs = preparedStatement.executeQuery()) {
 
-            while (resultSet.next()) {
-                int idBrigada = resultSet.getInt("idBrigada");
+            while (rs.next()) {
+                Brigada bri = new Brigada();
+                Cuartel cua = new Cuartel();
+                bri.setIdBrigada(rs.getInt("idBrigada"));
+                bri.setNombreBrigada(rs.getString("nombreBrigada"));
+                bri.setEspecialidad(rs.getString("especialidad"));              
+                bri.setIdCuartel(rs.getInt("brigada.idCuartel"));
+               cua.setNombreCuartel(rs.getString("cuartel.nombreCuartel"));
+                cua.setCiudad( rs.getString("cuartel.Ciudad"));
+                 brigadas.add(bri);
+                
+            /*    
                 String nombreBrigada = resultSet.getString("nombreBrigada");
                 // Otras columnas que desees recuperar
 
                 // Crea una instancia de Brigada y agrégala a la lista
                 Brigada brigada = new Brigada(idBrigada, nombreBrigada);
-                brigadas.add(brigada);
+                brigadas.add(brigada);*/
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return brigadas;
@@ -115,7 +126,7 @@ public class BrigadaData {
             nombre = rs.getString("nombreCuartel");
             
             }else{
-                JOptionPane.showMessageDialog(null, "El Cuartel buscado no existe.");}
+                JOptionPane.showMessageDialog(null, "El Cuartel buscado no existe1.");}
             rs.close();
             ps.close();
         }catch(SQLException sqle){
@@ -125,6 +136,32 @@ public class BrigadaData {
          
      }
     
+     public String traerCiudadCuartel(int idCuartel){
+         String ciudad ="aaa";
+         String sql = "SELECT Ciudad FROM cuartel WHERE idCuartel = ?";
+         Cuartel cuartel ;   
+         try{
+        PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
+        ps.setInt(1, idCuartel);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            
+            cuartel = new Cuartel();
+            cuartel.setCiudad(rs.getString("Ciudad"));
+            ciudad = rs.getString("Ciudad");            
+            
+            }else{
+                JOptionPane.showMessageDialog(null, "El Cuartel buscado no existe.");}
+            rs.close();
+            ps.close();
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Error en la carga de datos ");
+        }
+        return ciudad;
+         
+     }
+     
      public void cargarBrigada(Brigada brigada, int idBrigada){
            
     String sql = "UPDATE brigada SET idBombero1 = ?, idBombero2 = ?, idBombero3 = ?, idBombero4 = ?, idBombero5 = ? WHERE idBrigada = ? ";
@@ -203,7 +240,7 @@ public class BrigadaData {
                                     
              int check = ps.executeUpdate();
              if (check > 0) {
-                JOptionPane.showMessageDialog(null, "La Brigada está vacía!!");}
+              /*  JOptionPane.showMessageDialog(null, "La Brigada está vacía!!");*/}
              ps.close();
                 } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al intentar acceder a la tabla Brigada. Los datos no han sido modificados");
@@ -226,7 +263,7 @@ public class BrigadaData {
                                     
              int check = ps.executeUpdate();
              if (check > 0) {
-                JOptionPane.showMessageDialog(null, "El bombero ha salido removido de la Brigada!!");}
+                /*JOptionPane.showMessageDialog(null, "El bombero ha salido removido de la Brigada!!");*/}
              ps.close();
                 } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al intentar acceder a la tabla Brigada. Los datos no han sido modificados");
@@ -249,7 +286,7 @@ public class BrigadaData {
                                     
              int check = ps.executeUpdate();
              if (check > 0) {
-                JOptionPane.showMessageDialog(null, "El bombero ha salido removido de la Brigada!!");}
+                /*JOptionPane.showMessageDialog(null, "El bombero ha salido removido de la Brigada!!");*/}
              ps.close();
                 } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al intentar acceder a la tabla Brigada. Los datos no han sido modificados");
@@ -272,7 +309,7 @@ public class BrigadaData {
                                     
              int check = ps.executeUpdate();
              if (check > 0) {
-                JOptionPane.showMessageDialog(null, "El bombero ha salido removido de la Brigada!!");}
+                /*JOptionPane.showMessageDialog(null, "El bombero ha salido removido de la Brigada!!");*/}
              ps.close();
                 } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al intentar acceder a la tabla Brigada. Los datos no han sido modificados");
@@ -295,7 +332,7 @@ public class BrigadaData {
                                     
              int check = ps.executeUpdate();
              if (check > 0) {
-                JOptionPane.showMessageDialog(null, "El bombero ha salido removido de la Brigada!!");}
+                /*JOptionPane.showMessageDialog(null, "El bombero ha salido removido de la Brigada!!");*/}
              ps.close();
                 } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al intentar acceder a la tabla Brigada. Los datos no han sido modificados");
@@ -372,17 +409,18 @@ public class BrigadaData {
         }catch(NullPointerException np){
            JOptionPane.showMessageDialog(null,"Debe completar correctamente todos los campos obligatorios");}
      };
-        public void marcarBrigadaActiva(int idBrigada) {
+        
+           public void marcarBrigadaActiva(int idBrigada) {
         String sql = "UPDATE brigada SET libre = ? WHERE idBrigada = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, "OCUPADO");
+            ps.setString(1, "OCUPADA");
             ps.setInt(2, idBrigada);
 
             int rowsUpdated = ps.executeUpdate();
 
             if (rowsUpdated > 0) {
-                System.out.println("La brigada con ID " + idBrigada + " ha sido marcada como libre.");
+                System.out.println("La brigada con ID " + idBrigada + " ha sido marcada como OCUPADA.");
             } else {
                 System.out.println("No se pudo marcar la brigada como ocupada.");
             }

@@ -49,7 +49,7 @@ public class ABMCuartel extends javax.swing.JFrame {
         disableCopyPaste(txtBusNom);
         disableCopyPaste(txtBuscId);
         setDefaultCloseOperation(0); //para desactivar la X(cerrar) del formulario.
-             
+        setBounds(230, 30, 700 , 580);           
     }
 
     private void disableCopy(JComponent component) {
@@ -124,7 +124,6 @@ public class ABMCuartel extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblCuarte = new javax.swing.JTable();
         jcbEstado = new javax.swing.JComboBox<>();
-        lblEstado = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -135,6 +134,7 @@ public class ABMCuartel extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
+        lblEstado = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -147,23 +147,21 @@ public class ABMCuartel extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 204, 204));
         setFocusable(false);
-        setPreferredSize(new java.awt.Dimension(700, 550));
+        setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnLimpiar.setBackground(new java.awt.Color(204, 204, 0));
         btnLimpiar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        btnLimpiar.setForeground(new java.awt.Color(0, 0, 0));
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, -1, -1));
+        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 540, 100, -1));
 
         btnActualizar.setBackground(new java.awt.Color(0, 204, 204));
         btnActualizar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -174,7 +172,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 btnActualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 460, -1, -1));
+        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 540, 100, -1));
 
         btnEliminar.setBackground(new java.awt.Color(255, 153, 153));
         btnEliminar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -185,7 +183,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 460, -1, -1));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 540, 100, -1));
 
         btnGuardar.setBackground(new java.awt.Color(153, 255, 153));
         btnGuardar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -196,7 +194,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 460, -1, -1));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 540, 110, -1));
 
         btnSalir.setBackground(new java.awt.Color(153, 153, 255));
         btnSalir.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -207,27 +205,27 @@ public class ABMCuartel extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 460, 67, -1));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 540, 110, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
-        jLabel6.setText("  Telefono:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, -1, -1));
+        jLabel6.setText("  Telefono: (sin 0 (Cód Área + Nro de Telef))");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, 190, -1));
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel7.setText("  Coordenada X:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 90, 20));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 90, 20));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel3.setText("  Coordenada Y:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 90, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 90, -1));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel8.setText("  Email:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 50, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 50, -1));
 
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel9.setText("  Estado:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 50, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, 50, -1));
 
         txtCoordX.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtCoordX.addActionListener(new java.awt.event.ActionListener() {
@@ -243,7 +241,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtCoordXKeyTyped(evt);
             }
         });
-        getContentPane().add(txtCoordX, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 230, -1));
+        getContentPane().add(txtCoordX, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 230, -1));
 
         txtCoordY.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtCoordY.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -254,7 +252,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtCoordYKeyTyped(evt);
             }
         });
-        getContentPane().add(txtCoordY, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 230, -1));
+        getContentPane().add(txtCoordY, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 230, -1));
 
         txtMail.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtMail.addActionListener(new java.awt.event.ActionListener() {
@@ -270,7 +268,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtMailKeyTyped(evt);
             }
         });
-        getContentPane().add(txtMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, 190, -1));
+        getContentPane().add(txtMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 230, 190, -1));
 
         txtNroTel.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtNroTel.addActionListener(new java.awt.event.ActionListener() {
@@ -286,15 +284,15 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtNroTelKeyTyped(evt);
             }
         });
-        getContentPane().add(txtNroTel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 120, 190, -1));
+        getContentPane().add(txtNroTel, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 190, -1));
 
         jLabel10.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel10.setText(" Barrio /Ciudad:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 140, 80, -1));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 80, -1));
 
         jLabel11.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel11.setText("  Provincia:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, -1, 21));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, -1, 21));
 
         txtCiudad.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtCiudad.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -305,7 +303,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtCiudadKeyTyped(evt);
             }
         });
-        getContentPane().add(txtCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 230, -1));
+        getContentPane().add(txtCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 230, -1));
 
         txtProvincia.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         txtProvincia.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -316,18 +314,18 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtProvinciaKeyTyped(evt);
             }
         });
-        getContentPane().add(txtProvincia, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 190, -1));
+        getContentPane().add(txtProvincia, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 180, 190, -1));
 
         jLabel12.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel12.setText("Código:");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 80, -1));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 80, -1));
 
         lblIdCuartel.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
-        getContentPane().add(lblIdCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 63, 60, 20));
+        getContentPane().add(lblIdCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 60, 20));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel2.setText(" Nombre:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 50, 60, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 60, -1));
 
         txtNombre.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -338,7 +336,7 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtNombreKeyTyped(evt);
             }
         });
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, 190, -1));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 190, -1));
 
         txtDireccion.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -349,52 +347,51 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtDireccionKeyTyped(evt);
             }
         });
-        getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 230, -1));
+        getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 230, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         jLabel4.setText(" Dirección:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 60, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 60, -1));
 
-        lblDireccion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        lblDireccion.setFont(new java.awt.Font("Roboto", 2, 11)); // NOI18N
         lblDireccion.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(249, 109, 140, 20));
+        getContentPane().add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 110, 20));
 
-        lblCiudad.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        lblCiudad.setFont(new java.awt.Font("Roboto", 2, 11)); // NOI18N
         lblCiudad.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 110, 20));
+        getContentPane().add(lblCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 110, 20));
 
-        lblCoordX.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        lblCoordX.setFont(new java.awt.Font("Roboto", 2, 11)); // NOI18N
         lblCoordX.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblCoordX, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 112, 21));
+        getContentPane().add(lblCoordX, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 112, 21));
 
         jLabel15.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 51, 51));
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 391, 112, -1));
 
-        lblMail.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        lblMail.setFont(new java.awt.Font("Roboto", 2, 11)); // NOI18N
         lblMail.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 210, 130, 20));
+        getContentPane().add(lblMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 230, 120, 20));
 
-        lblNombre.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        lblNombre.setFont(new java.awt.Font("Roboto", 2, 11)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 73, 140, 20));
+        getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, 130, 20));
 
-        lblTelefono.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        lblTelefono.setFont(new java.awt.Font("Roboto", 2, 11)); // NOI18N
         lblTelefono.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 130, 20));
+        getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 140, 130, 20));
 
-        lblPcia.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        lblPcia.setFont(new java.awt.Font("Roboto", 2, 11)); // NOI18N
         lblPcia.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblPcia, new org.netbeans.lib.awtextra.AbsoluteConstraints(593, 163, 150, 20));
+        getContentPane().add(lblPcia, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 180, 130, 20));
 
-        lblCoordY.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        lblCoordY.setFont(new java.awt.Font("Roboto", 2, 11)); // NOI18N
         lblCoordY.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblCoordY, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 140, 20));
+        getContentPane().add(lblCoordY, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 120, 20));
 
         lblBuscId.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
-        lblBuscId.setForeground(new java.awt.Color(0, 0, 0));
         lblBuscId.setText("Ingrese ID a buscar:");
-        getContentPane().add(lblBuscId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
+        getContentPane().add(lblBuscId, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
 
         txtBuscId.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtBuscId.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -405,12 +402,11 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtBuscIdKeyTyped(evt);
             }
         });
-        getContentPane().add(txtBuscId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 80, -1));
+        getContentPane().add(txtBuscId, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 80, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Ingrese Nombre a buscar:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 350, -1, -1));
 
         txtBusNom.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         txtBusNom.addActionListener(new java.awt.event.ActionListener() {
@@ -426,12 +422,11 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtBusNomKeyTyped(evt);
             }
         });
-        getContentPane().add(txtBusNom, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 154, -1));
+        getContentPane().add(txtBusNom, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 370, 154, -1));
 
         jLabel13.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Ingrese Ciudad a buscar:");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 116, -1));
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 350, 140, -1));
 
         txtBusCiu.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         txtBusCiu.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -442,12 +437,12 @@ public class ABMCuartel extends javax.swing.JFrame {
                 txtBusCiuKeyTyped(evt);
             }
         });
-        getContentPane().add(txtBusCiu, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, 130, -1));
+        getContentPane().add(txtBusCiu, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, 130, -1));
 
-        jPanel1.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(177, 27));
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(java.awt.Color.white);
         jLabel1.setText("ABM DE CUARTELES");
 
@@ -456,8 +451,9 @@ public class ABMCuartel extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(0, 599, Short.MAX_VALUE))
+                .addContainerGap(577, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -469,9 +465,9 @@ public class ABMCuartel extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Roboto", 3, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(153, 0, 51));
         jLabel14.setText("(*) <-- Campos obligatorios ");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 30, 150, -1));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 46, 720, 10));
-        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 302, 710, 20));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 170, -1));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 680, 10));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 680, 20));
 
         tblCuarte.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -510,64 +506,69 @@ public class ABMCuartel extends javax.swing.JFrame {
             tblCuarte.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 700, 90));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 670, 120));
 
         jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ACTIVO", "INACTIVO" }));
-        getContentPane().add(jcbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, 190, -1));
-
-        lblEstado.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        lblEstado.setForeground(new java.awt.Color(255, 51, 51));
-        getContentPane().add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 260, 140, 20));
+        jcbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbEstadoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jcbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 280, 190, -1));
 
         jLabel16.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 51, 51));
         jLabel16.setText("(*)");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 20, 30));
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 20, 30));
 
         jLabel17.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 51, 51));
         jLabel17.setText("(*)");
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 137, 20, 20));
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 20, 20));
 
         jLabel18.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 51, 51));
         jLabel18.setText("(*)");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 20, 20));
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 20, 20));
 
         jLabel19.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 51, 51));
         jLabel19.setText("(*)");
-        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 237, 20, 20));
+        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 20, 20));
 
         jLabel20.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 51, 51));
         jLabel20.setText("(*)");
-        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 20, 10));
+        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, 20, 10));
 
         jLabel21.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 51, 51));
         jLabel21.setText("(*)");
-        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 20, 30));
+        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 20, 30));
 
         jLabel22.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 51, 51));
         jLabel22.setText("(*)");
-        getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 20, 40));
+        getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 20, 40));
 
         jLabel23.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 51, 51));
         jLabel23.setText("(*)");
-        getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 20, 10));
+        getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, 20, 10));
 
         jLabel24.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 51, 51));
         jLabel24.setText("(*)");
-        getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 20, 30));
+        getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, 20, 30));
 
         jLabel25.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 51, 51));
         jLabel25.setText("(*)");
-        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 20, 30));
+        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 20, 30));
+
+        lblEstado.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        lblEstado.setForeground(new java.awt.Color(255, 51, 51));
+        getContentPane().add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 280, 110, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -829,7 +830,6 @@ public class ABMCuartel extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDireccionKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-
         int key = evt.getKeyChar();
         boolean numylet = (key >= 48 && key <= 57) || (key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (evt.getKeyChar() == KeyEvent.VK_SPACE) || (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE);
         if (!numylet) {
@@ -845,7 +845,7 @@ public class ABMCuartel extends javax.swing.JFrame {
 
     private void txtNroTelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroTelKeyTyped
         int key = evt.getKeyChar();
-        boolean numeros = key >= 48 && key <= 57 && (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE);
+        boolean numeros = (key >= 48 && key <= 57) || (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE);
         if (!numeros) {
             evt.consume();
 
@@ -916,7 +916,7 @@ public class ABMCuartel extends javax.swing.JFrame {
     private void txtMailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMailKeyTyped
  /*numeros, signo menos,punto, arroba,guion bajo*/
         int key = evt.getKeyChar();
-        boolean numylet = (key >= 48 && key <= 57) ||(key == 64)||(key == 95)||(key >= 45 && key <= 46)||(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) ;
+        boolean numylet = ((key >= 48 && key <= 57)||(key >= 64 && key <= 90) ||(key >= 97 && key <= 122) ||(key == 95)||(key >= 45 && key <= 46)||(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE)) ;
         if (!numylet) {
             evt.consume();
          
@@ -995,8 +995,12 @@ public class ABMCuartel extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtBusCiuKeyTyped
 
+    private void jcbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbEstadoActionPerformed
+
     public void validar() {
-        if (lblIdCuartel.getText() == null) {
+        if (lblIdCuartel.getText()== null) {
             btnGuardar.setEnabled(true);
         } else {
             btnGuardar.setEnabled(false);
@@ -1035,7 +1039,6 @@ public class ABMCuartel extends javax.swing.JFrame {
             txtBusNom.setEnabled(false);
             txtBusCiu.setEnabled(false);
             txtBuscId.setEnabled(false);
-
             btnEliminar.setEnabled(false);
             btnActualizar.setEnabled(true);
 
@@ -1045,7 +1048,8 @@ public class ABMCuartel extends javax.swing.JFrame {
         } else {
             lblMail.setText("");
         }
-        if (jcbEstado.getSelectedItem() == null) {
+        
+        if (jcbEstado.getSelectedItem()== null){
             lblEstado.setText("Campo Requerido");
         } else {
             lblEstado.setText("");
@@ -1321,7 +1325,7 @@ public class ABMCuartel extends javax.swing.JFrame {
     private javax.swing.JLabel lblCoordX;
     private javax.swing.JLabel lblCoordY;
     private javax.swing.JLabel lblDireccion;
-    private javax.swing.JLabel lblEstado;
+    public static javax.swing.JLabel lblEstado;
     public static javax.swing.JLabel lblIdCuartel;
     private javax.swing.JLabel lblMail;
     private javax.swing.JLabel lblNombre;

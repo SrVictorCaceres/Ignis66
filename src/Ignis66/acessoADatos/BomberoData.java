@@ -30,7 +30,7 @@ public BomberoData(){
     }
     
 public void altaBombero(Bombero bombero){
-     String sql = "INSERT INTO bomberos (dni, nombreCompleto, fechaNacimiento, grupoSanguineo, fijo, celular, sexo, correo, tipoBombero, rango, estado, especialidad) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+     String sql = "INSERT INTO bomberos (dni, nombreCompleto, fechaNacimiento, grupoSanguineo, fijo, celular, sexo, correo, tipoBombero, rango, estado, especialidad, idBrigada) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
            
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -46,6 +46,7 @@ public void altaBombero(Bombero bombero){
             ps.setString(10, bombero.getRango());    
             ps.setString(11, bombero.getEstado());                
             ps.setString(12, bombero.getEspecialidad());    
+            ps.setInt(13, bombero.getIdBrigada());
             
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -58,7 +59,7 @@ public void altaBombero(Bombero bombero){
                   ps.close();
 
                   } catch (SQLException ex) {
-                  JOptionPane.showMessageDialog(null, "Error!! No se pudo ingresar el bombero " +bombero.getNombreCompleto() +" en la Base de Datos");
+                  JOptionPane.showMessageDialog(null, "Error!! El DNI ingresado pertenece a otro Bombero en la Base de Datos");
                   } catch (NullPointerException nx){
                       JOptionPane.showMessageDialog(null, "Error!! Debe completar todos los campos obligatorios");
                   }
@@ -160,7 +161,7 @@ public void modificarDatosBombero(Bombero bombero, int idBombero){
             rs.close();
             ps.close();
         }catch(SQLException sqle){
-            JOptionPane.showMessageDialog(null, "Error en la carga de datos ");
+            JOptionPane.showMessageDialog(null, "Error en la carga de datos!!");
         }
         return bomber;
          
@@ -195,7 +196,7 @@ public void modificarDatosBombero(Bombero bombero, int idBombero){
              
              int check = ps.executeUpdate();
              if (check > 0) {
-                 JOptionPane.showMessageDialog(null, "El bombero ya no pertenece a ninguna Brigada!");}
+                /* JOptionPane.showMessageDialog(null, "El bombero ya no pertenece a ninguna Brigada!");*/}
              ps.close();
                 } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al intentar quitar al bombero de la Brigada");

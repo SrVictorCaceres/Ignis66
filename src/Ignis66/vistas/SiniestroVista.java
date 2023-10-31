@@ -2,7 +2,6 @@ package Ignis66.vistas;
 
 import Ignis66.acessoADatos.BrigadaData;
 import Ignis66.acessoADatos.CuartelData;
-import Ignis66.acessoADatos.SiniestroData;
 import Ignis66.entidades.Brigada;
 import Ignis66.entidades.Cuartel;
 import Ignis66.entidades.Siniestro;
@@ -34,10 +33,11 @@ private Connection conexion;
         jCBTipoS.addItem("Siniestro Accidental");
         jCBTipoS.addItem("Siniestro Intencional");
         jTDatos.getTableHeader().setReorderingAllowed(false);
-        jBActualizarBrigadasActionPerformed(null);
+        //jBActualizarBrigadasActionPerformed(null);
         jTFCoordX.setTransferHandler(null);
         jTFCoordY.setTransferHandler(null);
         jTADet.setTransferHandler(null);
+        setBounds(230, 30, 830 , 580);     
     }
 
     
@@ -47,7 +47,6 @@ private Connection conexion;
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLHead = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTADet = new javax.swing.JTextArea();
         jLDetalles = new javax.swing.JLabel();
@@ -65,6 +64,10 @@ private Connection conexion;
         jBLimpiar = new javax.swing.JButton();
         jBActualizarBrigadas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLHead = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        botonSalir = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,27 +83,49 @@ private Connection conexion;
         jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
         setSize(new java.awt.Dimension(700, 600));
-
-        jLHead.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        jLHead.setText("SINIESTRO");
+        getContentPane().setLayout(null);
 
         jTADet.setColumns(20);
         jTADet.setRows(5);
         jScrollPane1.setViewportView(jTADet);
 
-        jLDetalles.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLDetalles.setText("DETALLES");
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(389, 72, 405, 146);
 
-        jLTSiniestro.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
+        jLDetalles.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLDetalles.setText("Detalles");
+        getContentPane().add(jLDetalles);
+        jLDetalles.setBounds(389, 45, 42, 21);
+
+        getContentPane().add(jCBTipoS);
+        jCBTipoS.setBounds(28, 72, 192, 24);
+
+        jLTSiniestro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLTSiniestro.setText("Tipo de Siniestro *");
+        getContentPane().add(jLTSiniestro);
+        jLTSiniestro.setBounds(30, 50, 103, 21);
 
+        jLX.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLX.setText("Coordenada X *");
+        getContentPane().add(jLX);
+        jLX.setBounds(30, 100, 87, 21);
 
+        jLY.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLY.setText("Coordenada Y *");
+        getContentPane().add(jLY);
+        jLY.setBounds(30, 150, 88, 21);
+        getContentPane().add(jTFCoordY);
+        jTFCoordY.setBounds(30, 170, 192, 24);
+        getContentPane().add(jTFCoordX);
+        jTFCoordX.setBounds(30, 120, 192, 24);
 
         jLAsigBrig.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLAsigBrig.setText("Asignación de Brigada");
+        getContentPane().add(jLAsigBrig);
+        jLAsigBrig.setBounds(300, 270, 143, 22);
 
         jTDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -116,12 +141,19 @@ private Connection conexion;
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Id Cuartel", "Nombre Cuartel", "Dirección", "Ciudad", "Id Brigada", "Teléfono"
+                "Cercanía (Km)", "Id Cuartel", "Nombre Cuartel", "Id Brigada", "Nombre Brigada", "Ciudad"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                true, false, false, true, true, true
+            Class[] types = new Class [] {
+                java.lang.Double.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                true, true, false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -129,120 +161,97 @@ private Connection conexion;
         });
         jScrollPane3.setViewportView(jTDatos);
 
+        getContentPane().add(jScrollPane3);
+        jScrollPane3.setBounds(20, 320, 780, 160);
+
         jLBrigSelec.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLBrigSelec.setText("Brigada Seleccionada");
+        getContentPane().add(jLBrigSelec);
+        jLBrigSelec.setBounds(280, 490, 140, 23);
 
+        jBDesingBrig.setBackground(new java.awt.Color(153, 255, 51));
+        jBDesingBrig.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBDesingBrig.setText("Designar Brigada");
+        jBDesingBrig.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jBDesingBrig.setBorderPainted(false);
         jBDesingBrig.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBDesingBrigActionPerformed(evt);
             }
         });
+        getContentPane().add(jBDesingBrig);
+        jBDesingBrig.setBounds(240, 530, 160, 30);
 
+        jBLimpiar.setBackground(new java.awt.Color(255, 255, 102));
+        jBLimpiar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBLimpiar.setText("Limpiar Campos");
+        jBLimpiar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jBLimpiar.setBorderPainted(false);
         jBLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBLimpiarActionPerformed(evt);
             }
         });
+        getContentPane().add(jBLimpiar);
+        jBLimpiar.setBounds(420, 530, 170, 30);
 
+        jBActualizarBrigadas.setBackground(new java.awt.Color(153, 255, 51));
+        jBActualizarBrigadas.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBActualizarBrigadas.setText("Actualizar Brigadas");
+        jBActualizarBrigadas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jBActualizarBrigadas.setBorderPainted(false);
         jBActualizarBrigadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBActualizarBrigadasActionPerformed(evt);
             }
         });
+        getContentPane().add(jBActualizarBrigadas);
+        jBActualizarBrigadas.setBounds(30, 210, 192, 28);
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel1.setText("DE MAS CERCANAS A MAS LEJANAS");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(280, 300, 204, 15);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+
+        jLHead.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLHead.setForeground(new java.awt.Color(255, 255, 255));
+        jLHead.setText("SINIESTROS");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCBTipoS, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLX)
-                            .addComponent(jTFCoordX, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLY)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jBActualizarBrigadas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTFCoordY, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(167, 167, 167)
-                                .addComponent(jLHead)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLAsigBrig)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(11, 11, 11))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLTSiniestro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLDetalles)
-                        .addGap(221, 221, 221))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane3)
-                        .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(jBDesingBrig)
-                        .addGap(153, 153, 153)
-                        .addComponent(jBLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(280, 280, 280)
-                        .addComponent(jLBrigSelec))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(241, 241, 241)
-                        .addComponent(jLabel1)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jLHead)
+                .addContainerGap(729, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLHead, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLTSiniestro, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCBTipoS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLX, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTFCoordX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLY, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTFCoordY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBActualizarBrigadas)))
-                .addGap(18, 18, 18)
-                .addComponent(jLAsigBrig, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLBrigSelec, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBDesingBrig)
-                    .addComponent(jBLimpiar))
-                .addGap(41, 41, 41))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLHead, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 0, 830, 0);
+        getContentPane().add(jSeparator3);
+        jSeparator3.setBounds(10, 260, 790, 10);
+
+        botonSalir.setBackground(new java.awt.Color(255, 51, 51));
+        botonSalir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        botonSalir.setText("Salir");
+        botonSalir.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        botonSalir.setBorderPainted(false);
+        botonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonSalir);
+        botonSalir.setBounds(610, 530, 175, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -285,10 +294,10 @@ private Connection conexion;
         double longitud = Double.parseDouble(jTFCoordY.getText());
         
         // Llama al método brigadasLibres para obtener las brigadas libres
-      List<Brigada> brigadasLibres = brigadaData.brigadasLibres();
+     
         
         // Actualiza el JTable con las brigadas libres
-        cargarBrigadasEnJTable(brigadasLibres);
+        cargarBrigadasEnJTable();
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Ingresa coordenadas válidas (números) en los campos de latitud y longitud.");
     }
@@ -315,7 +324,7 @@ private Connection conexion;
 
     if (filaSeleccionada != -1) {
         // Obtiene ID de brigada seleccionada desde la fila JTable
-        int idBrigada = (int) jTDatos.getValueAt(filaSeleccionada, 0);
+        int idBrigada = (int) jTDatos.getValueAt(filaSeleccionada, 3);
 
         System.out.println("Valor de idBrigada: " + idBrigada); // Línea de depuración
 
@@ -324,11 +333,19 @@ private Connection conexion;
 
         // Llama al método para marcar la brigada como activa
         brigadaData.marcarBrigadaActiva(idBrigada);
+         JOptionPane.showMessageDialog(null, "Brigada asingada al siniestro correctamente.") ;
+        
     } else {
         JOptionPane.showMessageDialog(null, "Por favor, selecciona una brigada de la tabla antes de designarla.", "Error", JOptionPane.ERROR_MESSAGE);
     }
     
     }//GEN-LAST:event_jBDesingBrigActionPerformed
+
+    private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Esta seguro que desea salir de esta pantalla?", "Ignis - Salir de Siniestro", JOptionPane.YES_NO_OPTION) == 0) {
+            dispose();
+        }
+    }//GEN-LAST:event_botonSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -363,6 +380,14 @@ private Connection conexion;
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -373,6 +398,7 @@ private Connection conexion;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonSalir;
     private javax.swing.JButton jBActualizarBrigadas;
     private javax.swing.JButton jBDesingBrig;
     private javax.swing.JButton jBLimpiar;
@@ -385,9 +411,11 @@ private Connection conexion;
     private javax.swing.JLabel jLX;
     private javax.swing.JLabel jLY;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTextArea jTADet;
     private javax.swing.JTable jTDatos;
     private javax.swing.JTextField jTFCoordX;
@@ -426,13 +454,18 @@ private List<Cuartel> obtenerCuartelesDesdeBaseDeDatos(double coordX, double coo
     return cuarteles;
 }
 
-private void cargarBrigadasEnJTable(List<Brigada> brigada) {
+private void cargarBrigadasEnJTable() {
     DefaultTableModel model = (DefaultTableModel) jTDatos.getModel();
     model.setRowCount(0);
-
-    for (Brigada cuartel : brigada) {
+    BrigadaData bData = new BrigadaData();
+    double cX = Double.parseDouble(jTFCoordX.getText());
+    double cY = Double.parseDouble(jTFCoordY.getText());
+  
+    
+    for (Brigada brigada  : bData.brigadasLibres()) {
         // Agregar cuartel al JTable
-        model.addRow(new Object[]{cuartel.getIdCuartel(), cuartel.getNombreBrigada(), cuartel.getIdBrigada(), cuartel.getIdCuartel()});
+        model.addRow(new Object[]{obtenerCercania(brigada.getIdCuartel(),cX,cY),brigada.getIdCuartel(), bData.traerNombreCuartel(brigada.getIdCuartel()), brigada.getIdBrigada() , brigada.getNombreBrigada(),
+            bData.traerCiudadCuartel(brigada.getIdCuartel())});
     }
     
     jTDatos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -449,4 +482,28 @@ private void cargarBrigadasEnJTable(List<Brigada> brigada) {
      jTDatos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 }
 
+    private double obtenerCercania(int idCuartel, double coordX, double coordY) {
+     CuartelData cData = new CuartelData(); 
+        double coordenadaXdeCuartel = Double.parseDouble(cData.buscarCuartel(idCuartel).getCoordenadaX());
+        double coordenadaYdeCuartel = Double.parseDouble(cData.buscarCuartel(idCuartel).getCoordenadaY());
+                
+        double cercania = Math.sqrt((Math.pow(coordX - coordenadaXdeCuartel, 2) + Math.pow(coordY - coordenadaYdeCuartel, 2)));
+      
+      int grados;  
+     if (cercania >= 0)
+           grados =  (int) Math.floor(cercania);
+     else
+         grados = (int) Math.ceil(cercania);
+     
+     int minutos = (int) Math.floor((cercania - (double) grados)*60);
+   
+     int segundos = (int) Math.floor((minutos - (double) grados)*60);
+        
+        
+     double distanciaKm = (grados*111.1)+(minutos*1.8)+(segundos*0.031);
+     
+return distanciaKm;
+
+    
+}
 }
