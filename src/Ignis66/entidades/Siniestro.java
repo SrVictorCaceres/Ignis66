@@ -17,6 +17,11 @@ public class Siniestro {
     public Siniestro() {
     }
 
+    public Siniestro(String tipo, double coordenadaX, double coordenadaY){
+        this.tipo = tipo;
+        this.coordenadaX = coordenadaX;
+        this.coordenadaY = coordenadaY;
+    }
     
     public Siniestro(String tipo, double coordenadaX, double coordenadaY, String detalles) {
         this.tipo = tipo;

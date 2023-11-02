@@ -104,6 +104,7 @@ public final class AltaBombero extends javax.swing.JFrame {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(671, 580));
         setResizable(false);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -220,7 +221,7 @@ public final class AltaBombero extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 670, 0);
+        jPanel1.setBounds(0, 0, 670, 27);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel12.setText("Complete el siguiente formulario:");

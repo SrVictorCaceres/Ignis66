@@ -21,7 +21,7 @@ public class Bombero {
     private String tipo;  /// Zapador o Voluntario //
     private String sexo;  // Femenino, Masculino o "Otros" //
     private String correo;
-    private int idBrigada;
+    private int idBrigada=9999;
     private String estado;
     private String especialidad;
    

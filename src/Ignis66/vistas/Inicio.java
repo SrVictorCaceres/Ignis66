@@ -52,6 +52,7 @@ public class Inicio extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         altaSiniestro = new javax.swing.JLabel();
         cerrarSiniestro = new javax.swing.JLabel();
+        consultas = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
 
         setUndecorated(true);
@@ -81,7 +82,6 @@ public class Inicio extends javax.swing.JFrame {
 
         jLCerrar.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
         jLCerrar.setForeground(new java.awt.Color(255, 255, 255));
-        jLCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Cerrar.png"))); // NOI18N
         jLCerrar.setToolTipText("");
         jLCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -156,11 +156,6 @@ public class Inicio extends javax.swing.JFrame {
 
         jLBtnSini.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Siniestro.png"))); // NOI18N
         jLBtnSini.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLBtnSini.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLBtnSiniMouseClicked(evt);
-            }
-        });
 
         jLBtnCuar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Cuartel.png"))); // NOI18N
         jLBtnCuar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -249,6 +244,17 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        consultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/consultas.png"))); // NOI18N
+        consultas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        consultas.setMaximumSize(new java.awt.Dimension(150, 30));
+        consultas.setMinimumSize(new java.awt.Dimension(150, 30));
+        consultas.setPreferredSize(new java.awt.Dimension(150, 30));
+        consultas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                consultasMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPMenúPlegableLayout = new javax.swing.GroupLayout(jPMenúPlegable);
         jPMenúPlegable.setLayout(jPMenúPlegableLayout);
         jPMenúPlegableLayout.setHorizontalGroup(
@@ -260,6 +266,7 @@ public class Inicio extends javax.swing.JFrame {
             .addGroup(jPMenúPlegableLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPMenúPlegableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(consultas, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cerrarSiniestro, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(altaSiniestro, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPMenúPlegableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,9 +310,11 @@ public class Inicio extends javax.swing.JFrame {
                 .addComponent(altaSiniestro, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(cerrarSiniestro, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(consultas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLBtnMov, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(28, 28, 28))
         );
@@ -392,8 +401,8 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jLBtnBombMouseClicked
 
     private void botonAltaBomberoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAltaBomberoMouseClicked
-        AltaBombero pruebaFormulario = new AltaBombero();
-        pruebaFormulario.setVisible(true);
+        AltaBombero altaBombero = new AltaBombero();
+        altaBombero.setVisible(true);
          
         
     }//GEN-LAST:event_botonAltaBomberoMouseClicked
@@ -407,12 +416,6 @@ public class Inicio extends javax.swing.JFrame {
         ABMCuartel abmCuartel = new ABMCuartel();
         abmCuartel.setVisible(true);
     }//GEN-LAST:event_jLBtnCuarMouseClicked
-
-    private void jLBtnSiniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLBtnSiniMouseClicked
-
-        SiniestroVista SiVista = new SiniestroVista();
-        SiVista.setVisible(true);
-    }//GEN-LAST:event_jLBtnSiniMouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         System.exit(0);
@@ -452,8 +455,15 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_altaSiniestroMouseClicked
 
     private void cerrarSiniestroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarSiniestroMouseClicked
-        // TODO add your handling code here:
+        BajaSiniestro resolver = new BajaSiniestro();
+        resolver.setVisible(true);
     }//GEN-LAST:event_cerrarSiniestroMouseClicked
+
+    private void consultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultasMouseClicked
+        SiniestroEntreFechas consulta = new  SiniestroEntreFechas();
+        consulta.setVisible(true);
+        
+    }//GEN-LAST:event_consultasMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -485,6 +495,14 @@ public class Inicio extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -501,6 +519,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel botonAsignacion;
     private javax.swing.JLabel botonModificacion;
     private javax.swing.JLabel cerrarSiniestro;
+    private javax.swing.JLabel consultas;
     private javax.swing.JLabel jLBtnBomb;
     private javax.swing.JLabel jLBtnBrig;
     private javax.swing.JLabel jLBtnCuar;

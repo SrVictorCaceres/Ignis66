@@ -127,6 +127,7 @@ public class ModificarBombero extends javax.swing.JFrame {
         jLabel27.setText("(*) Campos obligatorios");
 
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(678, 577));
         setResizable(false);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -156,7 +157,7 @@ public class ModificarBombero extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 669, 0);
+        jPanel1.setBounds(0, 0, 669, 27);
 
         jLabel13.setText("Introduza el nombre y/o apellido:");
         getContentPane().add(jLabel13);

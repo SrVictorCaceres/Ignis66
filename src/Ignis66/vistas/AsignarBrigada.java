@@ -119,6 +119,8 @@ public class AsignarBrigada extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(918, 604));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(java.awt.Color.red);
@@ -372,7 +374,7 @@ public class AsignarBrigada extends javax.swing.JFrame {
        
       
       limpiarTablaBrigadas();
-       String sacarId = ComboBoxCuarteles.getSelectedItem().toString().substring(0, 2);
+       String sacarId = ComboBoxCuarteles.getSelectedItem().toString().substring(0,2);
        idCuartel=Integer.parseInt(sacarId);
       
         cargarTabla2(idCuartel);
@@ -848,7 +850,8 @@ public void botAgregar(){
     public void limpCampos(){
         limpiarTablaBrigadas();
         limpiarTablaBomberos();
-        ComboBoxCuarteles.setSelectedItem(null);
+       limpiarTablaFinal();
+        /*ComboBoxCuarteles.setSelectedItem(null);*/
         
         txtBrigada.setText("");
         txtEspecialidad.setText("");

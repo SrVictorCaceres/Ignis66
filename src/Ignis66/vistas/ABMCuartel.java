@@ -49,7 +49,8 @@ public class ABMCuartel extends javax.swing.JFrame {
         disableCopyPaste(txtBusNom);
         disableCopyPaste(txtBuscId);
         setDefaultCloseOperation(0); //para desactivar la X(cerrar) del formulario.
-        setBounds(230, 30, 700 , 580);           
+        setBounds(230, 30, 700 , 580);    
+        tblCuarte.getTableHeader().setReorderingAllowed(false);
     }
 
     private void disableCopy(JComponent component) {
@@ -836,9 +837,9 @@ public class ABMCuartel extends javax.swing.JFrame {
             evt.consume();
 
         }
-        if (txtNombre.getText().trim().length() == 30) {
+        if (txtNombre.getText().trim().length() == 50) {
             evt.consume();
-            mensaje("Solo se admiten hasta 30 letras y numeros");
+            mensaje("Solo se admiten hasta 50 letras y numeros");
         }
 
     }//GEN-LAST:event_txtNombreKeyTyped

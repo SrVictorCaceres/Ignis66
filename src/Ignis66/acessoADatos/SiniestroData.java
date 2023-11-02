@@ -10,7 +10,8 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import geolocalizacion.GeolocalizacionEspacial;
+import javax.swing.JOptionPane;
+
 
 public class SiniestroData {
     private Connection conexion;
@@ -19,14 +20,13 @@ public class SiniestroData {
         this.conexion = conexion;
     }
     
-    public double calcularDistanciaEntrePuntos(double coordenadaX1, double coordenadaY1, double coordenadaX2, double coordenadaY2) {
-        GeolocalizacionEspacial geolocalizacion = new GeolocalizacionEspacial(conexion);
-        return geolocalizacion.calcularDistanciaEntrePuntos(coordenadaX1, coordenadaY1, coordenadaX2, coordenadaY2);
+    public SiniestroData(){
+        conexion = Conexion.getConexion();
     }
 
     public void agregarSiniestro(Siniestro siniestro) {
         try {
-            String sql = "INSERT INTO siniestros (fechaSiniestro, coordenadaX, coordenadaY, tipo, detalles, idBrigada) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO siniestro (fechaSiniestro, coordenadaX, coordenadaY, tipo, detalles, idBrigada) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setObject(1, siniestro.getFechaSiniestro());
             statement.setDouble(2, siniestro.getCoordenadaX());
@@ -47,7 +47,7 @@ public class SiniestroData {
 
     public Siniestro buscarSiniestroPorId(int idSiniestro) {
         try {
-            String sql = "SELECT * FROM siniestros WHERE idSiniestro = ?";
+            String sql = "SELECT * FROM siniestro WHERE idSiniestro = ?";
             PreparedStatement statement = conexion.prepareStatement(sql);
             statement.setInt(1, idSiniestro);
             ResultSet resultSet = statement.executeQuery();
@@ -73,7 +73,7 @@ public class SiniestroData {
 
     public void marcarSiniestroComoResuelto(Siniestro siniestro, LocalDateTime fechaResolucion, int puntuacion) {
         try {
-            String sql = "UPDATE siniestros SET fechaResolucion = ?, puntuacion = ? WHERE idSiniestro = ?";
+            String sql = "UPDATE siniestro SET fechaResolucion = ?, puntuacion = ? WHERE idSiniestro = ?";
             PreparedStatement statement = conexion.prepareStatement(sql);
             statement.setObject(1, fechaResolucion);
             statement.setInt(2, puntuacion);
@@ -86,7 +86,7 @@ public class SiniestroData {
 
     public Brigada buscarBrigadaPorId(int idBrigada) {
         try {
-            String sql = "SELECT * FROM brigadas WHERE idBrigada = ?";
+            String sql = "SELECT * FROM brigada WHERE idBrigada = ?";
             PreparedStatement statement = conexion.prepareStatement(sql);
             statement.setInt(1, idBrigada);
             ResultSet resultSet = statement.executeQuery();
@@ -111,7 +111,7 @@ public class SiniestroData {
             if (siniestro != null && brigada != null) {
                 siniestro.setIdBrigada(idBrigada);
 
-                String sql = "UPDATE siniestros SET idBrigada = ? WHERE idSiniestro = ?";
+                String sql = "UPDATE siniestro SET idBrigada = ? WHERE idSiniestro = ?";
                 PreparedStatement statement = conexion.prepareStatement(sql);
                 statement.setInt(1, idBrigada);
                 statement.setInt(2, idSiniestro);
@@ -127,7 +127,7 @@ public class SiniestroData {
     public List<Siniestro> obtenerSiniestrosEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         List<Siniestro> siniestros = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM siniestros WHERE fechaSiniestro BETWEEN ? AND ?";
+            String sql = "SELECT * FROM siniestro WHERE fechaSiniestro BETWEEN ? AND ?";
             PreparedStatement statement = conexion.prepareStatement(sql);
             statement.setObject(1, fechaInicio);
             statement.setObject(2, fechaFin);
@@ -150,5 +150,28 @@ public class SiniestroData {
             e.printStackTrace();
         }
         return siniestros;
+    }
+
+    public Iterable<Siniestro> siniestrosSinResolver() {
+      ArrayList<Siniestro> lista = new ArrayList();
+        
+        try{
+            String sql = "Select idSiniestro, tipo, fechaSiniestro, idBrigada From siniestro Where puntuacion = 0";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+           
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Siniestro sin = new Siniestro();
+                sin.setIdSiniestro(rs.getInt("idSiniestro"));
+                sin.setTipo(rs.getString("tipo"));
+                sin.setFechaSiniestro(rs.getObject("fechaSiniestro", LocalDateTime.class));
+                sin.setIdBrigada(rs.getInt("idBrigada"));
+                lista.add(sin);
+            }
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Error al acceder a los siniestros sin resolver");
+        }
+        return lista;
     }
 }

@@ -55,7 +55,7 @@ public class BrigadaData {
  
         //CuartelData cData = new CuartelData();
         List<Brigada> brigadas = new ArrayList<>();
-        String consultaSQL = "SELECT idBrigada, nombreBrigada, especialidad, brigada.idCuartel, cuartel.nombreCuartel, cuartel.Ciudad FROM brigada, cuartel WHERE brigada.idCuartel = cuartel.idCuartel AND libre = LIBRE"; // Ajusta la consulta según tu estructura de base de datos
+            String consultaSQL = "SELECT idBrigada, nombreBrigada, especialidad, brigada.idCuartel, cuartel.nombreCuartel, cuartel.Ciudad FROM brigada, cuartel WHERE brigada.idCuartel = cuartel.idCuartel AND libre = 'LIBRE' AND brigada.estado = 'ACTIVA'"; // Ajusta la consulta según tu estructura de base de datos
 
         try (PreparedStatement preparedStatement = con.prepareStatement(consultaSQL);
              ResultSet rs = preparedStatement.executeQuery()) {
