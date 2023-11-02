@@ -366,6 +366,12 @@ ALTER TABLE `bomberos`
   ADD CONSTRAINT `codBrigada` FOREIGN KEY (`IdBrigada`) REFERENCES `brigada` (`idBrigada`);
 
 --
+-- Filtros para la tabla `cuartel`
+--
+  
+  ALTER TABLE `cuartel`
+  ADD CONSTRAINT `codBrigadas` FOREIGN KEY (`idBrigada`) REFERENCES `brigada` (`idBrigada`);
+--
 -- Filtros para la tabla `brigada`
 --
 ALTER TABLE `brigada`
