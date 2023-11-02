@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2023 a las 02:42:59
+-- Tiempo de generación: 31-10-2023 a las 23:02:07
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -49,11 +49,11 @@ CREATE TABLE `bomberos` (
 --
 
 INSERT INTO `bomberos` (`idBombero`, `dni`, `nombreCompleto`, `fechaNacimiento`, `grupoSanguineo`, `fijo`, `celular`, `sexo`, `correo`, `tipoBombero`, `rango`, `idBrigada`, `estado`, `especialidad`) VALUES
-(1, 46640083, 'Ignacio Conti', '2000-08-15', 'A+', NULL, 2147483647, 'Masculino', NULL, 'Zapador', 'BOMBERO', 9999, 'ACTIVO', 'INCENDIO'),
-(2, 42551738, 'Nicolas Delgado', '1996-02-23', 'B+', NULL, 1167422410, 'Masculino', NULL, 'Voluntario', 'BOMBERO', 9999, 'ACTIVO', 'RESCATE'),
+(1, 46640083, 'Ignacio Conti', '2000-08-15', 'A+', NULL, 2147483647, 'Masculino', 'iconti@gmail.com', 'Zapador', 'BOMBERO', 9999, 'ACTIVO', 'INCENDIO'),
+(2, 42551738, 'Nicolas Delgado', '1996-02-23', 'B+', NULL, 1167422410, 'Masculino', NULL, 'Voluntario', 'BOMBERO', 10002, 'ACTIVO', 'RESCATE'),
 (3, 28777121, 'Micaela Aguirre', '1980-09-02', 'A-', NULL, 2147483647, 'Femenino', NULL, 'Voluntario', 'BOMBERO', 16, 'ACTIVO', 'MAT. PELIGROSOS'),
 (4, 36029983, 'Andrea Matera', '1986-05-12', 'AB-', NULL, 2147483645, 'Femenino', NULL, 'Voluntario', 'BOMBERO', 10, 'ACTIVO', 'INC. FORESTALES'),
-(5, 41233891, 'Jorge Gomez', '2001-12-21', 'O+', NULL, 2147483647, 'Masculino', 'pepe.leon@hotmail.com', 'Voluntario', 'SARGENTO', 9, 'ACTIVO', 'MAT. PELIGROSOS'),
+(5, 41233891, 'Jorge Gomez', '2001-12-21', 'O+', NULL, 2147483641, 'Masculino', 'pepe.leon@hotmail.com', 'Voluntario', 'SARGENTO', 9, 'ACTIVO', 'MAT. PELIGROSOS'),
 (6, 25845107, 'Adrián Sarmiento', '1976-07-04', 'AB-', NULL, 2147483647, 'Masculino', NULL, 'Voluntario', 'COMANDANTE', 12, 'ACTIVO', 'CANINA '),
 (7, 40015465, 'Yanina Blanco', '1991-03-13', 'A-', NULL, 2147483647, 'Femenino', 'yaniwhiteee@outlook.com', 'Zapador', 'BOMBERO', 9, 'ACTIVO', 'MAT. PELIGROSOS'),
 (8, 35698306, 'Lorena Mansilla', '1990-01-08', 'AB+', NULL, 2147483647, 'Femenino', NULL, 'Voluntario', 'BOMBERO', 9, 'ACTIVO', 'MAT. PELIGROSOS'),
@@ -80,16 +80,16 @@ INSERT INTO `bomberos` (`idBombero`, `dni`, `nombreCompleto`, `fechaNacimiento`,
 (29, 39287521, 'Martina Trotta', '1970-12-24', 'A-', NULL, 1153431262, 'Femenino', NULL, 'Zapador', 'COMANDANTE GENERAL', 9999, 'ACTIVO', 'INCENDIO'),
 (30, 42951110, 'Cintia Toledo', '1999-01-05', 'B-', NULL, 2147483647, 'Femenino', NULL, 'Zapador', 'SUBOFICIAL PRINCIPAL', 12, 'ACTIVO', 'CANINA '),
 (31, 21987612, 'Jorgelina Mendez', '1968-10-21', 'O-', NULL, 2147483647, 'Femenino', NULL, 'Voluntario', 'COMANDANTE MAYOR', 9999, 'ACTIVO', 'INCENDIO'),
-(32, 43844813, 'Joaquín Duarte', '1987-02-24', 'A+', NULL, 2147483647, 'Masculino', NULL, 'Zapador', 'SARGENTO', 9999, 'ACTIVO', 'RESCATE'),
+(32, 43844813, 'Joaquín Duarte', '1987-02-24', 'A+', NULL, 2147483647, 'Masculino', NULL, 'Zapador', 'SARGENTO', 10002, 'ACTIVO', 'RESCATE'),
 (33, 32447888, 'Daniel Bossio', '2003-06-25', 'B+', NULL, 2147483647, 'Masculino', NULL, 'Voluntario', 'CABO', 9999, 'ACTIVO', 'INCENDIO'),
 (34, 23594482, 'Walter Monzón', '2003-08-24', 'AB-', NULL, 2147483647, 'Masculino', NULL, 'Voluntario', 'BOMBERO', 14, 'ACTIVO', 'BUCEO'),
 (35, 43447065, 'Emanuel Basualdo', '1998-09-27', 'B-', NULL, 2142131155, 'Masculino', NULL, 'Voluntario', 'BOMBERO', 14, 'ACTIVO', 'BUCEO'),
 (36, 44807866, 'Ezequiel Leiva', '1988-05-29', 'B+', NULL, 1155611323, 'Masculino', NULL, 'Voluntario', 'CABO PRIMERO', 9999, 'ACTIVO', 'MAT. PELIGROSOS'),
-(37, 44934516, 'Pablo Carrizo', '1970-06-09', 'A-', NULL, 1146856586, 'Masculino', NULL, 'Voluntario', 'SUBCOMANDANTE', 8, 'ACTIVO', 'RESCATE'),
+(37, 44934516, 'Pablo Carrizo', '1970-06-09', 'A-', NULL, 1146856586, 'Masculino', NULL, 'Voluntario', 'SUBCOMANDANTE', 10002, 'ACTIVO', 'RESCATE'),
 (38, 31692364, 'Sebastián Collado', '1966-09-12', 'O+', NULL, 1142737560, 'Masculino', NULL, 'Voluntario', 'COMANDANTE GENERAL', 9999, 'ACTIVO', 'INC. FORESTALES'),
 (39, 32792747, 'Agustín Nievas', '1994-01-28', 'B+', NULL, 1191199710, 'Masculino', NULL, 'Voluntario', 'CABO', 9999, 'ACTIVO', 'INCENDIO'),
 (40, 40114017, 'Mariano Reynoso', '1995-07-17', 'O+', NULL, 2147483642, 'Masculino', NULL, 'Voluntario', 'BOMBERO', 9999, 'ACTIVO', 'INCENDIO'),
-(41, 17096273, 'Diego Perez', '1997-04-21', 'B-', NULL, 2111321232, 'Masculino', NULL, 'Voluntario', 'CABO', 9999, 'ACTIVO', 'RESCATE'),
+(41, 17096273, 'Diego Perez', '1997-04-21', 'B-', NULL, 2111321232, 'Masculino', NULL, 'Voluntario', 'CABO', 8, 'ACTIVO', 'RESCATE'),
 (42, 25519808, 'Martín Huergo', '1975-08-14', 'A+', NULL, 2147483647, 'Masculino', NULL, 'Zapador', 'OFICIAL AYUDANTE', 16, 'ACTIVO', 'MAT. PELIGROSOS'),
 (43, 36536311, 'José Luis Pereyra', '1975-01-23', 'B+', NULL, 1182696774, 'Masculino', NULL, 'Voluntario', 'SUBOFICIAL MAYOR', 9999, 'ACTIVO', 'INC. FORESTALES'),
 (44, 24894461, 'Leonardo Garro', '1976-03-25', 'AB-', NULL, 1148842565, 'Masculino', NULL, 'Voluntario', 'OFICIAL INSPECTOR', 11, 'ACTIVO', 'ACUATICA'),
@@ -107,12 +107,14 @@ INSERT INTO `bomberos` (`idBombero`, `dni`, `nombreCompleto`, `fechaNacimiento`,
 (60, 215653102, 'Federico Rodriguez', '1984-10-24', 'B+', NULL, 2147483647, 'Masculino', 'prueba@ulp.org', 'Voluntario', 'CABO PRIMERO', 9999, 'ACTIVO', 'INC. FORESTALES'),
 (73, 31265345, 'Mariana Vivas', '1984-10-19', 'AB+', '2234548788', 2147483647, 'Femenino', NULL, 'Voluntario', 'SARGENTO', 8, 'ACTIVO', 'RESCATE'),
 (74, 13566800, 'Francisco Mendez', '1960-09-27', 'B-', NULL, 2147483647, 'Masculino', NULL, 'Voluntario', 'OFICIAL PRINCIPAL', 8, 'ACTIVO', 'RESCATE'),
-(76, 13566801, 'Francisco Menendez', '1960-09-27', 'B-', NULL, 2147483647, 'Masculino', 'fjm60@hotmail.com', 'Voluntario', 'OFICIAL PRINCIPAL', 9999, 'ACTIVO', 'RESCATE'),
-(77, 13566802, 'Francisco Nandez', '1960-09-27', 'B-', '2215570806', 2147483647, 'Masculino', NULL, 'Voluntario', 'OFICIAL PRINCIPAL', 9999, 'ACTIVO', 'RESCATE'),
-(79, 13524723, 'Alberto Gonzalez', '1971-11-08', 'A-', '1134560124', 1165630073, '', NULL, 'Voluntario', 'CABO', 9999, 'ACTIVO', 'ACTIVO'),
-(80, 34463121, 'Fernanda Cipollone', '1995-07-04', 'B+', NULL, 2147483647, 'Femenino', NULL, 'Voluntario', 'CABO', 9999, 'ACTIVO', 'ACTIVO'),
-(81, 32123119, 'Ricardo Zozo', '1983-12-29', 'B+', NULL, 2147483647, 'Masculino', NULL, 'Voluntario', 'BOMBERO', 9999, 'ACTIVO', 'ACTIVO'),
-(82, 33990556, 'Cintia Acuña', '1988-08-19', 'A+', NULL, 2216318899, 'Femenino', 'cinlp.87@hotmail.com', 'Voluntario', 'SARGENTO', 8, 'ACTIVO', 'RESCATE');
+(76, 13566801, 'Francisco Menendez', '1960-09-27', 'B-', NULL, 2147483647, 'Masculino', 'fjm60@hotmail.com', 'Voluntario', 'OFICIAL PRINCIPAL', 10002, 'ACTIVO', 'RESCATE'),
+(77, 13566802, 'Francisco Nandez', '1960-09-27', 'B-', '2215570806', 2147483647, 'Masculino', NULL, 'Voluntario', 'OFICIAL PRINCIPAL', 10002, 'ACTIVO', 'RESCATE'),
+(79, 13524723, 'Alberto Gonzalez', '1971-11-08', 'A-', '1134560124', 1165630073, '', NULL, 'Voluntario', 'CABO', 9999, 'ACTIVO', 'INCENDIO'),
+(80, 34463121, 'Fernanda Cipollone', '1995-07-04', 'B+', NULL, 2147483647, 'Femenino', NULL, 'Voluntario', 'CABO', 9999, 'ACTIVO', 'INCENDIO'),
+(81, 32123119, 'Ricardo Zozo', '1983-12-29', 'B+', NULL, 2147483647, 'Masculino', NULL, 'Voluntario', 'BOMBERO', 9999, 'ACTIVO', 'INCENDIO'),
+(82, 33990556, 'Cintia Acuña', '1988-08-19', 'A+', NULL, 2216318899, 'Femenino', 'cinlp.87@hotmail.com', 'Voluntario', 'SARGENTO', 8, 'ACTIVO', 'RESCATE'),
+(83, 1122221, 'Juan Diaz', '2000-10-01', 'A+', NULL, 1120235214, 'Otro', NULL, 'Voluntario', 'BOMBERO', 9999, 'ACTIVO', 'INCENDIO'),
+(84, 12345667, 'JUAN PEREZ', '2023-11-12', 'B+', NULL, 2363252563, 'Masculino', NULL, 'Voluntario', 'SARGENTO 1°', 9999, 'ACTIVO', 'INC. FORESTALES');
 
 -- --------------------------------------------------------
 
@@ -140,7 +142,7 @@ CREATE TABLE `brigada` (
 
 INSERT INTO `brigada` (`idBrigada`, `nombreBrigada`, `especialidad`, `idBombero1`, `idBombero2`, `idBombero3`, `idBombero4`, `idBombero5`, `libre`, `estado`, `idCuartel`) VALUES
 (7, 'ALFA', 'INCENDIO', 0, 0, 0, 0, 0, 'LIBRE', 'INACTIVA', 12),
-(8, 'BRAVO', 'RESCATE', 54, 82, 74, 73, 37, 'LIBRE', 'ACTIVA', 13),
+(8, 'BRAVO', 'RESCATE', 54, 82, 74, 73, 41, 'LIBRE', 'ACTIVA', 13),
 (9, 'CHARLIE', 'MAT. PELIGROSOS', 5, 7, 8, 13, 23, 'LIBRE', 'ACTIVA', 13),
 (10, 'DELTA', 'INC. FORESTALES', 4, 12, 19, 25, 27, 'LIBRE', 'ACTIVA', 13),
 (11, 'ECHO', 'ACUATICA', 9, 16, 20, 44, 53, 'LIBRE', 'ACTIVA', 13),
@@ -155,7 +157,10 @@ INSERT INTO `brigada` (`idBrigada`, `nombreBrigada`, `especialidad`, `idBombero1
 (20, 'GOLF', 'MONTAÑA', 0, 0, 0, 0, 0, 'LIBRE', 'INACTIVA', 19),
 (21, 'HOTEL', 'BUCEO', 0, 0, 0, 0, 0, 'LIBRE', 'INACTIVA', 22),
 (22, 'HOTEL', 'INC. FORESTALES', 0, 0, 0, 0, 0, 'LIBRE', 'INACTIVA', 26),
-(9999, 'SIN BRIGADA', 'SIN ESPECIALIDAD', 0, 0, 0, 0, 0, 'LIBRE', 'ACTIVO', 0);
+(9999, 'SIN BRIGADA', 'SIN ESPECIALIDAD', 0, 0, 0, 0, 0, 'LIBRE', 'ACTIVO', 0),
+(10000, 'ALFA', 'INCENDIO', 0, 0, 0, 0, 0, 'LIBRE', 'INACTIVA', 11),
+(10001, 'ALFA', 'INCENDIO', 0, 0, 0, 0, 0, 'LIBRE', 'INACTIVA', 13),
+(10002, 'BRAVO', 'RESCATE', 2, 32, 37, 77, 76, 'LIBRE', 'ACTIVA', 14);
 
 -- --------------------------------------------------------
 
@@ -182,23 +187,23 @@ CREATE TABLE `cuartel` (
 
 INSERT INTO `cuartel` (`idCuartel`, `nombreCuartel`, `direccion`, `Ciudad`, `Provincia`, `telefono`, `coordenadaX`, `coordenadaY`, `correo`, `estado`) VALUES
 (11, 'División Cuartel I José María Calaza', 'Av. Belgrano 1547', 'San Nicolás ', 'Ciudad de Buenos Aires', '1143705857', '-34.61284964648445', ' -58.38841472883594', 'Socorro@gmail.com', 'ACTIVO'),
-(12, 'Destacamento San Telmo', 'Bolivar 1419', 'San Telmo ', 'Ciudad de Buenos Aires', '1149452222', '-34.624384985155444', '-58.372801347012754', 'Socorro@gmail.com', 'INACTIVO'),
+(12, 'Destacamento San Telmo', 'Bolivar 1419', 'San Telmo ', 'Ciudad de Buenos Aires', '1149452222', '-34.624384985155444', '-58.372801347012754', 'Socorro@gmail.com', 'ACTIVO'),
 (13, 'División Cuartel IV  Recoleta ', 'Laprida 1739', 'Recoleta', 'Ciudad de Buenos Aires', '1148235146', '-34.589927416986356', '-58.40237354516254', 'Socorro@gmail.com', 'ACTIVO'),
 (14, 'Destacamento Once', 'Billinghurst 471', 'Once', 'Ciudad de Buenos Aires', '1148632884', '-34.60409701763348', ' -58.41568502002933', 'Socorro@gmail.com', 'ACTIVO'),
-(15, 'División Cuartel II  Patricios', 'Av. Caseros 2849', 'Parque Patricios', 'Ciudad de Buenos Aires', '4943-2222', '-34.63627269172013', '-58.40301299088509', 'Socorro@gmail.com', 'ACTIVO'),
-(16, 'Destacamento Nueva Pompeya', 'Av. Sáenz 1457', 'Nueva Pompeya', 'Ciudad de Buenos Aires', '4911-4852', '-34.658305396674166', ' -58.41681788933946', 'Socorro@gmail.com', 'ACTIVO'),
-(17, 'División Cuartel III  Barracas', 'Brandsen 1046', 'Barracas', 'Ciudad de Buenos Aires', '4301-2222', '-34.63707431099562', '-58.367268233210645', 'Socorro@gmail.com', 'ACTIVO'),
-(18, 'Destacamento Boca', 'Alte. Brown y Pedro de Mendoza', ' La Boca', 'Ciudad de Buenos Aires', '4301-2121', '-34.635203162478525', '-58.36169489088536', 'Socorro@gmail.com', 'ACTIVO'),
-(19, 'División Cuartel VIII Flores', 'Ramón L. Falcón 2255', 'Flores', 'Ciudad de Buenos Aires', '114632-5806', '-34.62902846271735', ' -58.46020053166879', 'Socorro@gmail.com', 'ACTIVO'),
-(20, 'División Cuartel X  Lugano', 'Cafayate y Ana Díaz', 'Villa Lugano', 'Ciudad de Buenos Aires', '4605-4242', '-34.6834630040573', '-58.46947914330707', 'Socorro@gmail.com', 'ACTIVO'),
-(21, 'División Cuartel VIII Nueva Chicago', 'Lisandro de la Torre 2830', 'Mataderos', 'Ciudad de Buenos Aires', '4687-8743', '-34.66582216604948', '-58.49564184854965', 'Socorro@gmail.com', 'ACTIVO'),
-(22, 'División Cuartel IX Versalles', 'Porcel de Peralta 750', 'Versalles', 'Ciudad de Buenos Aires', '4641-0326', '-34.62963930717036', ' -58.52381120283265', 'Socorro@gmail.com', 'ACTIVO'),
-(23, 'Destacamento  Villa Devoto', 'José Cubas 4142', 'Villa Devoto', 'Ciudad de Buenos Aires', '4501-5604', '-34.59806464312379', ' -58.515669773997885', 'Socorro@gmail.com', 'ACTIVO'),
-(24, 'Destacamento Villa Urquiza', 'Olazábal 5454', 'Villa Urquiza', 'Ciudad de Buenos Aires', '114521-2222', '-34.57895430416091', '-58.48997360283476', 'Socorro@gmail.com', 'ACTIVO'),
-(25, 'División Cuartel V Belgrano', 'Vuelta de Obligado 2254', 'Belgrano', 'Ciudad de Buenos Aires', '4783-2222', '-34.559954392426505', '-58.45703637556014', 'Socorro@gmail.com', 'ACTIVO'),
-(26, 'Destacamento Palermo', 'Guatemala 5966', 'Palermo', 'Ciudad de Buenos Aires', '114772-2222', '-34.577439768706384', ' -58.43577310283203', 'Socorro@gmail.com', 'ACTIVO'),
-(27, 'División Cuartel VI Villa Crespo', 'Av. Corrientes 5340', 'Villa Crespo', 'Ciudad de Buenos Aires', '4854-2222', '-34.59855652707473', '-58.440255487490184', 'Socorro@gmail.com', 'ACTIVO'),
-(31, 'División Cuartel IV  Recoleta ', 'Laprida 1739', 'Recoleta', 'Ciudad de Buenos Aires', '4823-5146', '-34.589927416986356', '-58.40237354516254', 'Socorro@gmail.com', 'ACTIVO'),
+(15, 'División Cuartel II  Patricios', 'Av. Caseros 2849', 'Parque Patricios', 'Ciudad de Buenos Aires', '1149432222', '-34.63627269172013', '-58.40301299088509', 'Socorro@gmail.com', 'ACTIVO'),
+(16, 'Destacamento Nueva Pompeya', 'Av. Sáenz 1457', 'Nueva Pompeya', 'Ciudad de Buenos Aires', '1149114852', '-34.658305396674166', ' -58.41681788933946', 'Socorro@gmail.com', 'ACTIVO'),
+(17, 'División Cuartel III  Barracas', 'Brandsen 1046', 'Barracas', 'Ciudad de Buenos Aires', '1143012222', '-34.63707431099562', '-58.367268233210645', 'Socorro@gmail.com', 'ACTIVO'),
+(18, 'Destacamento Boca', 'Alte. Brown y Pedro de Mendoza', ' La Boca', 'Ciudad de Buenos Aires', '1143012121', '-34.635203162478525', '-58.36169489088536', 'Socorro@gmail.com', 'ACTIVO'),
+(19, 'División Cuartel VIII Flores', 'Ramón L. Falcón 2255', 'Flores', 'Ciudad de Buenos Aires', '1146325806', '-34.62902846271735', ' -58.46020053166879', 'Socorro@gmail.com', 'ACTIVO'),
+(20, 'División Cuartel X  Lugano', 'Cafayate y Ana Díaz', 'Villa Lugano', 'Ciudad de Buenos Aires', '1146054242', '-34.6834630040573', '-58.46947914330707', 'Socorro@gmail.com', 'ACTIVO'),
+(21, 'División Cuartel VIII Nueva Chicago', 'Lisandro de la Torre 2830', 'Mataderos', 'Ciudad de Buenos Aires', '1146878743', '-34.66582216604948', '-58.49564184854965', 'Socorro@gmail.com', 'ACTIVO'),
+(22, 'División Cuartel IX Versalles', 'Porcel de Peralta 750', 'Versalles', 'Ciudad de Buenos Aires', '1146410326', '-34.62963930717036', ' -58.52381120283265', 'Socorro@gmail.com', 'ACTIVO'),
+(23, 'Destacamento  Villa Devoto', 'José Cubas 4142', 'Villa Devoto', 'Ciudad de Buenos Aires', '1145015604', '-34.59806464312379', ' -58.515669773997885', 'Socorro@gmail.com', 'ACTIVO'),
+(24, 'Destacamento Villa Urquiza', 'Olazábal 5454', 'Villa Urquiza', 'Ciudad de Buenos Aires', '1145212222', '-34.57895430416091', '-58.48997360283476', 'Socorro@gmail.com', 'ACTIVO'),
+(25, 'División Cuartel V Belgrano', 'Vuelta de Obligado 2254', 'Belgrano', 'Ciudad de Buenos Aires', '1147832222', '-34.559954392426505', '-58.45703637556014', 'Socorro@gmail.com', 'ACTIVO'),
+(26, 'Destacamento Palermo', 'Guatemala 5966', 'Palermo', 'Ciudad de Buenos Aires', '1147722222', '-34.577439768706384', ' -58.43577310283203', 'Socorro@gmail.com', 'ACTIVO'),
+(27, 'División Cuartel VI Villa Crespo', 'Av. Corrientes 5340', 'Villa Crespo', 'Ciudad de Buenos Aires', '1148542222', '-34.59855652707473', '-58.440255487490184', 'Socorro@gmail.com', 'ACTIVO'),
+(31, 'División Cuartel IV  Recoleta ', 'Laprida 1739', 'Recoleta', 'Ciudad de Buenos Aires', '1148235146', '-34.589927416986356', '-58.40237354516254', 'Socorro@gmail.com', 'ACTIVO'),
 (32, 'Asociacion Bomberos Voluntarios Maria Juana', 'Padre Calleri 301', 'María Juana', ' Santa Fe', '3406471000', ' -31.67618693068803', ' -61.75285112251022', 'bomberosmjuana@hotmail.com', 'ACTIVO'),
 (33, 'Bomberos  Voluntarios de Rafaela', 'Jorge Newbery 674', 'Rafaela', 'Santa Fe', '3492443059', '-31.250241037683608', '-61.466135632305814', 'abvrafaela@hotmail.com', 'ACTIVO');
 
@@ -210,11 +215,22 @@ INSERT INTO `cuartel` (`idCuartel`, `nombreCuartel`, `direccion`, `Ciudad`, `Pro
 
 CREATE TABLE `movil` (
   `idMovil` int(11) NOT NULL,
-  `marca` varchar(20) NOT NULL,
-  `modelo` varchar(20) NOT NULL,
-  `año` int(4) NOT NULL,
+  `TipoVehiculo` varchar(20) NOT NULL,
+  `Patente` varchar(20) NOT NULL,
+  `Añomodelo` varchar(20) NOT NULL,
+  `Tripulantes` int(4) NOT NULL,
   `estado` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `movil`
+--
+
+INSERT INTO `movil` (`idMovil`, `TipoVehiculo`, `Patente`, `Añomodelo`, `Tripulantes`, `estado`) VALUES
+(1, 'Camión Bomba', 'AC213CP', '2017', 6, 'ACTIVO'),
+(2, 'Unidad de Rescate', 'AA230RP', '2015', 4, 'ACTIVO'),
+(3, 'Camión Bomba', 'AB652PL', '2016', 6, 'ACTIVO'),
+(4, 'Unidad de Rescate', 'AF230RP', '2015', 4, 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -281,13 +297,13 @@ ALTER TABLE `siniestro`
 -- AUTO_INCREMENT de la tabla `bomberos`
 --
 ALTER TABLE `bomberos`
-  MODIFY `idBombero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `idBombero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT de la tabla `brigada`
 --
 ALTER TABLE `brigada`
-  MODIFY `idBrigada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000;
+  MODIFY `idBrigada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10003;
 
 --
 -- AUTO_INCREMENT de la tabla `cuartel`
@@ -299,7 +315,7 @@ ALTER TABLE `cuartel`
 -- AUTO_INCREMENT de la tabla `movil`
 --
 ALTER TABLE `movil`
-  MODIFY `idMovil` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMovil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `siniestro`
